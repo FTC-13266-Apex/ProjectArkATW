@@ -12,15 +12,15 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Gripper {
     public static class Constants {
-        public static Hardware hardware = new Hardware();
-        public static Position position = new Position();
+        public static Hardware hardware;
+        public static Position position;
         private static class Hardware{
 
-            public Servo.Direction DIRECTION = Servo.Direction.FORWARD;
+            public static Servo.Direction DIRECTION = Servo.Direction.FORWARD;
 
         }
         private static class Position {
-            public double
+            public static double
                         OPEN = .5,
                         CLOSE = .7;
 
@@ -42,8 +42,8 @@ public class Gripper {
 
     }
     public void teleOpCommand() {
-        if (gamepad2.a) gripper.setPosition(position.CLOSE);
+        if (gamepad2.a) gripper.setPosition(Constants.Position.CLOSE);
 
-        if (gamepad2.b)gripper.setPosition(position.OPEN);
+        if (gamepad2.b)gripper.setPosition(Constants.Position.OPEN);
     }
 }

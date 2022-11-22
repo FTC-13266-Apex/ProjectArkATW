@@ -17,13 +17,6 @@ import org.firstinspires.ftc.teamcode.subsystem.Drive;
 
 import java.util.Objects;
 
-import static org.firstinspires.ftc.teamcode.util.DriveConstants.MAX_ACCEL;
-import static org.firstinspires.ftc.teamcode.util.DriveConstants.MAX_VEL;
-import static org.firstinspires.ftc.teamcode.util.DriveConstants.RUN_USING_ENCODER;
-import static org.firstinspires.ftc.teamcode.util.DriveConstants.kA;
-import static org.firstinspires.ftc.teamcode.util.DriveConstants.kStatic;
-import static org.firstinspires.ftc.teamcode.util.DriveConstants.kV;
-
 /*
  * This routine is designed to tune the open-loop feedforward coefficients. Although it may seem unnecessary,
  * tuning these coefficients is just as important as the positional parameters. Like the other
@@ -58,12 +51,12 @@ public class ManualFeedforwardTuner extends LinearOpMode {
     private static MotionProfile generateProfile(boolean movingForward) {
         MotionState start = new MotionState(movingForward ? 0 : DISTANCE, 0, 0, 0);
         MotionState goal = new MotionState(movingForward ? DISTANCE : 0, 0, 0, 0);
-        return MotionProfileGenerator.generateSimpleMotionProfile(start, goal, MAX_VEL, MAX_ACCEL);
+        return MotionProfileGenerator.generateSimpleMotionProfile(start, goal, Drive.Constants.Controller.MAX_VEL, Drive.Constants.Controller.MAX_ACCEL);
     }
 
     @Override
     public void runOpMode() {
-        if (RUN_USING_ENCODER) {
+        if (Drive.Constants.Controller.RUN_USING_BUILT_IN_CONTROLLER) {
             RobotLog.setGlobalErrorMsg("Feedforward constants usually don't need to be tuned " +
                     "when using the built-in drive motor velocity PID.");
         }
@@ -109,7 +102,7 @@ public class ManualFeedforwardTuner extends LinearOpMode {
                     }
 
                     MotionState motionState = activeProfile.get(profileTime);
-                    double targetPower = Kinematics.calculateMotorFeedforward(motionState.getV(), motionState.getA(), kV, kA, kStatic);
+                    double targetPower = Kinematics.calculateMotorFeedforward(motionState.getV(), motionState.getA(), Drive.Constants.Controller.kV, Drive.Constants.Controller.kA, Drive.Constants.Controller.kStatic);
 
                     drive.setDrivePower(new Pose2d(targetPower, 0, 0));
                     drive.updatePoseEstimate();

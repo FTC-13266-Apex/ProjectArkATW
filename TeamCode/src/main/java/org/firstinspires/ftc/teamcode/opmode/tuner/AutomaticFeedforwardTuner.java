@@ -17,10 +17,6 @@ import org.firstinspires.ftc.teamcode.util.RegressionUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.firstinspires.ftc.teamcode.util.DriveConstants.MAX_RPM;
-import static org.firstinspires.ftc.teamcode.util.DriveConstants.RUN_USING_ENCODER;
-import static org.firstinspires.ftc.teamcode.util.DriveConstants.rpmToVelocity;
-
 /*
  * Op mode for computing kV, kStatic, and kA from various drive routines. For the curious, here's an
  * outline of the procedure:
@@ -39,7 +35,7 @@ public class AutomaticFeedforwardTuner extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        if (RUN_USING_ENCODER) {
+        if (Drive.Constants.Controller.RUN_USING_BUILT_IN_CONTROLLER) {
             RobotLog.setGlobalErrorMsg("Feedforward constants usually don't need to be tuned " +
                     "when using the built-in drive motor velocity PID.");
         }
@@ -96,7 +92,7 @@ public class AutomaticFeedforwardTuner extends LinearOpMode {
         telemetry.addLine("Running...");
         telemetry.update();
 
-        double maxVel = rpmToVelocity(MAX_RPM);
+        double maxVel = Drive.Constants.rpmToVelocity(Drive.Constants.Drivetrain.MAX_RPM);
         double finalVel = MAX_POWER * maxVel;
         double accel = (finalVel * finalVel) / (2.0 * DISTANCE);
         double rampTime = Math.sqrt(2.0 * DISTANCE / accel);

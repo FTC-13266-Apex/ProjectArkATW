@@ -17,12 +17,6 @@ import org.firstinspires.ftc.teamcode.subsystem.Drive;
 
 import java.util.List;
 
-import static org.firstinspires.ftc.teamcode.util.DriveConstants.MAX_ACCEL;
-import static org.firstinspires.ftc.teamcode.util.DriveConstants.MAX_VEL;
-import static org.firstinspires.ftc.teamcode.util.DriveConstants.MOTOR_VELO_PID;
-import static org.firstinspires.ftc.teamcode.util.DriveConstants.RUN_USING_ENCODER;
-import static org.firstinspires.ftc.teamcode.util.DriveConstants.kV;
-
 /*
  * This routine is designed to tune the PID coefficients used by the REV Expansion Hubs for closed-
  * loop velocity control. Although it may seem unnecessary, tuning these coefficients is just as
@@ -60,12 +54,12 @@ public class DriveVelocityPIDTuner extends LinearOpMode {
     private static MotionProfile generateProfile(boolean movingForward) {
         MotionState start = new MotionState(movingForward ? 0 : DISTANCE, 0, 0, 0);
         MotionState goal = new MotionState(movingForward ? DISTANCE : 0, 0, 0, 0);
-        return MotionProfileGenerator.generateSimpleMotionProfile(start, goal, MAX_VEL, MAX_ACCEL);
+        return MotionProfileGenerator.generateSimpleMotionProfile(start, goal, Drive.Constants.Controller.MAX_VEL, Drive.Constants.Controller.MAX_ACCEL);
     }
 
     @Override
     public void runOpMode() {
-        if (!RUN_USING_ENCODER) {
+        if (!Drive.Constants.Controller.RUN_USING_BUILT_IN_CONTROLLER) {
             RobotLog.setGlobalErrorMsg("%s does not need to be run if the built-in motor velocity" +
                     "PID is not in use", getClass().getSimpleName());
         }
@@ -76,12 +70,12 @@ public class DriveVelocityPIDTuner extends LinearOpMode {
 
         Mode mode = Mode.TUNING_MODE;
 
-        double lastKp = MOTOR_VELO_PID.p;
-        double lastKi = MOTOR_VELO_PID.i;
-        double lastKd = MOTOR_VELO_PID.d;
-        double lastKf = MOTOR_VELO_PID.f;
+        double lastKp = Drive.Constants.Controller.MOTOR_VELO_PID.p;
+        double lastKi = Drive.Constants.Controller.MOTOR_VELO_PID.i;
+        double lastKd = Drive.Constants.Controller.MOTOR_VELO_PID.d;
+        double lastKf = Drive.Constants.Controller.MOTOR_VELO_PID.f;
 
-        drive.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, MOTOR_VELO_PID);
+        drive.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, Drive.Constants.Controller.MOTOR_VELO_PID);
 
         NanoClock clock = NanoClock.system();
 
@@ -119,7 +113,7 @@ public class DriveVelocityPIDTuner extends LinearOpMode {
                     }
 
                     MotionState motionState = activeProfile.get(profileTime);
-                    double targetPower = kV * motionState.getV();
+                    double targetPower = Drive.Constants.Controller.kV * motionState.getV();
                     drive.setDrivePower(new Pose2d(targetPower, 0, 0));
 
                     List<Double> velocities = drive.getWheelVelocities();
@@ -154,14 +148,14 @@ public class DriveVelocityPIDTuner extends LinearOpMode {
                     break;
             }
 
-            if (lastKp != MOTOR_VELO_PID.p || lastKd != MOTOR_VELO_PID.d
-                    || lastKi != MOTOR_VELO_PID.i || lastKf != MOTOR_VELO_PID.f) {
-                drive.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, MOTOR_VELO_PID);
+            if (lastKp != Drive.Constants.Controller.MOTOR_VELO_PID.p || lastKd != Drive.Constants.Controller.MOTOR_VELO_PID.d
+                    || lastKi != Drive.Constants.Controller.MOTOR_VELO_PID.i || lastKf != Drive.Constants.Controller.MOTOR_VELO_PID.f) {
+                drive.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, Drive.Constants.Controller.MOTOR_VELO_PID);
 
-                lastKp = MOTOR_VELO_PID.p;
-                lastKi = MOTOR_VELO_PID.i;
-                lastKd = MOTOR_VELO_PID.d;
-                lastKf = MOTOR_VELO_PID.f;
+                lastKp = Drive.Constants.Controller.MOTOR_VELO_PID.p;
+                lastKi = Drive.Constants.Controller.MOTOR_VELO_PID.i;
+                lastKd = Drive.Constants.Controller.MOTOR_VELO_PID.d;
+                lastKf = Drive.Constants.Controller.MOTOR_VELO_PID.f;
             }
 
             telemetry.update();

@@ -18,7 +18,7 @@ public class TeleOpMain extends LinearOpMode {
 
         waitForStart();
         while (opModeIsActive()) {
-            drive.teleOpControlTest();
+            drive.manualControl();
             lift.teleOpCommand();
             gripper.teleOpCommand();
             telemetry.update();

@@ -14,21 +14,21 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Lift {
     public static class Constants {
-        public static Hardware hardware = new Hardware();
-        public static Controller controller = new Controller();
-        public static Position position = new Position();
-        public static Speed speed = new Speed();
+        public static Hardware hardware;
+        public static Controller controller;
+        public static Position position;
+        public static Speed speed;
 
         public static class Hardware {
-            public DcMotorSimple.Direction LEFT_DIRECTION = DcMotorSimple.Direction.FORWARD;
-            public DcMotorSimple.Direction RIGHT_DIRECTION = DcMotorSimple.Direction.REVERSE;
-            public double
+            public static DcMotorSimple.Direction LEFT_DIRECTION = DcMotorSimple.Direction.REVERSE;
+            public static DcMotorSimple.Direction RIGHT_DIRECTION = DcMotorSimple.Direction.FORWARD;
+            public static double
                     RPM = 1150,
                     CPR = 145.090909;
 
         }
         public static class Controller {
-            public double
+            public static double
                     TOLERANCE     = 8,
                     POSITION_TOLERANCE = 8,
                     KP            = 4,
@@ -37,7 +37,7 @@ public class Lift {
                     kF            = 0;
         }
         public static class Position {
-            public int
+            public static int
                     TALL = 955,
                     MIDDLE = 330,
                     LOWER = 0,
@@ -46,8 +46,8 @@ public class Lift {
                     MIN_POSITION = 0;
         }
         public static class Speed {
-            public double NORMAL        = .5;
-            public int MANUAL_MOVE_SPEED = 1;
+            public static double NORMAL        = .5;
+            public static int MANUAL_MOVE_SPEED = 1;
 
         }
     }
@@ -68,8 +68,8 @@ public class Lift {
         leftLift = hardwareMap.get(DcMotorEx.class, "leftLift");
         rightLift = hardwareMap.get(DcMotorEx.class, "rightLift");
 
-        rightLift.setDirection(hardware.RIGHT_DIRECTION);
-        leftLift.setDirection(hardware.LEFT_DIRECTION);
+        rightLift.setDirection(Hardware.RIGHT_DIRECTION);
+        leftLift.setDirection(Hardware.LEFT_DIRECTION);
 
         leftLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -87,17 +87,17 @@ public class Lift {
         this.motorPosition = position;
         leftLift.setTargetPosition(position);
         rightLift.setTargetPosition(position);
-        leftLift.setPower(speed.NORMAL);
-        rightLift.setPower(speed.NORMAL);
+        leftLift.setPower(Speed.NORMAL);
+        rightLift.setPower(Speed.NORMAL);
     }
     public void teleOpCommand() {
-        if (gamepad2.dpad_down) moveMotors(position.INITIAL);
+        if (gamepad2.dpad_down) moveMotors(Position.INITIAL);
 
-        if(gamepad2.dpad_left) moveMotors(position.LOWER);
+        if(gamepad2.dpad_left) moveMotors(Position.LOWER);
 
-        if(gamepad2.dpad_right) moveMotors(position.MIDDLE);
+        if(gamepad2.dpad_right) moveMotors(Position.MIDDLE);
 
-        else if (gamepad2.dpad_up) moveMotors(position.TALL);
+        else if (gamepad2.dpad_up) moveMotors(Position.TALL);
 
         if (gamepad2.right_stick_y < -0.3) moveMotors(motorPosition + speed.MANUAL_MOVE_SPEED);
 
