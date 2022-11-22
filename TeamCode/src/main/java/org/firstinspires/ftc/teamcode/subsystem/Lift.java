@@ -38,9 +38,9 @@ public class Lift {
         }
         public static class Position {
             public static int
-                    TALL = 955,
-                    MIDDLE = 330,
-                    LOWER = 0,
+                    TALL = 1400,
+                    MIDDLE = 1170,
+                    LOWER = 800,
                     INITIAL = 0,
                     MAX_POSITION = 1210,
                     MIN_POSITION = 0;

@@ -14,6 +14,8 @@ public class TeleOpMain extends LinearOpMode {
         Lift lift = new Lift(this);
         Gripper gripper = new Gripper(this);
         Drive drive = new Drive(this,true);
+
+        gripper.open();
         //insert iniit here
 
         waitForStart();

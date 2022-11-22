@@ -41,9 +41,16 @@ public class Gripper {
         gripper.setDirection(Servo.Direction.FORWARD);
 
     }
-    public void teleOpCommand() {
-        if (gamepad2.a) gripper.setPosition(Constants.Position.CLOSE);
+    public void open() {
+        gripper.setPosition(Constants.Position.OPEN);
 
-        if (gamepad2.b)gripper.setPosition(Constants.Position.OPEN);
+    }
+    public void close() {
+        gripper.setPosition(Constants.Position.CLOSE);
+    }
+    public void teleOpCommand() {
+        if (gamepad2.a) close();
+
+        if (gamepad2.b)open();
     }
 }
