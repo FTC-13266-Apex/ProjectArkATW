@@ -159,7 +159,7 @@ public class Drive extends MecanumDrive {
         leftFront.setDirection(DcMotorSimple.Direction.FORWARD);
         rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
         rightRear.setDirection(DcMotorSimple.Direction.REVERSE);
-        leftRear.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftRear.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // TODO: if desired, use setLocalizer() to change the localization method
         // for instance, setLocalizer(new ThreeTrackingWheelLocalizer(...));
@@ -350,8 +350,8 @@ public class Drive extends MecanumDrive {
      */
     public void driveFieldCentric(double strafeSpeed, double forwardSpeed, double turnSpeed, double gyroAngle) {
         driveRobotCentric(
-                (strafeSpeed * Math.cos(gyroAngle) - forwardSpeed * Math.sin(gyroAngle)),
                 (strafeSpeed * Math.sin(gyroAngle) + forwardSpeed * Math.cos(gyroAngle)),
+                (strafeSpeed * Math.cos(gyroAngle) - forwardSpeed * Math.sin(gyroAngle)),
                 turnSpeed);
     }
     
