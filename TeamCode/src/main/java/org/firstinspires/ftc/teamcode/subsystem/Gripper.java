@@ -37,7 +37,7 @@ public class Gripper {
         gamepad2 = opMode.gamepad2;
         hardwareMap = opMode.hardwareMap;
         telemetry = opMode.telemetry;
-        gripper = hardwareMap.get(Servo.class, gripper.toString());
+        gripper = hardwareMap.get(Servo.class, "gripper");
         gripper.setDirection(Servo.Direction.FORWARD);
 
     }
