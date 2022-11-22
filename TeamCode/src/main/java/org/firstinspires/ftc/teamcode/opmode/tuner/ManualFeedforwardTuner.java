@@ -17,6 +17,7 @@ import org.firstinspires.ftc.teamcode.subsystem.Drive;
 
 import java.util.Objects;
 
+import static org.firstinspires.ftc.teamcode.opmode.tuner.ManualFeedforwardTuner.Constants.*;
 /*
  * This routine is designed to tune the open-loop feedforward coefficients. Although it may seem unnecessary,
  * tuning these coefficients is just as important as the positional parameters. Like the other
@@ -32,10 +33,11 @@ import java.util.Objects;
  * user to reset the position of the bot in the event that it drifts off the path.
  * Pressing B/O (Xbox/PS4) will cede control back to the tuning process.
  */
-@Config
 @Autonomous(group = "drive")
 public class ManualFeedforwardTuner extends LinearOpMode {
-    public static double DISTANCE = 72; // in
+    public static class Constants {
+        public static double DISTANCE = 72; // in
+    }
 
     private FtcDashboard dashboard = FtcDashboard.getInstance();
 

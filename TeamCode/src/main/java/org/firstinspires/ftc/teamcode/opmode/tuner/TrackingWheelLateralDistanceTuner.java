@@ -10,6 +10,8 @@ import com.qualcomm.robotcore.util.RobotLog;
 import org.firstinspires.ftc.teamcode.subsystem.Drive;
 import org.firstinspires.ftc.teamcode.util.StandardTrackingWheelLocalizer;
 
+import static org.firstinspires.ftc.teamcode.opmode.tuner.TrackingWheelLateralDistanceTuner.Constants.*;
+
 /**
  * Opmode designed to assist the user in tuning the `StandardTrackingWheelLocalizer`'s
  * LATERAL_DISTANCE value. The LATERAL_DISTANCE is the center-to-center distance of the parallel
@@ -61,10 +63,11 @@ import org.firstinspires.ftc.teamcode.util.StandardTrackingWheelLocalizer;
  * slightly but your heading will still be fine. This does not affect your overall tracking
  * precision. The heading should still line up.
  */
-@Config
 @TeleOp(group = "drive")
 public class TrackingWheelLateralDistanceTuner extends LinearOpMode {
-    public static int NUM_TURNS = 10;
+    public static class Constants {
+        public static int NUM_TURNS = 10;
+    }
 
     @Override
     public void runOpMode() throws InterruptedException {

@@ -14,6 +14,7 @@ import org.firstinspires.ftc.teamcode.subsystem.Drive;
 
 import java.util.Objects;
 
+import static org.firstinspires.ftc.teamcode.opmode.tuner.MaxVelocityTuner.Constants.*;
 /**
  * This routine is designed to calculate the maximum velocity your bot can achieve under load. It
  * will also calculate the effective kF value for your velocity PID.
@@ -22,10 +23,11 @@ import java.util.Objects;
  * <p>
  * Further fine tuning of kF may be desired.
  */
-@Config
 @Autonomous(group = "drive")
 public class MaxVelocityTuner extends LinearOpMode {
-    public static double RUNTIME = 2.0;
+    public static class Constants {
+        public static double RUNTIME = 2.0;
+    }
 
     private ElapsedTime timer;
     private double maxVelocity = 0.0;

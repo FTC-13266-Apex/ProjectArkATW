@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.util.MovingStatistics;
 import org.firstinspires.ftc.robotcore.internal.system.Misc;
 import org.firstinspires.ftc.teamcode.subsystem.Drive;
 
+import static org.firstinspires.ftc.teamcode.opmode.tuner.TrackWidthTuner.Constants.*;
 /*
  * This routine determines the effective track width. The procedure works by executing a point turn
  * with a given angle and measuring the difference between that angle and the actual angle (as
@@ -21,12 +22,13 @@ import org.firstinspires.ftc.teamcode.subsystem.Drive;
  * this procedure a few times and averages the values for additional accuracy. Note: a relatively
  * accurate track width estimate is important or else the angular constraints will be thrown off.
  */
-@Config
 @Autonomous(group = "drive")
 public class TrackWidthTuner extends LinearOpMode {
-    public static double ANGLE = 180; // deg
-    public static int NUM_TRIALS = 5;
-    public static int DELAY = 1000; // ms
+    public static class Constants {
+        public static double ANGLE = 180; // deg
+        public static int NUM_TRIALS = 5;
+        public static int DELAY = 1000; // ms
+    }
 
     @Override
     public void runOpMode() throws InterruptedException {

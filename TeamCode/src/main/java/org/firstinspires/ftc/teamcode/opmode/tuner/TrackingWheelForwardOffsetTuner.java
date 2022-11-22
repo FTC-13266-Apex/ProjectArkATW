@@ -14,6 +14,7 @@ import org.firstinspires.ftc.robotcore.internal.system.Misc;
 import org.firstinspires.ftc.teamcode.subsystem.Drive;
 import org.firstinspires.ftc.teamcode.util.StandardTrackingWheelLocalizer;
 
+import static org.firstinspires.ftc.teamcode.opmode.tuner.TrackingWheelForwardOffsetTuner.Constants.*;
 /**
  * This routine determines the effective forward offset for the lateral tracking wheel.
  * The procedure executes a point turn at a given angle for a certain number of trials,
@@ -33,12 +34,13 @@ import org.firstinspires.ftc.teamcode.util.StandardTrackingWheelLocalizer;
  * for the forward offset. You can run this procedure as many times as necessary until a
  * satisfactory result is produced.
  */
-@Config
 @Autonomous(group="drive")
 public class TrackingWheelForwardOffsetTuner extends LinearOpMode {
-    public static double ANGLE = 180; // deg
-    public static int NUM_TRIALS = 5;
-    public static int DELAY = 1000; // ms
+    public static class Constants {
+        public static double ANGLE = 180; // deg
+        public static int NUM_TRIALS = 5;
+        public static int DELAY = 1000; // ms
+    }
 
     @Override
     public void runOpMode() throws InterruptedException {

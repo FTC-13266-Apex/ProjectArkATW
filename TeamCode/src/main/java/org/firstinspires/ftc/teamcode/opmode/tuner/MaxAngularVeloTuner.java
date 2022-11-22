@@ -13,6 +13,8 @@ import org.firstinspires.ftc.teamcode.subsystem.Drive;
 
 import java.util.Objects;
 
+import static org.firstinspires.ftc.teamcode.opmode.tuner.MaxAngularVeloTuner.Constants.*;
+
 /**
  * This routine is designed to calculate the maximum angular velocity your bot can achieve under load.
  * <p>
@@ -21,10 +23,11 @@ import java.util.Objects;
  * Further fine tuning of MAX_ANG_VEL may be desired.
  */
 
-@Config
 @Autonomous(group = "drive")
 public class MaxAngularVeloTuner extends LinearOpMode {
-    public static double RUNTIME = 4.0;
+    public static class Constants {
+        public static double RUNTIME = 4.0;
+    }
 
     private ElapsedTime timer;
     private double maxAngVelocity = 0.0;

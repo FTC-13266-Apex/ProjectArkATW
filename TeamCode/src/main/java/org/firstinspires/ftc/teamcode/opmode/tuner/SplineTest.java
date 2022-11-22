@@ -8,11 +8,15 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.subsystem.Drive;
 
+import static org.firstinspires.ftc.teamcode.opmode.tuner.SplineTest.Constants.*;
 /*
  * This is an example of a more complex path to really test the tuning.
  */
 @Autonomous(group = "drive")
 public class SplineTest extends LinearOpMode {
+    public static class Constants {
+        public static Vector2d END_VECTOR = new Vector2d(30, 30);
+    }
     @Override
     public void runOpMode() throws InterruptedException {
         Drive drive = new Drive(this);
@@ -22,7 +26,7 @@ public class SplineTest extends LinearOpMode {
         if (isStopRequested()) return;
 
         Trajectory traj = drive.trajectoryBuilder(new Pose2d())
-                .splineTo(new Vector2d(30, 30), 0)
+                .splineTo(END_VECTOR, 0)
                 .build();
 
         drive.followTrajectory(traj);
