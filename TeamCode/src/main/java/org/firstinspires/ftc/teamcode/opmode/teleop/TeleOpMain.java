@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.subsystem.Drive;
 import org.firstinspires.ftc.teamcode.subsystem.Gripper;
 import org.firstinspires.ftc.teamcode.subsystem.Lift;
 @TeleOp
-public class TeleOp13266 extends LinearOpMode {
+public class TeleOpMain extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {

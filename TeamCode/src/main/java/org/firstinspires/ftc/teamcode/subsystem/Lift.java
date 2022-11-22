@@ -65,8 +65,8 @@ public class Lift {
         gamepad2 = opMode.gamepad2;
         hardwareMap = opMode.hardwareMap;
         telemetry = opMode.telemetry;
-        leftLift = hardwareMap.get(DcMotorEx.class, "leftMotor");
-        rightLift = hardwareMap.get(DcMotorEx.class, "rightMotor");
+        leftLift = hardwareMap.get(DcMotorEx.class, "leftLift");
+        rightLift = hardwareMap.get(DcMotorEx.class, "rightLift");
 
         rightLift.setDirection(hardware.RIGHT_DIRECTION);
         leftLift.setDirection(hardware.LEFT_DIRECTION);
