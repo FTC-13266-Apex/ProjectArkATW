@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.subsystem.Drive;
 public class SplineTest extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        Drive drive = new Drive(hardwareMap);
+        Drive drive = new Drive(this);
 
         waitForStart();
 

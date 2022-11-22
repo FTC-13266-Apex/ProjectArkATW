@@ -8,20 +8,20 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import static org.firstinspires.ftc.teamcode.subsystem.Lift.LiftConstants.*;
+import static org.firstinspires.ftc.teamcode.subsystem.Lift.Constants.*;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Lift {
-    public static class LiftConstants {
+    public static class Constants {
         public static Hardware hardware = new Hardware();
         public static Controller controller = new Controller();
         public static Position position = new Position();
         public static Speed speed = new Speed();
 
         public static class Hardware {
-            public boolean Left_REVERSED = true;
-            public boolean RIGHT_REVERSED = false;
+            public DcMotorSimple.Direction LEFT_DIRECTION = DcMotorSimple.Direction.FORWARD;
+            public DcMotorSimple.Direction RIGHT_DIRECTION = DcMotorSimple.Direction.REVERSE;
             public double
                     RPM = 1150,
                     CPR = 145.090909;
@@ -68,8 +68,8 @@ public class Lift {
         leftLift = hardwareMap.get(DcMotorEx.class, "leftMotor");
         rightLift = hardwareMap.get(DcMotorEx.class, "rightMotor");
 
-        rightLift.setDirection(DcMotorSimple.Direction.REVERSE);
-        leftLift.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightLift.setDirection(hardware.RIGHT_DIRECTION);
+        leftLift.setDirection(hardware.LEFT_DIRECTION);
 
         leftLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

@@ -7,8 +7,8 @@ import org.firstinspires.ftc.teamcode.subsystem.Lift;
 
 @Config
 public class Constants {
-    Lift.LiftConstants liftConstants;
-    DriveConstants driveConstants;
-    Drive drive;
+    public static Lift.Constants lift;
+    public static   DriveConstants driveConstants;
+    public static  Drive drive;
 
 }

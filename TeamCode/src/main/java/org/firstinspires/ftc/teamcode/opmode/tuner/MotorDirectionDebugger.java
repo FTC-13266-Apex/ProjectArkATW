@@ -48,7 +48,7 @@ public class MotorDirectionDebugger extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        Drive drive = new Drive(hardwareMap);
+        Drive drive = new Drive(this);
 
         telemetry.addLine("Press play to begin the debugging opmode");
         telemetry.update();
