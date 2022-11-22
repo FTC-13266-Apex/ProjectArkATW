@@ -371,27 +371,27 @@ public class Drive extends MecanumDrive {
         double turnSpeed;
 
         if (DriveConstants.fineControl) {
-            strafeSpeed = squareInput(gamepad1.left_stick_x) * 1.1;
+            strafeSpeed = squareInput(gamepad1.left_stick_x);
             forwardSpeed = squareInput(-gamepad1.left_stick_y);
             turnSpeed = squareInput(gamepad1.right_stick_x);
         } else {
-            strafeSpeed = gamepad1.left_stick_x * 1.1;
+            strafeSpeed = gamepad1.left_stick_x;
             forwardSpeed = -gamepad1.left_stick_y;
             turnSpeed = gamepad1.right_stick_x;
         }
 
         if (gamepad1.left_bumper) {
-            Drive.VX_WEIGHT = 0.3;
+            Drive.VX_WEIGHT = 0.3 * 1.1;
             Drive.VY_WEIGHT = 0.3;
             Drive.OMEGA_WEIGHT = 0.3;
         }
         else if (gamepad1.right_bumper) {
-            Drive.VX_WEIGHT = 1;
+            Drive.VX_WEIGHT = 1 * 1.1;
             Drive.VY_WEIGHT = 1;
             Drive.OMEGA_WEIGHT = 1;
         }
         else {
-            Drive.VX_WEIGHT = 0.6;
+            Drive.VX_WEIGHT = 0.6 * 1.1;
             Drive.VY_WEIGHT = 0.6;
             Drive.OMEGA_WEIGHT = 0.6;
         }
