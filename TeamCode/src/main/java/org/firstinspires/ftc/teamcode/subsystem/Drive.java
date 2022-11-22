@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.subsystem;
 
 import androidx.annotation.NonNull;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.drive.DriveSignal;
 import com.acmerobotics.roadrunner.drive.MecanumDrive;
@@ -336,9 +335,71 @@ public class Drive extends MecanumDrive {
         return new ProfileAccelerationConstraint(maxAccel);
     }
 
-//    public void teleOpCommand(){
-//        if (Constants.driveConstants.) driveFieldCentric(x, y, rotate, Math.toDegrees(getRawExternalHeading()));
-//        else driveRobotCentric(x, y, rotate, fineControl);
-//
-//    }
+    /**
+     * Square magnitude of number while keeping the sign.
+     */
+    private double squareInput(double input) {
+        return input * Math.abs(input);
+    }
+
+    /**
+     *
+     *
+     * @param gyroAngle angle the bot is currently facing relative to start (radians)
+     */
+    public void driveFieldCentric(double strafeSpeed, double forwardSpeed, double turnSpeed, double gyroAngle) {
+        driveRobotCentric(
+                (strafeSpeed * Math.cos(gyroAngle) - forwardSpeed * Math.sin(gyroAngle)),
+                (strafeSpeed * Math.sin(gyroAngle) + forwardSpeed * Math.cos(gyroAngle)),
+                turnSpeed);
+    }
+    
+    private void driveRobotCentric(double strafeSpeed, double forwardSpeed, double turnSpeed) {
+        setWeightedDrivePower(
+                new Pose2d(
+                        forwardSpeed,
+                        -strafeSpeed,
+                        -turnSpeed
+                )
+        );
+    }
+
+    public void manualControl() {
+        double strafeSpeed;
+        double forwardSpeed;
+        double turnSpeed;
+
+        if (Constants.driveConstants.fineControl) {
+            strafeSpeed = squareInput(gamepad1.left_stick_x) * 1.1;
+            forwardSpeed = squareInput(-gamepad1.left_stick_y);
+            turnSpeed = squareInput(gamepad1.right_stick_x);
+        } else {
+            strafeSpeed = gamepad1.left_stick_x * 1.1;
+            forwardSpeed = -gamepad1.left_stick_y;
+            turnSpeed = gamepad1.right_stick_x;
+        }
+
+        if (gamepad1.left_bumper) {
+            Drive.VX_WEIGHT = 0.3;
+            Drive.VY_WEIGHT = 0.3;
+            Drive.OMEGA_WEIGHT = 0.3;
+        }
+        else if (gamepad1.right_bumper) {
+            Drive.VX_WEIGHT = 1;
+            Drive.VY_WEIGHT = 1;
+            Drive.OMEGA_WEIGHT = 1;
+        }
+        else {
+            Drive.VX_WEIGHT = 0.6;
+            Drive.VY_WEIGHT = 0.6;
+            Drive.OMEGA_WEIGHT = 0.6;
+        }
+
+
+        if (Constants.driveConstants.isFieldCentric)
+            driveFieldCentric(strafeSpeed, forwardSpeed, turnSpeed, -getRawExternalHeading());
+        else
+            driveRobotCentric(strafeSpeed, forwardSpeed, turnSpeed);
+
+    }
 }
