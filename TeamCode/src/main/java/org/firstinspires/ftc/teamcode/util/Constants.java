@@ -9,5 +9,4 @@ import org.firstinspires.ftc.teamcode.subsystem.Lift;
 public class Constants {
     public static Lift.Constants lift;
     public static Drive drive;
-
 }
