@@ -33,6 +33,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceRunner;
 import org.firstinspires.ftc.teamcode.util.Constants;
+import org.firstinspires.ftc.teamcode.util.DriveConstants;
 import org.firstinspires.ftc.teamcode.util.LynxModuleUtil;
 import org.firstinspires.ftc.teamcode.util.StandardTrackingWheelLocalizer;
 
@@ -369,7 +370,7 @@ public class Drive extends MecanumDrive {
         double forwardSpeed;
         double turnSpeed;
 
-        if (Constants.driveConstants.fineControl) {
+        if (DriveConstants.fineControl) {
             strafeSpeed = squareInput(gamepad1.left_stick_x) * 1.1;
             forwardSpeed = squareInput(-gamepad1.left_stick_y);
             turnSpeed = squareInput(gamepad1.right_stick_x);
@@ -396,7 +397,7 @@ public class Drive extends MecanumDrive {
         }
 
 
-        if (Constants.driveConstants.isFieldCentric)
+        if (DriveConstants.isFieldCentric)
             driveFieldCentric(strafeSpeed, forwardSpeed, turnSpeed, -getRawExternalHeading());
         else
             driveRobotCentric(strafeSpeed, forwardSpeed, turnSpeed);

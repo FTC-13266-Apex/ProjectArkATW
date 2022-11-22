@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.util;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 /*
@@ -14,9 +15,10 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
  * and op modes themselves.
  */
 
+@Config
 public class DriveConstants {
-    public boolean isFieldCentric = false;
-    public boolean fineControl = false;
+    public static boolean isFieldCentric = false;
+    public static boolean fineControl = false;
 
     /*
      * These are motor constants that should be listed online for your motors.
