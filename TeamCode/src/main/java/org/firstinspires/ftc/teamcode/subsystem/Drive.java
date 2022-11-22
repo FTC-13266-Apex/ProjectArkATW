@@ -185,8 +185,6 @@ public class Drive extends MecanumDrive {
             public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(8, 0, 0);
             public static PIDCoefficients HEADING_PID = new PIDCoefficients(8, 0, 0);
 
-            public static double LATERAL_MULTIPLIER = 1; // this is used for odometry things
-
             public static Pose2d ADMISSIBLE_ERROR = new Pose2d(0.5, 0.5, Math.toRadians(5.0));
             public static double TIMEOUT = 0.5;
         }
