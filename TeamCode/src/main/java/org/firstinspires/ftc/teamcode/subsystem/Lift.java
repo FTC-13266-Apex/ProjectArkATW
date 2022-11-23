@@ -90,6 +90,14 @@ public class Lift {
         leftLift.setPower(Speed.NORMAL);
         rightLift.setPower(Speed.NORMAL);
     }
+
+    public void moveInitial() {
+        moveMotors(Position.INITIAL);
+    }
+
+    public void moveHigh() {
+        moveMotors(Position.TALL);
+    }
     public void teleOpCommand() {
         if (gamepad2.dpad_down) moveMotors(Position.INITIAL);
 
