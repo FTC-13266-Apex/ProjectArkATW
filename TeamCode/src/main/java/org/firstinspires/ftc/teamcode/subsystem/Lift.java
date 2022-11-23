@@ -6,13 +6,11 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import static org.firstinspires.ftc.teamcode.subsystem.Lift.Constants.*;
+import com.qualcomm.robotcore.hardware.MotorControlAlgorithm;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
+import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-
-public class Lift {
+public class Lift extends BaseSubsystem {
     public static class Constants {
         public static Hardware hardware;
         public static Controller controller;
@@ -29,12 +27,11 @@ public class Lift {
         }
         public static class Controller {
             public static double
-                    TOLERANCE     = 8,
-                    POSITION_TOLERANCE = 8,
-                    KP            = 4,
-                    kI            = 0,
-                    kD            = 0,
-                    kF            = 0;
+                    P = 4,
+                    I = 0,
+                    D = 0,
+                    F = 0;
+            public static int TOLERANCE = 8;
         }
         public static class Position {
             public static int
@@ -42,6 +39,7 @@ public class Lift {
                     MIDDLE = 1170,
                     LOWER = 800,
                     INITIAL = 0,
+                    FLIPPED_CONE = 1170,
                     MAX_POSITION = 1210,
                     MIN_POSITION = 0;
         }
@@ -51,25 +49,24 @@ public class Lift {
 
         }
     }
-    private DcMotorEx leftLift;
-    private  DcMotorEx rightLift;
+    private final DcMotorEx leftLift;
+    private final DcMotorEx rightLift;
     private int motorPosition;
-    private final  HardwareMap hardwareMap;
-    private final Gamepad gamepad2;
-    private final Telemetry telemetry;
 
 
 
 
     public Lift(@NonNull OpMode opMode) {
-        gamepad2 = opMode.gamepad2;
-        hardwareMap = opMode.hardwareMap;
-        telemetry = opMode.telemetry;
-        leftLift = hardwareMap.get(DcMotorEx.class, "leftLift");
-        rightLift = hardwareMap.get(DcMotorEx.class, "rightLift");
+        super(opMode);
+        leftLift = opMode.hardwareMap.get(DcMotorEx.class, "leftLift");
+        rightLift = opMode.hardwareMap.get(DcMotorEx.class, "rightLift");
 
-        rightLift.setDirection(Hardware.RIGHT_DIRECTION);
-        leftLift.setDirection(Hardware.LEFT_DIRECTION);
+        rightLift.setDirection(Constants.Hardware.RIGHT_DIRECTION);
+        leftLift.setDirection(Constants.Hardware.LEFT_DIRECTION);
+
+        // TODO: Find out what these constants are by default
+//        leftLift.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION, new PIDFCoefficients(Constants.Controller.P, Constants.Controller.I, Constants.Controller.D, Constants.Controller.F));
+//        leftLift.setTargetPositionTolerance(Constants.Controller.TOLERANCE);
 
         leftLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -82,37 +79,58 @@ public class Lift {
 
         leftLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+
     }
-    public void moveMotors(int position){
+
+    @Override
+    protected void manualControl() {
+        if (opMode.gamepad2.dpad_down) moveInitial();
+        else if(opMode.gamepad2.dpad_left) moveLow();
+        else if(opMode.gamepad2.dpad_right) moveMid();
+        else if (opMode.gamepad2.dpad_up) moveHigh();
+
+        if (opMode.gamepad2.right_stick_y < -0.3) moveMotors(motorPosition + Constants.Speed.MANUAL_MOVE_SPEED);
+        else if (opMode.gamepad2.right_stick_y > 0.3) moveMotors(motorPosition - Constants.Speed.MANUAL_MOVE_SPEED);
+
+        opMode.telemetry.addData("Slide position", motorPosition);
+        opMode.telemetry.addData("Slide P", leftLift.getPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION).p);
+        opMode.telemetry.addData("Slide I", leftLift.getPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION).i);
+        opMode.telemetry.addData("Slide D", leftLift.getPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION).d);
+        opMode.telemetry.addData("Slide F", leftLift.getPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION).f);
+        opMode.telemetry.addData("Slide Tolerance", leftLift.getTargetPositionTolerance());
+    }
+
+    public void moveMotors(int position) {
+        if (position > Constants.Position.MAX_POSITION || position < Constants.Position.MIN_POSITION) return;
+
         this.motorPosition = position;
+
         leftLift.setTargetPosition(position);
         rightLift.setTargetPosition(position);
-        leftLift.setPower(Speed.NORMAL);
-        rightLift.setPower(Speed.NORMAL);
+
+        leftLift.setPower(Constants.Speed.NORMAL);
+        rightLift.setPower(Constants.Speed.NORMAL);
     }
 
     public void moveInitial() {
-        moveMotors(Position.INITIAL);
+        moveMotors(Constants.Position.INITIAL);
     }
 
     public void moveHigh() {
-        moveMotors(Position.TALL);
-    }
-    public void teleOpCommand() {
-        if (gamepad2.dpad_down) moveMotors(Position.INITIAL);
-
-        if(gamepad2.dpad_left) moveMotors(Position.LOWER);
-
-        if(gamepad2.dpad_right) moveMotors(Position.MIDDLE);
-
-        else if (gamepad2.dpad_up) moveMotors(Position.TALL);
-
-        if (gamepad2.right_stick_y < -0.3) moveMotors(motorPosition + speed.MANUAL_MOVE_SPEED);
-
-        if (gamepad2.right_stick_y > 0.3) moveMotors(motorPosition - speed.MANUAL_MOVE_SPEED);
-
-        telemetry.addData("slide position", motorPosition);
-
+        moveMotors(Constants.Position.TALL);
     }
 
+    public void moveMid() {
+        moveMotors(Constants.Position.MIDDLE);
+    }
+
+    public void moveLow() {
+        moveMotors(Constants.Position.LOWER);
+    }
+
+    public void moveToPickUpFlippedCone() {
+        moveMotors(Constants.Position.FLIPPED_CONE);
+    }
 }
