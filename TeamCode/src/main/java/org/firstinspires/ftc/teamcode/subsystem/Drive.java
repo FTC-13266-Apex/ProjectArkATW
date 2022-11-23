@@ -32,8 +32,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceRunner;
-//import org.firstinspires.ftc.teamcode.util.Constants;
-//import org.firstinspires.ftc.teamcode.util.DriveConstants;
 import org.firstinspires.ftc.teamcode.util.LynxModuleUtil;
 import org.firstinspires.ftc.teamcode.util.StandardTrackingWheelLocalizer;
 
@@ -91,22 +89,13 @@ public class Drive extends MecanumDrive {
 
             public static Speed speed;
             public static class Speed {
-                private final static double VX_MULTIPLIER = 1.1;
+                public static double VX_MULTIPLIER = 1.1;
+                public static double VY_MULTIPLIER = 1;
+                public static double OMEGA_MULTIPLIER = 1;
 
-                private static final double NORMAL_SPEED = 0.6;
-                public static double NORMAL_VX_WEIGHT = NORMAL_SPEED * VX_MULTIPLIER;
-                public static double NORMAL_VY_WEIGHT = NORMAL_SPEED;
-                public static double NORMAL_OMEGA_WEIGHT = NORMAL_SPEED;
-
-                private static final double FAST_SPEED = 1;
-                public static double FAST_VX_WEIGHT = FAST_SPEED * VX_MULTIPLIER;
-                public static double FAST_VY_WEIGHT = FAST_SPEED;
-                public static double FAST_OMEGA_WEIGHT = FAST_SPEED;
-
-                private static final double SLOW_SPEED = 0.3;
-                public static double SLOW_VX_WEIGHT = SLOW_SPEED * VX_MULTIPLIER;
-                public static double SLOW_VY_WEIGHT = SLOW_SPEED;
-                public static double SLOW_OMEGA_WEIGHT = SLOW_SPEED;
+                public static final double NORMAL_WEIGHT = 0.6;
+                public static final double FAST_WEIGHT = 1;
+                public static final double SLOW_WEIGHT = 0.3;
             }
             public static Direction direction;
             public static class Direction {
@@ -174,10 +163,10 @@ public class Drive extends MecanumDrive {
              * You are free to raise this on your own if you would like. It is best determined through experimentation.
              * </p>
              */
-            public static double MAX_VEL       = 30;
-            public static double MAX_ACCEL     = 30; // 70 is prob about as high as this can be
-            public static double MAX_ANG_VEL   = Math.toRadians(180);
-            public static double MAX_ANG_ACCEL = Math.toRadians(180);
+            public static double MAX_VEL       = 30; // 85% of the max for this drive would be 52
+            public static double MAX_ACCEL     = 30; // 60 is about as high as this should be
+            public static double MAX_ANG_VEL   = Math.toRadians(180); // 242 is about 85% of what it could do
+            public static double MAX_ANG_ACCEL = Math.toRadians(180); // do maybe 242 also idk
         }
 
         public static Follower follower;
@@ -525,19 +514,19 @@ public class Drive extends MecanumDrive {
         }
 
         if (gamepad1.left_bumper) {
-            VX_WEIGHT = Drivetrain.Speed.SLOW_VX_WEIGHT;
-            VY_WEIGHT = Drivetrain.Speed.SLOW_VY_WEIGHT;
-            OMEGA_WEIGHT = Drivetrain.Speed.SLOW_OMEGA_WEIGHT;
+            VX_WEIGHT = Drivetrain.Speed.SLOW_WEIGHT * Drivetrain.Speed.VX_MULTIPLIER;
+            VY_WEIGHT = Drivetrain.Speed.SLOW_WEIGHT * Drivetrain.Speed.VY_MULTIPLIER;
+            OMEGA_WEIGHT = Drivetrain.Speed.SLOW_WEIGHT * Drivetrain.Speed.OMEGA_MULTIPLIER;
         }
         else if (gamepad1.right_bumper) {
-            VX_WEIGHT = Drivetrain.Speed.FAST_VX_WEIGHT;
-            VY_WEIGHT = Drivetrain.Speed.FAST_VY_WEIGHT;
-            OMEGA_WEIGHT = Drivetrain.Speed.FAST_OMEGA_WEIGHT;
+            VX_WEIGHT = Drivetrain.Speed.FAST_WEIGHT * Drivetrain.Speed.VX_MULTIPLIER;
+            VY_WEIGHT = Drivetrain.Speed.FAST_WEIGHT * Drivetrain.Speed.VY_MULTIPLIER;
+            OMEGA_WEIGHT = Drivetrain.Speed.FAST_WEIGHT * Drivetrain.Speed.OMEGA_MULTIPLIER;
         }
         else {
-            VX_WEIGHT = Drivetrain.Speed.NORMAL_VX_WEIGHT;
-            VY_WEIGHT = Drivetrain.Speed.NORMAL_VY_WEIGHT;
-            OMEGA_WEIGHT = Drivetrain.Speed.NORMAL_OMEGA_WEIGHT;
+            VX_WEIGHT = Drivetrain.Speed.NORMAL_WEIGHT * Drivetrain.Speed.VX_MULTIPLIER;
+            VY_WEIGHT = Drivetrain.Speed.NORMAL_WEIGHT * Drivetrain.Speed.VY_MULTIPLIER;
+            OMEGA_WEIGHT = Drivetrain.Speed.NORMAL_WEIGHT * Drivetrain.Speed.OMEGA_MULTIPLIER;
         }
 
 
