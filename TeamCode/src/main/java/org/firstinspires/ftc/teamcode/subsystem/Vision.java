@@ -5,6 +5,10 @@ import androidx.annotation.NonNull;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 public class Vision extends BaseSubsystem {
+    public static class Constants {
+
+    }
+
     public Vision(@NonNull OpMode opmode) {
         super(opmode);
     }

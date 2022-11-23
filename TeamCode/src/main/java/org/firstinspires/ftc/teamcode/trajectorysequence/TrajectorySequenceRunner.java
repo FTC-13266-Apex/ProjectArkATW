@@ -29,15 +29,18 @@ import java.util.List;
 
 @Config
 public class TrajectorySequenceRunner {
-    public static String COLOR_INACTIVE_TRAJECTORY = "#4caf507a";
-    public static String COLOR_INACTIVE_TURN = "#7c4dff7a";
-    public static String COLOR_INACTIVE_WAIT = "#dd2c007a";
+    public static class Constants {
+        public static String COLOR_INACTIVE_TRAJECTORY = "#4caf507a";
+        public static String COLOR_INACTIVE_TURN = "#7c4dff7a";
+        public static String COLOR_INACTIVE_WAIT = "#dd2c007a";
 
-    public static String COLOR_ACTIVE_TRAJECTORY = "#4CAF50";
-    public static String COLOR_ACTIVE_TURN = "#7c4dff";
-    public static String COLOR_ACTIVE_WAIT = "#dd2c00";
+        public static String COLOR_ACTIVE_TRAJECTORY = "#4CAF50";
+        public static String COLOR_ACTIVE_TURN = "#7c4dff";
+        public static String COLOR_ACTIVE_WAIT = "#dd2c00";
 
-    public static int POSE_HISTORY_LIMIT = 100;
+        public static int POSE_HISTORY_LIMIT = 100;
+    }
+
 
     private final TrajectoryFollower follower;
 
@@ -180,7 +183,7 @@ public class TrajectorySequenceRunner {
 
         poseHistory.add(poseEstimate);
 
-        if (POSE_HISTORY_LIMIT > -1 && poseHistory.size() > POSE_HISTORY_LIMIT) {
+        if (Constants.POSE_HISTORY_LIMIT > -1 && poseHistory.size() > Constants.POSE_HISTORY_LIMIT) {
             poseHistory.removeFirst();
         }
 
@@ -210,19 +213,19 @@ public class TrajectorySequenceRunner {
 
                 if (segment instanceof TrajectorySegment) {
                     fieldOverlay.setStrokeWidth(1);
-                    fieldOverlay.setStroke(COLOR_INACTIVE_TRAJECTORY);
+                    fieldOverlay.setStroke(Constants.COLOR_INACTIVE_TRAJECTORY);
 
                     DashboardUtil.drawSampledPath(fieldOverlay, ((TrajectorySegment) segment).getTrajectory().getPath());
                 } else if (segment instanceof TurnSegment) {
                     Pose2d pose = segment.getStartPose();
 
-                    fieldOverlay.setFill(COLOR_INACTIVE_TURN);
+                    fieldOverlay.setFill(Constants.COLOR_INACTIVE_TURN);
                     fieldOverlay.fillCircle(pose.getX(), pose.getY(), 2);
                 } else if (segment instanceof WaitSegment) {
                     Pose2d pose = segment.getStartPose();
 
                     fieldOverlay.setStrokeWidth(1);
-                    fieldOverlay.setStroke(COLOR_INACTIVE_WAIT);
+                    fieldOverlay.setStroke(Constants.COLOR_INACTIVE_WAIT);
                     fieldOverlay.strokeCircle(pose.getX(), pose.getY(), 3);
                 }
             }
@@ -233,19 +236,19 @@ public class TrajectorySequenceRunner {
                 Trajectory currentTrajectory = ((TrajectorySegment) currentSegment).getTrajectory();
 
                 fieldOverlay.setStrokeWidth(1);
-                fieldOverlay.setStroke(COLOR_ACTIVE_TRAJECTORY);
+                fieldOverlay.setStroke(Constants.COLOR_ACTIVE_TRAJECTORY);
 
                 DashboardUtil.drawSampledPath(fieldOverlay, currentTrajectory.getPath());
             } else if (currentSegment instanceof TurnSegment) {
                 Pose2d pose = currentSegment.getStartPose();
 
-                fieldOverlay.setFill(COLOR_ACTIVE_TURN);
+                fieldOverlay.setFill(Constants.COLOR_ACTIVE_TURN);
                 fieldOverlay.fillCircle(pose.getX(), pose.getY(), 3);
             } else if (currentSegment instanceof WaitSegment) {
                 Pose2d pose = currentSegment.getStartPose();
 
                 fieldOverlay.setStrokeWidth(1);
-                fieldOverlay.setStroke(COLOR_ACTIVE_WAIT);
+                fieldOverlay.setStroke(Constants.COLOR_ACTIVE_WAIT);
                 fieldOverlay.strokeCircle(pose.getX(), pose.getY(), 3);
             }
         }
