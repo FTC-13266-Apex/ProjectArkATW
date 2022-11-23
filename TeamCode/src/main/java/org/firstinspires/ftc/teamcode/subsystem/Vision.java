@@ -1,4 +1,16 @@
 package org.firstinspires.ftc.teamcode.subsystem;
 
-public class Vision {
+import androidx.annotation.NonNull;
+
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+
+public class Vision extends BaseSubsystem {
+    public Vision(@NonNull OpMode opmode) {
+        super(opmode);
+    }
+
+    @Override
+    protected void manualControl() {
+
+    }
 }
