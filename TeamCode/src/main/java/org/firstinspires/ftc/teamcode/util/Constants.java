@@ -31,6 +31,7 @@ public class Constants {
     public static Vision.Constants vision;
     public static ConeFlipper.Constants coneFlipper;
     public static RoadRunnerConfiguration drive;
+    public static Tuners tuners;
 
 
 
@@ -38,25 +39,24 @@ public class Constants {
     public static class RoadRunnerConfiguration {
         public static Drive.Constants drivetrain;
         public static StandardTrackingWheelLocalizer.Constants deadWheels;
-        public static Tuners tuners;
         public static TrajectorySequenceRunner.Constants trajectorySequenceRunner;
+    }
 
-        public static class Tuners {
-            AutomaticFeedforwardTuner.Constants automaticFeedforwardTuner;
-            BackAndForth.Constants backAndForth;
-            DriveVelocityPIDTuner.Constants driveVelocityPIDTuner;
-            ManualFeedforwardTuner.Constants manualFeedforwardTuner;
-            MaxAngularVeloTuner.Constants maxAngularVeloTuner;
-            MaxVelocityTuner.Constants maxVelocityTuner;
-            MotorDirectionDebugger.Constants motorDirectionDebugger;
-            SplineTest.Constants splineTest;
-            StrafeTest.Constants strafeTest;
-            StraightTest.Constants straightTest;
-            TrackingWheelForwardOffsetTuner.Constants trackingWheelForwardOffsetTuner;
-            TrackingWheelLateralDistanceTuner.Constants trackingWheelLateralDistanceTuner;
-            TrackWidthTuner.Constants trackWidthTuner;
-            TurnTest.Constants turnTest;
-            ServoPositionTuner.Constants servoPositionTuner;
-        }
+    public static class Tuners {
+        AutomaticFeedforwardTuner.Constants automaticFeedforwardTuner;
+        BackAndForth.Constants backAndForth;
+        DriveVelocityPIDTuner.Constants driveVelocityPIDTuner;
+        ManualFeedforwardTuner.Constants manualFeedforwardTuner;
+        MaxAngularVeloTuner.Constants maxAngularVeloTuner;
+        MaxVelocityTuner.Constants maxVelocityTuner;
+        MotorDirectionDebugger.Constants motorDirectionDebugger;
+        SplineTest.Constants splineTest;
+        StrafeTest.Constants strafeTest;
+        StraightTest.Constants straightTest;
+        TrackingWheelForwardOffsetTuner.Constants trackingWheelForwardOffsetTuner;
+        TrackingWheelLateralDistanceTuner.Constants trackingWheelLateralDistanceTuner;
+        TrackWidthTuner.Constants trackWidthTuner;
+        TurnTest.Constants turnTest;
+        ServoPositionTuner.Constants servoPositionTuner;
     }
 }
