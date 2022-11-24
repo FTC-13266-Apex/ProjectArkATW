@@ -39,7 +39,7 @@ public class Lift extends BaseSubsystem {
                     MIDDLE = 1170,
                     LOWER = 800,
                     INITIAL = 0,
-                    FLIPPED_CONE = 1170,
+                    FLIPPED_CONE = 280,
                     MAX_POSITION = 1210,
                     MIN_POSITION = 0;
         }
