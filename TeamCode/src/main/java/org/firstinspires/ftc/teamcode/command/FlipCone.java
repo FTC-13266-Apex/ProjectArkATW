@@ -10,8 +10,9 @@ import org.firstinspires.ftc.teamcode.subsystem.Lift;
 public class FlipCone {
     private enum FlipState {
         INITIAL, // lift is at wtv and coneflipper is reset
-        GET_CONE, // lift is at coneflip position gripper open and coneflipper is down
+        LIFT_CONE, // lift is at coneflip position gripper open and coneflipper is down
         FEED_CONE, // cone flipper moves up
+        GRAB_CONE,
         RETURN // Move back to initial state
 
     }
@@ -41,16 +42,20 @@ public class FlipCone {
                 coneFlipper.getCone();
                 gripper.open();
                 lift.moveToPickUpFlippedCone();
-                flipState = FlipState.GET_CONE;
+                flipState = FlipState.LIFT_CONE;
                 break;
-            case GET_CONE:
+            case LIFT_CONE:
                 if (gamepad2.y) break; // wait till y is let go
                 coneFlipper.lift();
-                coneFlipper.feedCone();
                 waitTimer.reset();
                 flipState = FlipState.FEED_CONE;
                 break;
             case FEED_CONE:
+                if (!(waitTimer.seconds() > 0.5)) break; // wait till its been 0.5 second
+                coneFlipper.feedCone();
+                flipState = FlipState.GRAB_CONE;
+                break;
+            case GRAB_CONE:
                 if (!(waitTimer.seconds() > 0.5)) break; // wait till its been 0.5 second
                 gripper.close();
                 lift.moveMid();
