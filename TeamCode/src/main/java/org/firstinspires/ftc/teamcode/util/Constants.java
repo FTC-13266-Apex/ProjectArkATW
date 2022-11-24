@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.opmode.tuner.ManualFeedforwardTuner;
 import org.firstinspires.ftc.teamcode.opmode.tuner.MaxAngularVeloTuner;
 import org.firstinspires.ftc.teamcode.opmode.tuner.MaxVelocityTuner;
 import org.firstinspires.ftc.teamcode.opmode.tuner.MotorDirectionDebugger;
+import org.firstinspires.ftc.teamcode.opmode.tuner.ServoPositionTuner;
 import org.firstinspires.ftc.teamcode.opmode.tuner.SplineTest;
 import org.firstinspires.ftc.teamcode.opmode.tuner.StrafeTest;
 import org.firstinspires.ftc.teamcode.opmode.tuner.StraightTest;
@@ -55,6 +56,7 @@ public class Constants {
             TrackingWheelLateralDistanceTuner.Constants trackingWheelLateralDistanceTuner;
             TrackWidthTuner.Constants trackWidthTuner;
             TurnTest.Constants turnTest;
+            ServoPositionTuner.Constants servoPositionTuner;
         }
     }
 }
