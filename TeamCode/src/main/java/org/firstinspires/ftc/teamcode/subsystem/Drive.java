@@ -163,10 +163,10 @@ public class Drive extends MecanumDrive {
              * You are free to raise this on your own if you would like. It is best determined through experimentation.
              * </p>
              */
-            public static double MAX_VEL       = 30; // 85% of the max for this drive would be 52
-            public static double MAX_ACCEL     = 30; // 60 is about as high as this should be
-            public static double MAX_ANG_VEL   = Math.toRadians(180); // 242 is about 85% of what it could do
-            public static double MAX_ANG_ACCEL = Math.toRadians(180); // do maybe 242 also idk
+            public static double MAX_VEL       = 40; // 85% of the max for this drive would be 52
+            public static double MAX_ACCEL     = 40; // 60 is about as high as this should be
+            public static double MAX_ANG_VEL   = Math.toRadians(186); // 242 is about 85% of what it could do
+            public static double MAX_ANG_ACCEL = Math.toRadians(186); // do maybe 242 also idk
         }
 
         public static Follower follower;
