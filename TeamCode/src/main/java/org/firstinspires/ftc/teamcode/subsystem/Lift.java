@@ -35,16 +35,16 @@ public class Lift extends BaseSubsystem {
         }
         public static class Position {
             public static int
-                    TALL = 1400,
-                    MIDDLE = 1170,
-                    LOWER = 800,
-                    INITIAL = 0,
-                    FLIPPED_CONE = 280,
-                    MAX_POSITION = 1210,
-                    MIN_POSITION = 0;
+                    TALL = 1870,
+                    MIDDLE = 1425,
+                    LOWER = 900,
+                    INITIAL = -70,
+                    FLIPPED_CONE = 330,
+                    MAX_POSITION = 1990,
+                    MIN_POSITION = -70;
         }
         public static class Speed {
-            public static double NORMAL        = .5;
+            public static double NORMAL        = 1;
             public static int MANUAL_MOVE_SPEED = 1;
 
         }

@@ -18,8 +18,9 @@ public class Gripper extends BaseSubsystem {
 
         private static class Position {
             public static double
-                    OPEN = .5,
-                    CLOSE = .7;
+                    OPEN = .51,
+                    CLOSE = .65;
+
 
         }
     }

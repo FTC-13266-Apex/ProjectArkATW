@@ -11,8 +11,8 @@ public class ConeFlipper extends BaseSubsystem {
         public static Position position;
         private static class Hardware{
 
-            public static Servo.Direction BOTTOM_DIRECTION = Servo.Direction.FORWARD;
-            public static Servo.Direction TOP_DIRECTION = Servo.Direction.FORWARD;
+            public static Servo.Direction BOTTOM_DIRECTION = Servo.Direction.REVERSE;
+            public static Servo.Direction TOP_DIRECTION = Servo.Direction.REVERSE;
 
         }
         private static class Position {

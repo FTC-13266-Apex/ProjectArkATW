@@ -51,19 +51,19 @@ public class FlipCone {
                 flipState = FlipState.FEED_CONE;
                 break;
             case FEED_CONE:
-                if (!(waitTimer.seconds() > 0.5)) break; // wait till its been 0.5 second
+                if (!(waitTimer.seconds() > 1.5)) break; // wait till its been 0.5 second
                 coneFlipper.feedCone();
                 flipState = FlipState.GRAB_CONE;
                 break;
             case GRAB_CONE:
-                if (!(waitTimer.seconds() > 0.5)) break; // wait till its been 0.5 second
+                if (!(waitTimer.seconds() > 2)) break; // wait till its been 0.5 second
                 gripper.close();
                 lift.moveMid();
                 waitTimer.reset();
                 flipState = FlipState.RETURN;
                 break;
             case RETURN:
-                if (!(waitTimer.seconds() > 0.5)) break; // wait till its been 0.5 second
+                if (!(waitTimer.seconds() > 2)) break; // wait till its been 0.5 second
                 coneFlipper.hide();
 
                 gripper.unlock();
