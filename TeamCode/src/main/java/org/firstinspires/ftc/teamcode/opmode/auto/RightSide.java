@@ -17,10 +17,10 @@ public class RightSide extends LinearOpMode {
     TrajectoryVelocityConstraint mediumSlowVel = (v, pose2d, pose2d1, pose2d2) -> 30; // value
     TrajectoryAccelerationConstraint mediumSlowAccel = (v, pose2d, pose2d1, pose2d2) -> 30; // value
 
-    TrajectoryVelocityConstraint slowVel = (v, pose2d, pose2d1, pose2d2) -> 40; // value
-    TrajectoryAccelerationConstraint slowAccel = (v, pose2d, pose2d1, pose2d2) -> 40; // value
+    TrajectoryVelocityConstraint slowVel = (v, pose2d, pose2d1, pose2d2) -> 30; // value
+    TrajectoryAccelerationConstraint slowAccel = (v, pose2d, pose2d1, pose2d2) -> 30; // value
 
-    Pose2d startPose = new Pose2d(-40, -62, Math.toRadians(90));
+    Pose2d startPose = new Pose2d(31, -62, Math.toRadians(90));
 
     double backDistance;
 
@@ -63,7 +63,7 @@ public class RightSide extends LinearOpMode {
 
         TrajectorySequence preLoad = drive.trajectorySequenceBuilder(startPose)
                 .splineTo(new Vector2d(35, -30), Math.toRadians(90))
-                .lineToLinearHeading(new Pose2d(28,-8 , Math.toRadians(120)))
+                .lineToLinearHeading(new Pose2d(29,-8 , Math.toRadians(110)))
                 //drop cone
                 //lift down
                 .lineToLinearHeading(new Pose2d(43,-12, Math.toRadians(0)))
@@ -71,16 +71,16 @@ public class RightSide extends LinearOpMode {
                 .splineToLinearHeading(new Pose2d(62, -12, Math.toRadians(0)), Math.toRadians(0))
                 //close claw
                 .lineToLinearHeading(new Pose2d(43,-12, Math.toRadians(0)))
-                .lineToLinearHeading(new Pose2d(28,-8 , Math.toRadians(120)))
+                .lineToLinearHeading(new Pose2d(29,-8 , Math.toRadians(110)))
                 .lineToLinearHeading(new Pose2d(43,-12, Math.toRadians(0)))
                 .splineToLinearHeading(new Pose2d(62, -12, Math.toRadians(0)), Math.toRadians(0))
                 .lineToLinearHeading(new Pose2d(43,-12, Math.toRadians(0)))
-                .lineToLinearHeading(new Pose2d(28,-8 , Math.toRadians(120)))
+                .lineToLinearHeading(new Pose2d(29,-8 , Math.toRadians(110)))
                 //insert park after this
                 .lineToLinearHeading(new Pose2d(43,-12, Math.toRadians(0)))
                 .build();
         TrajectorySequence boxOne = drive.trajectorySequenceBuilder(preLoad.end())
-                .lineToLinearHeading(new Pose2d(-12, -10, Math.toRadians(0)), slowVel, slowAccel)
+                .lineToLinearHeading(new Pose2d(12, -10, Math.toRadians(0)), slowVel, slowAccel)
                 .build();
         if (isStopRequested()) return;
         drive.followTrajectorySequence(preLoad);

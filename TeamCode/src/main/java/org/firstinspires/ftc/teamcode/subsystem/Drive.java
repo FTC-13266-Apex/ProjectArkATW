@@ -77,7 +77,7 @@ public class Drive extends MecanumDrive {
              */
             public static double WHEEL_RADIUS = 1.88976; // in
             public static double GEAR_RATIO = 1; // output (wheel) speed / input (motor) speed
-            public static double TRACK_WIDTH = 12.3; // in
+            public static double TRACK_WIDTH = 10.8; // in
 
             public static boolean IS_FIELD_CENTRIC = true;
             public static boolean USING_FINE_CONTROL = true;
@@ -93,7 +93,7 @@ public class Drive extends MecanumDrive {
                 public static double VY_MULTIPLIER = 1;
                 public static double OMEGA_MULTIPLIER = 1;
 
-                public static final double NORMAL_WEIGHT = 0.6;
+                public static final double NORMAL_WEIGHT = 1;
                 public static final double FAST_WEIGHT = 1;
                 public static final double SLOW_WEIGHT = 0.3;
             }
@@ -126,8 +126,8 @@ public class Drive extends MecanumDrive {
              * motor encoders or have elected not to use them for velocity control, these values should be
              * empirically tuned.
              */
-            public static double kV = 1.0 / rpmToVelocity(Drivetrain.MAX_RPM);
-            public static double kA = 0;
+            public static double kV = 0.01635;
+            public static double kA = 0.0025;
             public static double kStatic = 0;
 
             /**
@@ -163,8 +163,8 @@ public class Drive extends MecanumDrive {
              * You are free to raise this on your own if you would like. It is best determined through experimentation.
              * </p>
              */
-            public static double MAX_VEL       = 40; // 85% of the max for this drive would be 52
-            public static double MAX_ACCEL     = 40; // 60 is about as high as this should be
+            public static double MAX_VEL       = 50; // 85% of the max for this drive would be 52
+            public static double MAX_ACCEL     = 60; // 60 is about as high as this should be
             public static double MAX_ANG_VEL   = Math.toRadians(186); // 242 is about 85% of what it could do
             public static double MAX_ANG_ACCEL = Math.toRadians(186); // do maybe 242 also idk
         }

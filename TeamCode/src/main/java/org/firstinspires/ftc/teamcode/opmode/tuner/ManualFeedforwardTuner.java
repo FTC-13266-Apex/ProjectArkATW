@@ -36,7 +36,7 @@ import static org.firstinspires.ftc.teamcode.opmode.tuner.ManualFeedforwardTuner
 @Autonomous(group = "drive")
 public class ManualFeedforwardTuner extends LinearOpMode {
     public static class Constants {
-        public static double DISTANCE = 72; // in
+        public static double DISTANCE = 95; // in
     }
 
     private FtcDashboard dashboard = FtcDashboard.getInstance();
