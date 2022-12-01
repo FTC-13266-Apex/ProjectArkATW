@@ -95,12 +95,12 @@ public class Drive extends MecanumDrive {
 
                 public static final double NORMAL_WEIGHT = 1;
                 public static final double FAST_WEIGHT = 1;
-                public static final double SLOW_WEIGHT = 0.3;
+                public static final double SLOW_WEIGHT = 0.5;
             }
             public static Direction direction;
             public static class Direction {
                 public static DcMotorSimple.Direction
-                        LEFT_FRONT = DcMotorSimple.Direction.REVERSE,
+                        LEFT_FRONT = DcMotorSimple.Direction.FORWARD,
                         LEFT_REAR = DcMotorSimple.Direction.REVERSE,
                         RIGHT_FRONT = DcMotorSimple.Direction.REVERSE,
                         RIGHT_REAR = DcMotorSimple.Direction.FORWARD;

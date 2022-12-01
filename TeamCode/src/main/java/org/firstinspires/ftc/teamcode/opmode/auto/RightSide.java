@@ -30,6 +30,7 @@ public class RightSide extends LinearOpMode {
         Lift lift = new Lift(this);
         Gripper gripper = new Gripper(this);
 
+
         telemetry.setMsTransmissionInterval(50);
         drive.setPoseEstimate(startPose);
         lift.moveInitial();
@@ -63,20 +64,27 @@ public class RightSide extends LinearOpMode {
 
         TrajectorySequence preLoad = drive.trajectorySequenceBuilder(startPose)
                 .splineTo(new Vector2d(35, -30), Math.toRadians(90))
+                .addDisplacementMarker(lift::moveHigh)
                 .lineToLinearHeading(new Pose2d(29,-8 , Math.toRadians(110)))
-                //drop cone
-                //lift down
+                .addDisplacementMarker(gripper::open)
+                .addDisplacementMarker(lift::moveLow)
                 .lineToLinearHeading(new Pose2d(43,-12, Math.toRadians(0)))
-                //lift up to (new target cone stack pos)
-                .splineToLinearHeading(new Pose2d(62, -12, Math.toRadians(0)), Math.toRadians(0))
-                //close claw
-                .lineToLinearHeading(new Pose2d(43,-12, Math.toRadians(0)))
-                .lineToLinearHeading(new Pose2d(29,-8 , Math.toRadians(110)))
-                .lineToLinearHeading(new Pose2d(43,-12, Math.toRadians(0)))
+                .addDisplacementMarker(lift::moveCone5)
                 .splineToLinearHeading(new Pose2d(62, -12, Math.toRadians(0)), Math.toRadians(0))
                 .lineToLinearHeading(new Pose2d(43,-12, Math.toRadians(0)))
+                .addDisplacementMarker(gripper::close)
+                .addDisplacementMarker(lift::moveLow)
                 .lineToLinearHeading(new Pose2d(29,-8 , Math.toRadians(110)))
-                //insert park after this
+                .addDisplacementMarker(lift::moveHigh)
+                .lineToLinearHeading(new Pose2d(43,-12, Math.toRadians(0)))
+                .addDisplacementMarker(gripper::open)
+                .splineToLinearHeading(new Pose2d(62, -12, Math.toRadians(0)), Math.toRadians(0))
+                .addDisplacementMarker(lift::moveCone4)
+                .lineToLinearHeading(new Pose2d(43,-12, Math.toRadians(0)))
+                .addDisplacementMarker(gripper::close)
+                .addDisplacementMarker(lift::moveLow)
+                .lineToLinearHeading(new Pose2d(29,-8 , Math.toRadians(110)))
+
                 .lineToLinearHeading(new Pose2d(43,-12, Math.toRadians(0)))
                 .build();
         TrajectorySequence boxOne = drive.trajectorySequenceBuilder(preLoad.end())

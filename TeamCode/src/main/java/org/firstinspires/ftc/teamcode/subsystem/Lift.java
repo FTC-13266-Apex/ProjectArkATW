@@ -18,8 +18,8 @@ public class Lift extends BaseSubsystem {
         public static Speed speed;
 
         public static class Hardware {
-            public static DcMotorSimple.Direction LEFT_DIRECTION = DcMotorSimple.Direction.FORWARD;
-            public static DcMotorSimple.Direction RIGHT_DIRECTION = DcMotorSimple.Direction.REVERSE;
+            public static DcMotorSimple.Direction LEFT_DIRECTION = DcMotorSimple.Direction.REVERSE;
+            public static DcMotorSimple.Direction RIGHT_DIRECTION = DcMotorSimple.Direction.FORWARD;
             public static double
                     RPM = 1150,
                     CPR = 145.090909;
@@ -35,17 +35,21 @@ public class Lift extends BaseSubsystem {
         }
         public static class Position {
             public static int
-                    TALL = 1870,
-                    MIDDLE = 1425,
-                    LOWER = 900,
-                    INITIAL = -70,
+                    TALL = 2020,
+                    MIDDLE = 1510,
+                    LOWER = 940,
+                    INITIAL = -0,
                     FLIPPED_CONE = 330,
-                    MAX_POSITION = 1990,
-                    MIN_POSITION = -70;
+                    MAX_POSITION = 2100,
+                    MIN_POSITION = -70,
+                    AUTO_5CONE = 400,
+                    AUTO_4CONE = 350,
+                    AUTO_3CONE = 300,
+                    AUTO_2CONE = 250;
         }
         public static class Speed {
             public static double NORMAL        = 1;
-            public static int MANUAL_MOVE_SPEED = 1;
+            public static int MANUAL_MOVE_SPEED = 5;
 
         }
     }
@@ -129,6 +133,14 @@ public class Lift extends BaseSubsystem {
     public void moveLow() {
         moveMotors(Constants.Position.LOWER);
     }
+
+    public void moveCone5(){moveMotors(Constants.Position.AUTO_5CONE);}
+
+    public void moveCone4(){moveMotors(Constants.Position.AUTO_4CONE);}
+
+    public void moveCone3(){moveMotors(Constants.Position.AUTO_3CONE);}
+
+    public void moveCone2(){moveMotors(Constants.Position.AUTO_2CONE);}
 
     public void moveToPickUpFlippedCone() {
         moveMotors(Constants.Position.FLIPPED_CONE);
