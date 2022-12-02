@@ -4,10 +4,10 @@ import androidx.annotation.NonNull;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-public abstract class BaseSubsystem {
+public abstract class Subsystem {
     private boolean isLocked;
     protected OpMode opMode;
-    public BaseSubsystem(@NonNull OpMode opmode) {
+    public Subsystem(@NonNull OpMode opmode) {
         this.opMode = opmode;
     }
 
