@@ -95,8 +95,8 @@ public class Drive extends MecanumDrive {
                 public static double OMEGA_MULTIPLIER = 1;
 
                 public static final double NORMAL_WEIGHT = 1;
-                public static final double FAST_WEIGHT = 1;
-                public static final double SLOW_WEIGHT = 0.5;
+                public static final double FAST_WEIGHT = 0.5;
+                public static final double SLOW_WEIGHT = 0.3;
             }
             public static Direction direction;
             public static class Direction {
