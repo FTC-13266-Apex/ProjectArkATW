@@ -32,9 +32,9 @@ public class Lift extends Subsystem {
         }
         public static class Position {
             public static int
-                    TALL = 2020,
-                    MIDDLE = 1510,
-                    LOWER = 940,
+                    HIGH = 2020,
+                    MID = 1510,
+                    LOW = 940,
                     INITIAL = -0,
                     FLIPPED_CONE = 330,
                     MAX_POSITION = 2100,
@@ -46,13 +46,14 @@ public class Lift extends Subsystem {
         }
         public static class Speed {
             public static double NORMAL        = 1;
-            public static int MANUAL_MOVE_SPEED = 5;
+            public static int MANUAL_MOVE_SPEED = 6;
 
         }
     }
     private final DcMotorEx leftLift;
     private final DcMotorEx rightLift;
     private int motorPosition;
+    private boolean isMovingManually;
 
 
 
@@ -92,8 +93,12 @@ public class Lift extends Subsystem {
         else if(opMode.gamepad2.dpad_right) moveMid();
         else if (opMode.gamepad2.dpad_up) moveHigh();
 
-        if (opMode.gamepad2.right_stick_y < -0.3) moveMotors(motorPosition + Constants.Speed.MANUAL_MOVE_SPEED);
-        else if (opMode.gamepad2.right_stick_y > 0.3) moveMotors(motorPosition - Constants.Speed.MANUAL_MOVE_SPEED);
+        if (opMode.gamepad2.right_stick_y < -0.2 || opMode.gamepad2.right_stick_y > 0.2) {
+            moveMotors((int)(motorPosition + Constants.Speed.MANUAL_MOVE_SPEED * -opMode.gamepad2.right_stick_y));
+            isMovingManually = true;
+        } else {
+            isMovingManually = false;
+        }
 
         opMode.telemetry.addData("Slide position", motorPosition);
         opMode.telemetry.addData("Slide P", leftLift.getPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION).p);
@@ -117,27 +122,47 @@ public class Lift extends Subsystem {
 
     public void moveInitial() {
         moveMotors(Constants.Position.INITIAL);
+        if (isMovingManually) {
+            Constants.Position.INITIAL = motorPosition;
+        }
     }
 
     public void moveHigh() {
-        moveMotors(Constants.Position.TALL);
+        moveMotors(Constants.Position.HIGH);
+        if (isMovingManually) {
+            Constants.Position.HIGH = motorPosition;
+        }
     }
 
     public void moveMid() {
-        moveMotors(Constants.Position.MIDDLE);
+        moveMotors(Constants.Position.MID);
+        if (isMovingManually) {
+            Constants.Position.MID = motorPosition;
+        }
     }
 
     public void moveLow() {
-        moveMotors(Constants.Position.LOWER);
+        moveMotors(Constants.Position.LOW);
+        if (isMovingManually) {
+            Constants.Position.LOW = motorPosition;
+        }
     }
 
-    public void moveCone5(){moveMotors(Constants.Position.AUTO_5CONE);}
+    public void moveCone5() {
+        moveMotors(Constants.Position.AUTO_5CONE);
+    }
 
-    public void moveCone4(){moveMotors(Constants.Position.AUTO_4CONE);}
+    public void moveCone4() {
+        moveMotors(Constants.Position.AUTO_4CONE);
+    }
 
-    public void moveCone3(){moveMotors(Constants.Position.AUTO_3CONE);}
+    public void moveCone3() {
+        moveMotors(Constants.Position.AUTO_3CONE);
+    }
 
-    public void moveCone2(){moveMotors(Constants.Position.AUTO_2CONE);}
+    public void moveCone2() {
+        moveMotors(Constants.Position.AUTO_2CONE);
+    }
 
     public void moveToPickUpFlippedCone() {
         moveMotors(Constants.Position.FLIPPED_CONE);
