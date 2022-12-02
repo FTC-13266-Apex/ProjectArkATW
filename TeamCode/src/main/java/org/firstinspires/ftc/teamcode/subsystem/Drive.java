@@ -94,9 +94,9 @@ public class Drive extends MecanumDrive {
                 public static double VY_MULTIPLIER = 1;
                 public static double OMEGA_MULTIPLIER = 1;
 
-                public static final double NORMAL_WEIGHT = 1;
-                public static final double FAST_WEIGHT = 0.5;
-                public static final double SLOW_WEIGHT = 0.3;
+                public static final double NORMAL_SPEED = 1;
+                public static final double FAST_SPEED = 0.5;
+                public static final double SLOW_SPEED = 0.3;
             }
             public static Direction direction;
             public static class Direction {
@@ -198,9 +198,10 @@ public class Drive extends MecanumDrive {
 
 //    public static double LATERAL_MULTIPLIER = 1;
 
-    private double VX_WEIGHT = 1;
-    private double VY_WEIGHT = 1;
-    private double OMEGA_WEIGHT = 1;
+//    private double vx_weight = 1;
+//    private double VY_WEIGHT = 1;
+//    private double OMEGA_WEIGHT = 1;
+    private double speed = Drivetrain.Speed.NORMAL_SPEED;
 
     private TrajectorySequenceRunner trajectorySequenceRunner;
 
@@ -408,23 +409,27 @@ public class Drive extends MecanumDrive {
     }
 
     public void setWeightedDrivePower(Pose2d drivePower) {
-        Pose2d vel = drivePower;
+        // re-normalize the powers according to the weights
+        drivePower = new Pose2d(
+                Drivetrain.Speed.VX_MULTIPLIER * drivePower.getX(),
+                Drivetrain.Speed.VY_MULTIPLIER * drivePower.getY(),
+                Drivetrain.Speed.OMEGA_MULTIPLIER * drivePower.getHeading());
 
         if (Math.abs(drivePower.getX()) + Math.abs(drivePower.getY())
                 + Math.abs(drivePower.getHeading()) > 1) {
-            // re-normalize the powers according to the weights
-            double denom = VX_WEIGHT * Math.abs(drivePower.getX())
-                    + VY_WEIGHT * Math.abs(drivePower.getY())
-                    + OMEGA_WEIGHT * Math.abs(drivePower.getHeading());
 
-            vel = new Pose2d(
-                    VX_WEIGHT * drivePower.getX(),
-                    VY_WEIGHT * drivePower.getY(),
-                    OMEGA_WEIGHT * drivePower.getHeading()
-            ).div(denom);
+            // re-normalize the powers according to the weights
+            double denom = Drivetrain.Speed.VX_MULTIPLIER * Math.abs(drivePower.getX())
+                    + Drivetrain.Speed.VY_MULTIPLIER * Math.abs(drivePower.getY())
+                    + Drivetrain.Speed.OMEGA_MULTIPLIER * Math.abs(drivePower.getHeading());
+
+            drivePower = drivePower
+                    .div(denom)
+                    .times(speed); // incorporate speed
+
         }
 
-        setDrivePower(vel);
+        setDrivePower(drivePower);
     }
 
     @NonNull
@@ -489,8 +494,8 @@ public class Drive extends MecanumDrive {
      */
     public void driveFieldCentric(double strafeSpeed, double forwardSpeed, double turnSpeed, double gyroAngle) {
         Vector2d input = new Vector2d(
-                forwardSpeed,
-                strafeSpeed
+                strafeSpeed,
+                forwardSpeed
         ).rotated(gyroAngle);
 
         driveRobotCentric(
@@ -531,19 +536,13 @@ public class Drive extends MecanumDrive {
         }
 
         if (gamepad1.left_bumper) {
-            VX_WEIGHT = Drivetrain.Speed.SLOW_WEIGHT * Drivetrain.Speed.VX_MULTIPLIER;
-            VY_WEIGHT = Drivetrain.Speed.SLOW_WEIGHT * Drivetrain.Speed.VY_MULTIPLIER;
-            OMEGA_WEIGHT = Drivetrain.Speed.SLOW_WEIGHT * Drivetrain.Speed.OMEGA_MULTIPLIER;
+            speed = Drivetrain.Speed.SLOW_SPEED;
         }
         else if (gamepad1.right_bumper) {
-            VX_WEIGHT = Drivetrain.Speed.FAST_WEIGHT * Drivetrain.Speed.VX_MULTIPLIER;
-            VY_WEIGHT = Drivetrain.Speed.FAST_WEIGHT * Drivetrain.Speed.VY_MULTIPLIER;
-            OMEGA_WEIGHT = Drivetrain.Speed.FAST_WEIGHT * Drivetrain.Speed.OMEGA_MULTIPLIER;
+            speed = Drivetrain.Speed.FAST_SPEED;
         }
         else {
-            VX_WEIGHT = Drivetrain.Speed.NORMAL_WEIGHT * Drivetrain.Speed.VX_MULTIPLIER;
-            VY_WEIGHT = Drivetrain.Speed.NORMAL_WEIGHT * Drivetrain.Speed.VY_MULTIPLIER;
-            OMEGA_WEIGHT = Drivetrain.Speed.NORMAL_WEIGHT * Drivetrain.Speed.OMEGA_MULTIPLIER;
+            speed = Drivetrain.Speed.NORMAL_SPEED;
         }
 
 
