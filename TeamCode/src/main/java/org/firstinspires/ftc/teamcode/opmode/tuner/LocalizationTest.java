@@ -19,7 +19,6 @@ public class LocalizationTest extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         Drive drive = new Drive(this, true);
-        double speed = 0;
 
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
