@@ -9,7 +9,7 @@ public abstract class Command {
     protected boolean isFinished = false;
     protected LinearOpMode opMode;
 
-    protected Command(@NonNull LinearOpMode opMode) {
+    public Command(@NonNull LinearOpMode opMode) {
         this.opMode = opMode;
     }
 

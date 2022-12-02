@@ -8,7 +8,7 @@ public abstract class Subsystem {
     private boolean isLocked = false;
     protected OpMode opMode;
 
-    protected Subsystem(@NonNull OpMode opmode) {
+    public Subsystem(@NonNull OpMode opmode) {
         this.opMode = opmode;
     }
 
