@@ -35,7 +35,7 @@ public class Lift extends Subsystem {
                     HIGH = 2020,
                     MID = 1510,
                     LOW = 940,
-                    INITIAL = -0,
+                    INITIAL = -70,
                     FLIPPED_CONE = 330,
                     MAX_POSITION = 2100,
                     MIN_POSITION = -70,
