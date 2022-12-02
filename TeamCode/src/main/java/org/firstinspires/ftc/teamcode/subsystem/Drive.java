@@ -8,6 +8,7 @@ import com.acmerobotics.roadrunner.drive.MecanumDrive;
 import com.acmerobotics.roadrunner.followers.HolonomicPIDVAFollower;
 import com.acmerobotics.roadrunner.followers.TrajectoryFollower;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
 import com.acmerobotics.roadrunner.trajectory.constraints.AngularVelocityConstraint;
@@ -77,7 +78,7 @@ public class Drive extends MecanumDrive {
              */
             public static double WHEEL_RADIUS = 1.88976; // in
             public static double GEAR_RATIO = 1; // output (wheel) speed / input (motor) speed
-            public static double TRACK_WIDTH = 12.3; // in
+            public static double TRACK_WIDTH = 10.8; // in
 
             public static boolean IS_FIELD_CENTRIC = true;
             public static boolean USING_FINE_CONTROL = true;
@@ -93,14 +94,14 @@ public class Drive extends MecanumDrive {
                 public static double VY_MULTIPLIER = 1;
                 public static double OMEGA_MULTIPLIER = 1;
 
-                public static final double NORMAL_WEIGHT = 0.6;
+                public static final double NORMAL_WEIGHT = 1;
                 public static final double FAST_WEIGHT = 1;
-                public static final double SLOW_WEIGHT = 0.3;
+                public static final double SLOW_WEIGHT = 0.5;
             }
             public static Direction direction;
             public static class Direction {
                 public static DcMotorSimple.Direction
-                        LEFT_FRONT = DcMotorSimple.Direction.REVERSE,
+                        LEFT_FRONT = DcMotorSimple.Direction.FORWARD,
                         LEFT_REAR = DcMotorSimple.Direction.REVERSE,
                         RIGHT_FRONT = DcMotorSimple.Direction.REVERSE,
                         RIGHT_REAR = DcMotorSimple.Direction.FORWARD;
@@ -126,8 +127,8 @@ public class Drive extends MecanumDrive {
              * motor encoders or have elected not to use them for velocity control, these values should be
              * empirically tuned.
              */
-            public static double kV = 1.0 / rpmToVelocity(Drivetrain.MAX_RPM);
-            public static double kA = 0;
+            public static double kV = 0.01635;
+            public static double kA = 0.0025;
             public static double kStatic = 0;
 
             /**
@@ -163,8 +164,8 @@ public class Drive extends MecanumDrive {
              * You are free to raise this on your own if you would like. It is best determined through experimentation.
              * </p>
              */
-            public static double MAX_VEL       = 40; // 85% of the max for this drive would be 52
-            public static double MAX_ACCEL     = 40; // 60 is about as high as this should be
+            public static double MAX_VEL       = 50; // 85% of the max for this drive would be 52
+            public static double MAX_ACCEL     = 60; // 60 is about as high as this should be
             public static double MAX_ANG_VEL   = Math.toRadians(186); // 242 is about 85% of what it could do
             public static double MAX_ANG_ACCEL = Math.toRadians(186); // do maybe 242 also idk
         }
@@ -231,6 +232,7 @@ public class Drive extends MecanumDrive {
 
         batteryVoltageSensor = hardwareMap.voltageSensor.iterator().next();
 
+        // TODO: you may want to consider moving this
         for (LynxModule module : hardwareMap.getAll(LynxModule.class)) {
             module.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
         }
@@ -359,6 +361,10 @@ public class Drive extends MecanumDrive {
         waitForIdle();
     }
 
+    public void breakFollowing() {
+        trajectorySequenceRunner.breakFollowing();
+    }
+
     public Pose2d getLastError() {
         return trajectorySequenceRunner.getLastPoseError();
     }
@@ -482,10 +488,21 @@ public class Drive extends MecanumDrive {
      * @param gyroAngle angle the bot is currently facing relative to start (radians)
      */
     public void driveFieldCentric(double strafeSpeed, double forwardSpeed, double turnSpeed, double gyroAngle) {
+        Vector2d input = new Vector2d(
+                forwardSpeed,
+                strafeSpeed
+        ).rotated(gyroAngle);
+
         driveRobotCentric(
-                (strafeSpeed * Math.cos(gyroAngle) - forwardSpeed * Math.sin(gyroAngle)),
-                (strafeSpeed * Math.sin(gyroAngle) + forwardSpeed * Math.cos(gyroAngle)),
-                turnSpeed);
+                input.getX(),
+                input.getY(),
+                turnSpeed
+        );
+        // TODO: if the above works, remove this, otherwise remove the above and replace with commented out code
+//        driveRobotCentric(
+//                (strafeSpeed * Math.cos(gyroAngle) - forwardSpeed * Math.sin(gyroAngle)),
+//                (strafeSpeed * Math.sin(gyroAngle) + forwardSpeed * Math.cos(gyroAngle)),
+//                turnSpeed);
     }
     
     private void driveRobotCentric(double strafeSpeed, double forwardSpeed, double turnSpeed) {
@@ -498,7 +515,7 @@ public class Drive extends MecanumDrive {
         );
     }
 
-    public void manualControl() {
+    public void runIteratively() {
         double strafeSpeed;
         double forwardSpeed;
         double turnSpeed;

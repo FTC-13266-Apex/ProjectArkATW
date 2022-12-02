@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-public class Vision extends BaseSubsystem {
+public class Vision extends Subsystem {
     public static class Constants {
 
     }
@@ -15,6 +15,6 @@ public class Vision extends BaseSubsystem {
 
     @Override
     protected void manualControl() {
-
+        opMode.telemetry.addLine("Um what are you doing? Why is the Vision subsystem being controlled like this?");
     }
 }

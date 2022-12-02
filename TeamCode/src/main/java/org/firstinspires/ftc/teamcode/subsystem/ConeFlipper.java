@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 
-public class ConeFlipper extends BaseSubsystem {
+public class ConeFlipper extends Subsystem {
     public static class Constants {
         public static Hardware hardware;
         public static Position position;

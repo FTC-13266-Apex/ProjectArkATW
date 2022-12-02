@@ -4,16 +4,19 @@ import androidx.annotation.NonNull;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-public abstract class BaseSubsystem {
-    private boolean isLocked;
+public abstract class Subsystem {
+    private boolean isLocked = false;
     protected OpMode opMode;
-    public BaseSubsystem(@NonNull OpMode opmode) {
+
+    public Subsystem(@NonNull OpMode opmode) {
         this.opMode = opmode;
     }
 
+    protected abstract void manualControl();
+
     /**
      * Checks if the subsystem can be controlled with the gamepad
-     * @return Whether the subsystem is locked or not
+     * @return True if subsystem is locked, otherwise false
      */
     public boolean isLocked() {
         return isLocked;
@@ -33,10 +36,11 @@ public abstract class BaseSubsystem {
         isLocked = false;
     }
 
-    public void controlWithGamepad() {
+    /**
+     * Runs one iteration of the subsystem's manualControl function
+     */
+    public void runIteratively() {
         if (isLocked()) return;
         manualControl();
     }
-
-    protected abstract void manualControl();
 }
