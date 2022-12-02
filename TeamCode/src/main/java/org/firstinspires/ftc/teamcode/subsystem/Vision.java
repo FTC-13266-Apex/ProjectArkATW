@@ -15,6 +15,6 @@ public class Vision extends Subsystem {
 
     @Override
     protected void manualControl() {
-
+        opMode.telemetry.addLine("Um what are you doing? Why is the Vision subsystem being controlled like this?");
     }
 }
