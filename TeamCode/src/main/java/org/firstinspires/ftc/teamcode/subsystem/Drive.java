@@ -23,13 +23,9 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
-
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceRunner;
@@ -39,18 +35,6 @@ import org.firstinspires.ftc.teamcode.util.StandardTrackingWheelLocalizer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-//import static org.firstinspires.ftc.teamcode.util.DriveConstants.MAX_ACCEL;
-//import static org.firstinspires.ftc.teamcode.util.DriveConstants.MAX_ANG_ACCEL;
-//import static org.firstinspires.ftc.teamcode.util.DriveConstants.MAX_ANG_VEL;
-//import static org.firstinspires.ftc.teamcode.util.DriveConstants.MAX_VEL;
-//import static org.firstinspires.ftc.teamcode.util.DriveConstants.MOTOR_VELO_PID;
-//import static org.firstinspires.ftc.teamcode.util.DriveConstants.RUN_USING_ENCODER;
-//import static org.firstinspires.ftc.teamcode.util.DriveConstants.TRACK_WIDTH;
-//import static org.firstinspires.ftc.teamcode.util.DriveConstants.encoderTicksToInches;
-//import static org.firstinspires.ftc.teamcode.util.DriveConstants.kA;
-//import static org.firstinspires.ftc.teamcode.util.DriveConstants.kStatic;
-//import static org.firstinspires.ftc.teamcode.util.DriveConstants.kV;
 
 import static org.firstinspires.ftc.teamcode.subsystem.Drive.Constants.*;
 
@@ -193,54 +177,39 @@ public class Drive extends MecanumDrive {
         }
 
     }
-//    public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(0, 0, 0);
-//    public static PIDCoefficients HEADING_PID = new PIDCoefficients(0, 0, 0);
-
-//    public static double LATERAL_MULTIPLIER = 1;
-
-//    private double vx_weight = 1;
-//    private double VY_WEIGHT = 1;
-//    private double OMEGA_WEIGHT = 1;
     private double speed = Drivetrain.Speed.NORMAL_SPEED;
 
-    private TrajectorySequenceRunner trajectorySequenceRunner;
+    private final TrajectorySequenceRunner trajectorySequenceRunner;
 
-    private static final TrajectoryVelocityConstraint VEL_CONSTRAINT = getVelocityConstraint(Controller.MAX_VEL, Controller.MAX_ANG_VEL, Drivetrain.TRACK_WIDTH);
-    private static final TrajectoryAccelerationConstraint ACCEL_CONSTRAINT = getAccelerationConstraint(Controller.MAX_ACCEL);
+    private final TrajectoryVelocityConstraint VEL_CONSTRAINT = getVelocityConstraint(Controller.MAX_VEL, Controller.MAX_ANG_VEL, Drivetrain.TRACK_WIDTH);
+    private final TrajectoryAccelerationConstraint ACCEL_CONSTRAINT = getAccelerationConstraint(Controller.MAX_ACCEL);
 
-    private TrajectoryFollower follower;
-
-    private DcMotorEx leftFront, leftRear, rightRear, rightFront;
-    private List<DcMotorEx> motors;
+    private final DcMotorEx leftFront, leftRear, rightRear, rightFront;
+    private final List<DcMotorEx> motors;
 
     private BNO055IMU imu;
-    private VoltageSensor batteryVoltageSensor;
+    private final VoltageSensor batteryVoltageSensor;
+    private final OpMode opMode;
 
-    private final HardwareMap hardwareMap;
-    private final Telemetry telemetry;
-    private final Gamepad gamepad1;
-
-    public Drive(OpMode opMode,boolean isUsingimu) {
+    public Drive(OpMode opMode, boolean isUsingImu) {
         super(Controller.kV, Controller.kA, Controller.kStatic, Drivetrain.TRACK_WIDTH, Drivetrain.TRACK_WIDTH, Drivetrain.LATERAL_MULTIPLIER);
-        hardwareMap = opMode.hardwareMap;
-        telemetry = opMode.telemetry;
-        gamepad1 = opMode.gamepad1;
+        this.opMode = opMode;
 
-        follower = new HolonomicPIDVAFollower(Follower.TRANSLATIONAL_PID, Follower.TRANSLATIONAL_PID, Follower.HEADING_PID,
+        TrajectoryFollower follower = new HolonomicPIDVAFollower(Follower.TRANSLATIONAL_PID, Follower.TRANSLATIONAL_PID, Follower.HEADING_PID,
                 Follower.ADMISSIBLE_ERROR, Follower.TIMEOUT);
 
-        LynxModuleUtil.ensureMinimumFirmwareVersion(hardwareMap);
+        LynxModuleUtil.ensureMinimumFirmwareVersion(opMode.hardwareMap);
 
-        batteryVoltageSensor = hardwareMap.voltageSensor.iterator().next();
+        batteryVoltageSensor = opMode.hardwareMap.voltageSensor.iterator().next();
 
         // TODO: you may want to consider moving this
-        for (LynxModule module : hardwareMap.getAll(LynxModule.class)) {
+        for (LynxModule module : opMode.hardwareMap.getAll(LynxModule.class)) {
             module.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
         }
 
         // TODO: adjust the names of the following hardware devices to match your configuration
-        if(isUsingimu) {
-            imu = hardwareMap.get(BNO055IMU.class, "imu");
+        if(isUsingImu) {
+            imu = opMode.hardwareMap.get(BNO055IMU.class, "imu");
             BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
             parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
             imu.initialize(parameters);
@@ -269,10 +238,10 @@ public class Drive extends MecanumDrive {
         // For example, if +Y in this diagram faces downwards, you would use AxisDirection.NEG_Y.
         // BNO055IMUUtil.remapZAxis(imu, AxisDirection.NEG_Y);
 
-        leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
-        leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
-        rightRear = hardwareMap.get(DcMotorEx.class, "rightRear");
-        rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
+        leftFront = opMode.hardwareMap.get(DcMotorEx.class, "leftFront");
+        leftRear = opMode.hardwareMap.get(DcMotorEx.class, "leftRear");
+        rightRear = opMode.hardwareMap.get(DcMotorEx.class, "rightRear");
+        rightFront = opMode.hardwareMap.get(DcMotorEx.class, "rightFront");
 
         motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront);
 
@@ -299,7 +268,7 @@ public class Drive extends MecanumDrive {
 
         // TODO: if desired, use setLocalizer() to change the localization method
         // for instance, setLocalizer(new ThreeTrackingWheelLocalizer(...));
-        setLocalizer(new StandardTrackingWheelLocalizer(hardwareMap));
+        setLocalizer(new StandardTrackingWheelLocalizer(opMode.hardwareMap));
 
         trajectorySequenceRunner = new TrajectorySequenceRunner(follower, Follower.HEADING_PID);
     }
@@ -508,11 +477,6 @@ public class Drive extends MecanumDrive {
                 input.getY(),
                 turnSpeed
         );
-        // TODO: if the above works, remove this, otherwise remove the above and replace with commented out code
-//        driveRobotCentric(
-//                (strafeSpeed * Math.cos(gyroAngle) - forwardSpeed * Math.sin(gyroAngle)),
-//                (strafeSpeed * Math.sin(gyroAngle) + forwardSpeed * Math.cos(gyroAngle)),
-//                turnSpeed);
     }
     
     private void driveRobotCentric(double strafeSpeed, double forwardSpeed, double turnSpeed) {
@@ -531,20 +495,20 @@ public class Drive extends MecanumDrive {
         double turnSpeed;
 
         if (Drivetrain.USING_FINE_CONTROL) {
-            strafeSpeed = squareInput(gamepad1.left_stick_x);
-            forwardSpeed = squareInput(-gamepad1.left_stick_y);
-            turnSpeed = squareInput(gamepad1.right_stick_x);
+            strafeSpeed = squareInput(opMode.gamepad1.left_stick_x);
+            forwardSpeed = squareInput(-opMode.gamepad1.left_stick_y);
+            turnSpeed = squareInput(opMode.gamepad1.right_stick_x);
         } else {
-            strafeSpeed = gamepad1.left_stick_x;
-            forwardSpeed = -gamepad1.left_stick_y;
-            turnSpeed = gamepad1.right_stick_x;
+            strafeSpeed = opMode.gamepad1.left_stick_x;
+            forwardSpeed = -opMode.gamepad1.left_stick_y;
+            turnSpeed = opMode.gamepad1.right_stick_x;
         }
 
-        if (gamepad1.left_bumper) speed = Drivetrain.Speed.SLOW_SPEED;
-        else if (gamepad1.right_bumper) speed = Drivetrain.Speed.FAST_SPEED;
+        if (opMode.gamepad1.left_bumper) speed = Drivetrain.Speed.SLOW_SPEED;
+        else if (opMode.gamepad1.right_bumper) speed = Drivetrain.Speed.FAST_SPEED;
         else speed = Drivetrain.Speed.NORMAL_SPEED;
 
-        if (gamepad1.a) resetImu();
+        if (opMode.gamepad1.a) resetImu();
 
 
         if (Drivetrain.IS_FIELD_CENTRIC)
@@ -552,25 +516,5 @@ public class Drive extends MecanumDrive {
         else
             driveRobotCentric(strafeSpeed, forwardSpeed, turnSpeed);
 
-    }
-
-    public void teleOpControlTest() {
-        double y = -gamepad1.left_stick_y; // Remember, this is reversed!
-        double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
-        double rx = gamepad1.right_stick_x;
-
-        // Denominator is the largest motor power (absolute value) or 1
-        // This ensures all the powers maintain the same ratio, but only when
-        // at least one is out of the range [-1, 1]
-        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-        double frontLeftPower = (y + x + rx) / denominator;
-        double backLeftPower = (y - x + rx) / denominator;
-        double frontRightPower = (y - x - rx) / denominator;
-        double backRightPower = (y + x - rx) / denominator;
-
-        leftFront.setPower(frontLeftPower);
-        leftRear.setPower(backLeftPower);
-        rightFront.setPower(frontRightPower);
-        rightRear.setPower(backRightPower);
     }
 }
