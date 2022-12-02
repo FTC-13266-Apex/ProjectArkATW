@@ -48,7 +48,9 @@ public class Gripper extends Subsystem {
     }
 
     private void sensorControl() {
-        if (distanceSensor.getDistance(DistanceUnit.MM) < Constants.Sensor.GRAB_DISTANCE_MM) close();
+        double distance = distanceSensor.getDistance(DistanceUnit.MM);
+        if ((distance) < Constants.Sensor.GRAB_DISTANCE_MM) close();
+        opMode.telemetry.addData("Distance", distance);
     }
 
     public void open() {
