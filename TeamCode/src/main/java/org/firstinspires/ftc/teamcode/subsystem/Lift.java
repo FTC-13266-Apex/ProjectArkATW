@@ -122,31 +122,31 @@ public class Lift extends Subsystem {
     }
 
     public void moveInitial() {
-        moveMotors(Constants.Position.INITIAL);
         if (isMovingManually) {
             Constants.Position.INITIAL = motorPosition;
         }
+        moveMotors(Constants.Position.INITIAL);
     }
 
     public void moveHigh() {
-        moveMotors(Constants.Position.HIGH);
         if (isMovingManually) {
             Constants.Position.HIGH = motorPosition;
         }
+        moveMotors(Constants.Position.HIGH);
     }
 
     public void moveMid() {
-        moveMotors(Constants.Position.MID);
         if (isMovingManually) {
             Constants.Position.MID = motorPosition;
         }
+        moveMotors(Constants.Position.MID);
     }
 
     public void moveLow() {
-        moveMotors(Constants.Position.LOW);
         if (isMovingManually) {
             Constants.Position.LOW = motorPosition;
         }
+        moveMotors(Constants.Position.LOW);
     }
 
     public void moveGroundJunction() {
