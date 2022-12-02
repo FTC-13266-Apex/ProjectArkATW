@@ -43,7 +43,7 @@ public class Vision extends Subsystem {
 
     private boolean tagFound = false;
 
-    public static class CameraConstants {
+    public static class Constants {
         public static Hardware hardware = new Hardware();
         public static Value value = new Value();
 
