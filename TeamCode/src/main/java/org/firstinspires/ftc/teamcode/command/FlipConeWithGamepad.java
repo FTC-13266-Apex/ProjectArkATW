@@ -15,6 +15,7 @@ public class FlipConeWithGamepad extends Command{
         LIFT_CONE, // lift is at coneflip position gripper open and coneflipper is down
         FEED_CONE, // cone flipper moves up
         GRAB_CONE,
+        GRAB_WAIT,
         RETURN // Move back to initial state
     }
 
@@ -61,6 +62,11 @@ public class FlipConeWithGamepad extends Command{
             case GRAB_CONE:
                 if (!(waitTimer.seconds() > 2)) break; // wait till its been 0.5 second
                 gripper.close();
+                waitTimer.reset();
+                flipState = FlipState.GRAB_WAIT;
+                break;
+            case GRAB_WAIT:
+                if (!(waitTimer.seconds() > 2)) break; // wait till its been 0.5 second
                 lift.moveMid();
                 waitTimer.reset();
                 flipState = FlipState.RETURN;
