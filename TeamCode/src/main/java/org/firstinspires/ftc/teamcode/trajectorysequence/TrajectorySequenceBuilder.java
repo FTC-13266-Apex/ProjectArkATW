@@ -19,10 +19,18 @@ import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryAcceleration
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.acmerobotics.roadrunner.util.Angle;
 
+import org.firstinspires.ftc.teamcode.trajectorysequence.container.LineTo;
+import org.firstinspires.ftc.teamcode.trajectorysequence.container.LineToConstantHeading;
+import org.firstinspires.ftc.teamcode.trajectorysequence.container.LineToLinearHeading;
+import org.firstinspires.ftc.teamcode.trajectorysequence.container.LineToSplineHeading;
+import org.firstinspires.ftc.teamcode.trajectorysequence.container.SplineTo;
+import org.firstinspires.ftc.teamcode.trajectorysequence.container.SplineToConstantHeading;
+import org.firstinspires.ftc.teamcode.trajectorysequence.container.SplineToLinearHeading;
 import org.firstinspires.ftc.teamcode.trajectorysequence.sequencesegment.SequenceSegment;
 import org.firstinspires.ftc.teamcode.trajectorysequence.sequencesegment.TrajectorySegment;
 import org.firstinspires.ftc.teamcode.trajectorysequence.sequencesegment.TurnSegment;
 import org.firstinspires.ftc.teamcode.trajectorysequence.sequencesegment.WaitSegment;
+import org.firstinspires.ftc.teamcode.trajectorysequence.container.SplineToSplineHeading;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -279,6 +287,209 @@ public class TrajectorySequenceBuilder {
     ) {
         return addPath(() -> currentTrajectoryBuilder.splineToSplineHeading(endPose, endHeading, velConstraint, accelConstraint));
     }
+    /**
+     * JUSTIN ADDED LineTos
+     *
+     *
+     *
+     *
+     * */
+
+    public TrajectorySequenceBuilder lineTo(LineTo lineTo) {
+        return lineTo(
+                new Vector2d(
+                        lineTo.x,
+                        lineTo.y)
+        );
+    }
+
+    public TrajectorySequenceBuilder lineTo(
+            LineTo lineTo,
+            TrajectoryVelocityConstraint velConstraint,
+            TrajectoryAccelerationConstraint accelConstraint
+    ) {
+        return lineTo(
+                new Vector2d(
+                        lineTo.x,
+                        lineTo.y),
+                velConstraint,
+                accelConstraint
+        );
+    }
+
+    public TrajectorySequenceBuilder lineToConstantHeading(LineToConstantHeading lineToConstantHeading) {
+        return lineToConstantHeading(
+                new Vector2d(
+                        lineToConstantHeading.x,
+                        lineToConstantHeading.y)
+        );
+    }
+
+    public TrajectorySequenceBuilder lineToConstantHeading(
+            LineToConstantHeading lineToConstantHeading,
+            TrajectoryVelocityConstraint velConstraint,
+            TrajectoryAccelerationConstraint accelConstraint
+    ) {
+        return lineToConstantHeading(
+                new Vector2d(
+                        lineToConstantHeading.x,
+                        lineToConstantHeading.y),
+                velConstraint,
+                accelConstraint
+        );
+    }
+
+    public TrajectorySequenceBuilder lineToLinearHeading(LineToLinearHeading lineToLinearHeading) {
+        return lineToLinearHeading(
+                new Pose2d(
+                        lineToLinearHeading.x,
+                        lineToLinearHeading.y,
+                        Math.toRadians(lineToLinearHeading.heading))
+        );
+    }
+
+    public TrajectorySequenceBuilder lineToLinearHeading(
+            LineToLinearHeading lineToLinearHeading,
+            TrajectoryVelocityConstraint velConstraint,
+            TrajectoryAccelerationConstraint accelConstraint
+    ) {
+        return lineToLinearHeading(
+                new Pose2d(
+                        lineToLinearHeading.x,
+                        lineToLinearHeading.y,
+                        Math.toRadians(lineToLinearHeading.heading)),
+                velConstraint,
+                accelConstraint
+        );
+    }
+
+    public TrajectorySequenceBuilder lineToSplineHeading(LineToSplineHeading lineToSplineHeading) {
+        return lineToSplineHeading(
+                new Pose2d(
+                        lineToSplineHeading.x,
+                        lineToSplineHeading.y,
+                        Math.toRadians(lineToSplineHeading.heading))
+        );
+    }
+
+    public TrajectorySequenceBuilder lineToSplineHeading(
+            LineToSplineHeading lineToSplineHeading,
+            TrajectoryVelocityConstraint velConstraint,
+            TrajectoryAccelerationConstraint accelConstraint
+    ) {
+        return lineToSplineHeading(
+                new Pose2d(
+                        lineToSplineHeading.x,
+                        lineToSplineHeading.y,
+                        Math.toRadians(lineToSplineHeading.heading)),
+                velConstraint,
+                accelConstraint
+        );
+    }
+
+    /**
+     * JUSTIN ADDED SplineTos
+     *
+     *
+     *
+     *
+     * */
+
+    public TrajectorySequenceBuilder splineTo(SplineTo splineTo) {
+        return splineTo(
+                new Vector2d(
+                        splineTo.x,
+                        splineTo.y),
+                Math.toRadians(splineTo.endHeading));
+    }
+
+    public TrajectorySequenceBuilder splineTo(
+            SplineTo splineTo,
+            TrajectoryVelocityConstraint velConstraint,
+            TrajectoryAccelerationConstraint accelConstraint
+    ) {
+        return splineTo(
+                new Vector2d(
+                        splineTo.x,
+                        splineTo.y),
+                Math.toRadians(splineTo.endHeading),
+                velConstraint,
+                accelConstraint);
+    }
+
+    public TrajectorySequenceBuilder splineToConstantHeading(SplineToConstantHeading splineToConstantHeading) {
+        return splineToConstantHeading(
+                new Vector2d(
+                        splineToConstantHeading.x,
+                        splineToConstantHeading.y),
+                Math.toRadians(splineToConstantHeading.endHeading));
+    }
+
+    public TrajectorySequenceBuilder splineToConstantHeading(
+            SplineToConstantHeading splineToConstantHeading,
+            TrajectoryVelocityConstraint velConstraint,
+            TrajectoryAccelerationConstraint accelConstraint
+    ) {
+        return splineToConstantHeading(
+                new Vector2d(
+                        splineToConstantHeading.x,
+                        splineToConstantHeading.y),
+                Math.toRadians(splineToConstantHeading.endHeading), velConstraint, accelConstraint);
+    }
+
+    public TrajectorySequenceBuilder splineToLinearHeading(SplineToLinearHeading splineToLinearHeading) {
+        return splineToLinearHeading(
+                new Pose2d(
+                        splineToLinearHeading.x,
+                        splineToLinearHeading.y,
+                        Math.toRadians(splineToLinearHeading.heading)),
+                Math.toRadians(splineToLinearHeading.endHeading));
+    }
+
+    public TrajectorySequenceBuilder splineToLinearHeading(
+            SplineToLinearHeading splineToLinearHeading,
+            TrajectoryVelocityConstraint velConstraint,
+            TrajectoryAccelerationConstraint accelConstraint
+    ) {
+        return splineToLinearHeading(
+                new Pose2d(
+                        splineToLinearHeading.x,
+                        splineToLinearHeading.y,
+                        Math.toRadians(splineToLinearHeading.heading)),
+                Math.toRadians(splineToLinearHeading.endHeading),
+                velConstraint,
+                accelConstraint);
+    }
+
+    public TrajectorySequenceBuilder splineToSplineHeading(SplineToSplineHeading splineToSplineHeading) {
+        return splineToSplineHeading(
+                new Pose2d(
+                        splineToSplineHeading.x,
+                        splineToSplineHeading.y,
+                        Math.toRadians(splineToSplineHeading.heading)),
+                Math.toRadians(splineToSplineHeading.endHeading));
+    }
+
+    public TrajectorySequenceBuilder splineToSplineHeading(
+            SplineToSplineHeading splineToSplineHeading,
+            TrajectoryVelocityConstraint velConstraint,
+            TrajectoryAccelerationConstraint accelConstraint
+    ) {
+        return splineToSplineHeading(
+                new Pose2d(
+                        splineToSplineHeading.x,
+                        splineToSplineHeading.y,
+                        Math.toRadians(splineToSplineHeading.heading)),
+                Math.toRadians(splineToSplineHeading.endHeading),
+                velConstraint,
+                accelConstraint);
+    }
+
+    /**
+     * END OF JUSTIN ADDED CRAP
+     *
+     *
+     */
 
     private TrajectorySequenceBuilder addPath(AddPathCallback callback) {
         if (currentTrajectoryBuilder == null) newPath();
