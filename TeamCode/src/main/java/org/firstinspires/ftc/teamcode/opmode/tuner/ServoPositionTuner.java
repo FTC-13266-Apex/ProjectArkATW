@@ -4,12 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.command.FlipCone;
-import org.firstinspires.ftc.teamcode.subsystem.ConeFlipper;
-import org.firstinspires.ftc.teamcode.subsystem.Drive;
-import org.firstinspires.ftc.teamcode.subsystem.Gripper;
-import org.firstinspires.ftc.teamcode.subsystem.Lift;
-
 @TeleOp
 public class ServoPositionTuner extends LinearOpMode {
     public static class Constants {

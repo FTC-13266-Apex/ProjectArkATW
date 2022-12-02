@@ -498,7 +498,7 @@ public class Drive extends MecanumDrive {
         );
     }
 
-    public void manualControl() {
+    public void runIteratively() {
         double strafeSpeed;
         double forwardSpeed;
         double turnSpeed;

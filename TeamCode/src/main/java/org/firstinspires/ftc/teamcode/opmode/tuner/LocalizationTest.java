@@ -26,7 +26,7 @@ public class LocalizationTest extends LinearOpMode {
         waitForStart();
 
         while (!isStopRequested()) {
-            drive.manualControl();
+            drive.runIteratively();
 
             drive.update();
 
