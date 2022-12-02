@@ -469,6 +469,11 @@ public class Drive extends MecanumDrive {
         return (double) imu.getAngularVelocity().xRotationRate;
     }
 
+    public void resetImu() {
+        imu.initialize(new BNO055IMU.Parameters());
+    }
+
+
     public static TrajectoryVelocityConstraint getVelocityConstraint(double maxVel, double maxAngularVel, double trackWidth) {
         return new MinVelocityConstraint(Arrays.asList(
                 new AngularVelocityConstraint(maxAngularVel),
@@ -535,15 +540,11 @@ public class Drive extends MecanumDrive {
             turnSpeed = gamepad1.right_stick_x;
         }
 
-        if (gamepad1.left_bumper) {
-            speed = Drivetrain.Speed.SLOW_SPEED;
-        }
-        else if (gamepad1.right_bumper) {
-            speed = Drivetrain.Speed.FAST_SPEED;
-        }
-        else {
-            speed = Drivetrain.Speed.NORMAL_SPEED;
-        }
+        if (gamepad1.left_bumper) speed = Drivetrain.Speed.SLOW_SPEED;
+        else if (gamepad1.right_bumper) speed = Drivetrain.Speed.FAST_SPEED;
+        else speed = Drivetrain.Speed.NORMAL_SPEED;
+
+        if (gamepad1.a) resetImu();
 
 
         if (Drivetrain.IS_FIELD_CENTRIC)
