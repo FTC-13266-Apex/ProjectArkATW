@@ -85,7 +85,7 @@ public class RightSidePathOnly extends LinearOpMode {
         lift.moveHigh();
         drive.followTrajectorySequence(preLoad);
 
-        { // Code to be looped
+        for (int i = 0; i < 1; i++) { // Code to be looped
             gripper.open();
             sleep(2000);
             lift.moveCone5();
@@ -100,6 +100,7 @@ public class RightSidePathOnly extends LinearOpMode {
 
             drive.followTrajectorySequence(cycle1Drop);
         }
+
         // Put pose in pose storage (so it can be used in teleOp)
         PoseStorage.currentPose = drive.getPoseEstimate();
     }
