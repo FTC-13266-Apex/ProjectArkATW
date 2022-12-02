@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.util;
 
 import com.acmerobotics.dashboard.config.Config;
 
+import org.firstinspires.ftc.teamcode.command.FlipConeWithGamepad;
+import org.firstinspires.ftc.teamcode.command.Sensor;
 import org.firstinspires.ftc.teamcode.opmode.auto.RightSidePathOnly;
 import org.firstinspires.ftc.teamcode.opmode.tuner.AutomaticFeedforwardTuner;
 import org.firstinspires.ftc.teamcode.opmode.tuner.BackAndForth;
@@ -31,22 +33,29 @@ public class Constants {
     public static Gripper.Constants gripper;
     public static Vision.Constants vision;
     public static ConeFlipper.Constants coneFlipper;
-    public static RoadRunnerConfiguration drive;
-    public static Tuners tuners;
+
+
 
 
     public static Autos autos;
-
     public static class Autos {
         public static RightSidePathOnly.Constants rightSideOnly;
     }
 
+    public static Commands commands;
+    public static class Commands {
+        public static Sensor.Constants sensor;
+        public static FlipConeWithGamepad.Constants flipConeWIthGamepad;
+    }
+
+    public static RoadRunnerConfiguration drive;
     public static class RoadRunnerConfiguration {
         public static Drive.Constants drivetrain;
         public static StandardTrackingWheelLocalizer.Constants deadWheels;
         public static TrajectorySequenceRunner.Constants trajectorySequenceRunner;
     }
 
+    public static Tuners tuners;
     public static class Tuners {
         AutomaticFeedforwardTuner.Constants automaticFeedforwardTuner;
         BackAndForth.Constants backAndForth;

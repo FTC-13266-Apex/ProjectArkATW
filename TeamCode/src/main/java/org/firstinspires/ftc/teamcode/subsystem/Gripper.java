@@ -26,12 +26,13 @@ public class Gripper extends Subsystem {
         }
 
         private static class Sensor {
-            public static double GRAB_DISTANCE_MM = 70;
+            public static double GRAB_DISTANCE_MM = 30;
         }
     }
 
     private final Servo gripper;
     private final ColorRangeSensor distanceSensor;
+    private boolean ignoreSensor = false;
 
     public Gripper (@NonNull OpMode opMode) {
         super(opMode);
@@ -42,15 +43,20 @@ public class Gripper extends Subsystem {
 
     @Override
     protected void manualControl() {
-        if (opMode.gamepad2.a) close();
-        else if (opMode.gamepad2.b) open();
-        sensorControl();
+        ignoreSensor = true;
+        if (opMode.gamepad2.b) open();
+        else if (opMode.gamepad2.a) close();
+        else ignoreSensor = false;
     }
 
-    public void sensorControl() {
+    public boolean isInRange() {
         double distance = distanceSensor.getDistance(DistanceUnit.MM);
-        if ((distance) < Constants.Sensor.GRAB_DISTANCE_MM) close();
         opMode.telemetry.addData("Distance", distance);
+        return (distance) < Constants.Sensor.GRAB_DISTANCE_MM;
+    }
+
+    public boolean ignoreSensor() {
+        return ignoreSensor;
     }
 
     public void open() {

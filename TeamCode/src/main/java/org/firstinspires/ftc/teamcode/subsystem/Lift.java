@@ -35,6 +35,7 @@ public class Lift extends Subsystem {
                     HIGH = 2020,
                     MID = 1510,
                     LOW = 940,
+                    GROUND_JUNCTION = 200,
                     INITIAL = -70,
                     FLIPPED_CONE = 330,
                     MAX_POSITION = 2100,
@@ -146,6 +147,10 @@ public class Lift extends Subsystem {
         if (isMovingManually) {
             Constants.Position.LOW = motorPosition;
         }
+    }
+
+    public void moveGroundJunction() {
+        moveMotors(Constants.Position.GROUND_JUNCTION);
     }
 
     public void moveCone5() {

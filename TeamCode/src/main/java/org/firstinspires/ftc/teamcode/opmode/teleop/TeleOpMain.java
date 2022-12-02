@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.command.FlipConeWithGamepad;
+import org.firstinspires.ftc.teamcode.command.Sensor;
 import org.firstinspires.ftc.teamcode.command.Sussy;
 import org.firstinspires.ftc.teamcode.subsystem.ConeFlipper;
 import org.firstinspires.ftc.teamcode.subsystem.Drive;
@@ -21,6 +22,7 @@ public class TeleOpMain extends LinearOpMode {
         Drive drive = new Drive(this,true);
         Sussy sussy = new Sussy(this);
 
+        Sensor sensor = new Sensor(this, gripper, lift);
         FlipConeWithGamepad flipConeWithGamepad = new FlipConeWithGamepad(this, coneFlipper, lift, gripper);
 
         gripper.open();
@@ -32,6 +34,7 @@ public class TeleOpMain extends LinearOpMode {
         waitForStart();
         while (opModeIsActive()) {
             lift.runIteratively();
+            sensor.runIteratively();
             gripper.runIteratively();
 
             flipConeWithGamepad.runIteratively();
