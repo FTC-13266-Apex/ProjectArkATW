@@ -22,18 +22,22 @@ public class RightSidePathOnly extends LinearOpMode {
 
         Pose2d startPose = new Pose2d(31, -62, Math.toRadians(90));
 
+
+
         Drive drive = new Drive(this);
+
+        drive.setPoseEstimate(startPose);
 
         TrajectorySequence traj1 = drive.trajectorySequenceBuilder(startPose)
                 .setReversed(false)
                 .splineToSplineHeading(new Pose2d(35, -30, Math.toRadians(90)), Math.toRadians(90))
-                .splineToSplineHeading(new Pose2d(30,-6 , Math.toRadians(135)), Math.toRadians(135))
+                .splineToSplineHeading(new Pose2d(32,-6 , Math.toRadians(135)), Math.toRadians(135))
                 .setReversed(true)
                 .splineToSplineHeading(new Pose2d(59, -12, Math.toRadians(0)), Math.toRadians(0))
                 .forward(5)
                 .setReversed(false)
                 .back(5)
-                .splineToSplineHeading(new Pose2d(30,-6 , Math.toRadians(135)), Math.toRadians(135))
+                .splineToSplineHeading(new Pose2d(32,-6 , Math.toRadians(135)), Math.toRadians(135))
                 .build();
         waitForStart();
         if (isStopRequested()) return;
