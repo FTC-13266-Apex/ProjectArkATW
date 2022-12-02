@@ -17,6 +17,7 @@ public class TeleOpMain extends LinearOpMode {
         Lift lift = new Lift(this);
         Gripper gripper = new Gripper(this);
         ConeFlipper coneFlipper = new ConeFlipper(this);
+        // TODO: get this to false
         Drive drive = new Drive(this,true);
         Sussy sussy = new Sussy(this);
 
