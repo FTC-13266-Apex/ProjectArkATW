@@ -172,4 +172,8 @@ public class Lift extends Subsystem {
     public void moveToPickUpFlippedCone() {
         moveMotors(Constants.Position.FLIPPED_CONE);
     }
+
+    public boolean isDown() {
+        return motorPosition <= Constants.Position.INITIAL;
+    }
 }

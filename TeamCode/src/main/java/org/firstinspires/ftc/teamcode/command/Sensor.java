@@ -16,7 +16,7 @@ public class Sensor extends Command {
     }
 
     public static class Constants {
-        public static double LIFT_WAIT_SECONDS = 1;
+        public static double LIFT_WAIT_SECONDS = 0.3;
     }
 
     private final Gripper gripper;
@@ -34,9 +34,13 @@ public class Sensor extends Command {
     @Override
     protected void run() {
         switch (sensorState) {
-            case GRAB:
+            case DISABLED:
                 if (gripper.ignoreSensor()) break;
+                sensorState = SensorState.GRAB;
+                break;
+            case GRAB:
                 if (!gripper.isInRange()) break;
+                if (!lift.isDown()) break;
                 gripper.close();
                 waitTimer.reset();
                 sensorState = SensorState.LIFT;
@@ -45,7 +49,6 @@ public class Sensor extends Command {
                 lift.moveGroundJunction();
                 sensorState = SensorState.DISABLED;
                 break;
-
         }
     }
 }

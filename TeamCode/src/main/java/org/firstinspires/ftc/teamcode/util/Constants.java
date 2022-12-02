@@ -73,4 +73,10 @@ public class Constants {
         TurnTest.Constants turnTest;
         ServoPositionTuner.Constants servoPositionTuner;
     }
+
+    public static Utilities utilities;
+    public static class Utilities {
+        public static TrajectorySequenceRunner.Constants trajectorySequenceRunner;
+        public static StandardTrackingWheelLocalizer.Constants standardTrackingWheelLocalizer;
+    }
 }
