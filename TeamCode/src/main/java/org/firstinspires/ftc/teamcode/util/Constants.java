@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.util;
 
 import com.acmerobotics.dashboard.config.Config;
 
+import org.firstinspires.ftc.teamcode.opmode.auto.RightSidePathOnly;
 import org.firstinspires.ftc.teamcode.opmode.tuner.AutomaticFeedforwardTuner;
 import org.firstinspires.ftc.teamcode.opmode.tuner.BackAndForth;
 import org.firstinspires.ftc.teamcode.opmode.tuner.DriveVelocityPIDTuner;
@@ -34,7 +35,11 @@ public class Constants {
     public static Tuners tuners;
 
 
+    public static Autos autos;
 
+    public static class Autos {
+        public static RightSidePathOnly.Constants rightSideOnly;
+    }
 
     public static class RoadRunnerConfiguration {
         public static Drive.Constants drivetrain;
