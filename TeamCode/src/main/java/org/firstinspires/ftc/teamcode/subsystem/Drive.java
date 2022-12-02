@@ -8,6 +8,7 @@ import com.acmerobotics.roadrunner.drive.MecanumDrive;
 import com.acmerobotics.roadrunner.followers.HolonomicPIDVAFollower;
 import com.acmerobotics.roadrunner.followers.TrajectoryFollower;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
 import com.acmerobotics.roadrunner.trajectory.constraints.AngularVelocityConstraint;
@@ -231,6 +232,7 @@ public class Drive extends MecanumDrive {
 
         batteryVoltageSensor = hardwareMap.voltageSensor.iterator().next();
 
+        // TODO: you may want to consider moving this
         for (LynxModule module : hardwareMap.getAll(LynxModule.class)) {
             module.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
         }
@@ -486,10 +488,21 @@ public class Drive extends MecanumDrive {
      * @param gyroAngle angle the bot is currently facing relative to start (radians)
      */
     public void driveFieldCentric(double strafeSpeed, double forwardSpeed, double turnSpeed, double gyroAngle) {
+        Vector2d input = new Vector2d(
+                forwardSpeed,
+                strafeSpeed
+        ).rotated(gyroAngle);
+
         driveRobotCentric(
-                (strafeSpeed * Math.cos(gyroAngle) - forwardSpeed * Math.sin(gyroAngle)),
-                (strafeSpeed * Math.sin(gyroAngle) + forwardSpeed * Math.cos(gyroAngle)),
-                turnSpeed);
+                input.getX(),
+                input.getY(),
+                turnSpeed
+        );
+        // TODO: if the above works, remove this, otherwise remove the above and replace with commented out code
+//        driveRobotCentric(
+//                (strafeSpeed * Math.cos(gyroAngle) - forwardSpeed * Math.sin(gyroAngle)),
+//                (strafeSpeed * Math.sin(gyroAngle) + forwardSpeed * Math.cos(gyroAngle)),
+//                turnSpeed);
     }
     
     private void driveRobotCentric(double strafeSpeed, double forwardSpeed, double turnSpeed) {
