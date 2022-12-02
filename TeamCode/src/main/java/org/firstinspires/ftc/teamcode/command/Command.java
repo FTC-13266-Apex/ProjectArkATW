@@ -25,7 +25,16 @@ public abstract class Command {
     }
 
     /**
-     * Runs one iteration of the command
+     * Runs one iteration of the command.
+     * Same as {@link #runIteratively()}
+     */
+    public void runOnce() {
+        run();
+    }
+
+    /**
+     * Runs one iteration of the command.
+     * Same as {@link #runOnce()}
      */
     public void runIteratively() {
         run();
