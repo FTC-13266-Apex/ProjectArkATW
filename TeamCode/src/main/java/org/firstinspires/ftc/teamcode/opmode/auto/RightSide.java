@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmode.auto;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryAccelerationConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -11,96 +10,116 @@ import org.firstinspires.ftc.teamcode.subsystem.Drive;
 import org.firstinspires.ftc.teamcode.subsystem.Gripper;
 import org.firstinspires.ftc.teamcode.subsystem.Lift;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
+import org.firstinspires.ftc.teamcode.trajectorysequence.container.Pose2dContainer;
+import org.firstinspires.ftc.teamcode.util.PoseStorage;
+import org.firstinspires.ftc.teamcode.trajectorysequence.container.SplineToSplineHeading;
 
 @Autonomous
 public class RightSide extends LinearOpMode {
-    TrajectoryVelocityConstraint mediumSlowVel = (v, pose2d, pose2d1, pose2d2) -> 30; // value
-    TrajectoryAccelerationConstraint mediumSlowAccel = (v, pose2d, pose2d1, pose2d2) -> 30; // value
+    public static class Constants {
+        public static Speed speed;
+        public static class Speed {
+            public static double velocity = 50; // value
+            public static double acceleration = 60; // value
+        }
 
-    TrajectoryVelocityConstraint slowVel = (v, pose2d, pose2d1, pose2d2) -> 30; // value
-    TrajectoryAccelerationConstraint slowAccel = (v, pose2d, pose2d1, pose2d2) -> 30; // value
+        public static Path path;
+        public static class Path {
+            public static Pose2dContainer startPose = new Pose2dContainer(31, -62, 90);
+            public static PreLoad preload;
+            public static class PreLoad {
+                public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(32, -6, 135, 115);
 
-    Pose2d startPose = new Pose2d(31, -62, Math.toRadians(90));
+            }
+            public static Cycle1Pickup cycle1Pickup;
+            public static class Cycle1Pickup {
+                public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(59, -12, 0, 0);
+                public static double forwardDistance = 5;
+            }
+            public static Cycle1Drop cycle1Drop;
+            public static class Cycle1Drop {
+                public static double backDistance = 5;
+                public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(32, -6, 135, 135);
 
-    double backDistance;
+            }
+            public static long dropWaitMS = 2000;
+        }
+    }
 
     @Override
     public void runOpMode() throws InterruptedException {
+        TrajectoryVelocityConstraint vel = (v, pose2d, pose2d1, pose2d2) -> Constants.Speed.velocity; // value
+        TrajectoryAccelerationConstraint accel = (v, pose2d, pose2d1, pose2d2) -> Constants.Speed.acceleration; // value
+
+
         Drive drive = new Drive(this);
         Lift lift = new Lift(this);
         Gripper gripper = new Gripper(this);
 
-
-        telemetry.setMsTransmissionInterval(50);
-        drive.setPoseEstimate(startPose);
-        lift.moveInitial();
         gripper.close();
 
-//        vision.init();
-
-
-
-//        while (!isStarted() && !isStopRequested())
-//        {
-//           vision.updateTagOfInterest();
-//           vision.printTagData();
-//           telemetry.update();
-//           if (vision.getTagOfInterest() == null) continue;
-//           switch (vision.getTagOfInterest().id) {
-//               case 2: {
-//                   backDistance = 25;
-//                   break;
-//               }
-//               case 3: {
-//                   backDistance = 52;
-//                   break;
-//               }
-//               default: {
-//                   backDistance = 3;
-//               }
-//           }
-//        }
-        waitForStart();
+        Pose2d startPose = new Pose2d(
+                Constants.Path.startPose.x,
+                Constants.Path.startPose.y,
+                Math.toRadians(Constants.Path.startPose.heading));
 
         TrajectorySequence preLoad = drive.trajectorySequenceBuilder(startPose)
-                .splineTo(new Vector2d(35, -30), Math.toRadians(90))
-                .addDisplacementMarker(lift::moveHigh)
-                .lineToLinearHeading(new Pose2d(29,-8 , Math.toRadians(110)))
-                .addDisplacementMarker(gripper::open)
-                .addDisplacementMarker(lift::moveLow)
-                .lineToLinearHeading(new Pose2d(43,-12, Math.toRadians(0)))
-                .addDisplacementMarker(lift::moveCone5)
-                .splineToLinearHeading(new Pose2d(62, -12, Math.toRadians(0)), Math.toRadians(0))
-                .lineToLinearHeading(new Pose2d(43,-12, Math.toRadians(0)))
-                .addDisplacementMarker(gripper::close)
-                .addDisplacementMarker(lift::moveLow)
-                .lineToLinearHeading(new Pose2d(29,-8 , Math.toRadians(110)))
-                .addDisplacementMarker(lift::moveHigh)
-                .lineToLinearHeading(new Pose2d(43,-12, Math.toRadians(0)))
-                .addDisplacementMarker(gripper::open)
-                .splineToLinearHeading(new Pose2d(62, -12, Math.toRadians(0)), Math.toRadians(0))
-                .addDisplacementMarker(lift::moveCone4)
-                .lineToLinearHeading(new Pose2d(43,-12, Math.toRadians(0)))
-                .addDisplacementMarker(gripper::close)
-                .addDisplacementMarker(lift::moveLow)
-                .lineToLinearHeading(new Pose2d(29,-8 , Math.toRadians(110)))
+                .setReversed(false)
+                .splineToSplineHeading(Constants.Path.PreLoad.splineToSplineHeading, vel, accel) // The lower the right number is, the more the bot will go right. Higher = more straight of a path
+                .build();
 
-                .lineToLinearHeading(new Pose2d(43,-12, Math.toRadians(0)))
+        TrajectorySequence cycle1Pickup = drive.trajectorySequenceBuilder(preLoad.end())
+                .setReversed(true)
+                .splineToSplineHeading(Constants.Path.Cycle1Pickup.splineToSplineHeading, vel, accel)
+                .forward(Constants.Path.Cycle1Pickup.forwardDistance, vel, accel)
                 .build();
-        TrajectorySequence boxOne = drive.trajectorySequenceBuilder(preLoad.end())
-                .lineToLinearHeading(new Pose2d(12, -10, Math.toRadians(0)), slowVel, slowAccel)
+
+        TrajectorySequence cycle1Drop = drive.trajectorySequenceBuilder(cycle1Pickup.end())
+                .setReversed(false)
+                .back(Constants.Path.Cycle1Drop.backDistance, vel, accel)
+                .splineToSplineHeading(Constants.Path.Cycle1Drop.splineToSplineHeading, vel, accel)
                 .build();
+
+        drive.setPoseEstimate(startPose);
+
+
+        waitForStart();
         if (isStopRequested()) return;
+
+        lift.moveHigh();
         drive.followTrajectorySequence(preLoad);
-        //gripper.open();
-        drive.followTrajectorySequence(boxOne);
-//        lift.initial();
-        if (backDistance == 0) return;
-        TrajectorySequence forward = drive.trajectorySequenceBuilder(boxOne.end())
-                .back(backDistance, slowVel, slowAccel)
-                .build();
-        drive.followTrajectorySequence(forward);
-        sleep(5000);
+
+        for (int i = 1; i <= 1; i++) { // Code to be looped
+            gripper.open();
+            sleep(Constants.Path.dropWaitMS);
+            switch (i) {
+                case 1:
+                    lift.moveCone5();
+                    break;
+                case 2:
+                    lift.moveCone4();
+                    break;
+                case 3:
+                    lift.moveCone3();
+                    break;
+                case 4:
+                    lift.moveCone2();
+                    break;
+            }
+
+
+            drive.followTrajectorySequence(cycle1Pickup);
+
+            gripper.close();
+            // If the distance sensor detected it, then we know we got here and we can reset pose estimate
+            // drive.setPoseEstimate(cycle1Pickup.end());
+            sleep(Constants.Path.dropWaitMS);
+            lift.moveHigh();
+
+            drive.followTrajectorySequence(cycle1Drop);
+        }
+
+        // Put pose in pose storage (so it can be used in teleOp)
+        PoseStorage.currentPose = drive.getPoseEstimate();
     }
 }
-
