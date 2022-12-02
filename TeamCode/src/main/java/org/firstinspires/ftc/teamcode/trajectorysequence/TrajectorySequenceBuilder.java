@@ -430,6 +430,22 @@ public class TrajectorySequenceBuilder {
         return this;
     }
 
+    public TrajectorySequenceBuilder run(MarkerCallback callback) {
+        return this.addDisplacementMarker(callback);
+    }
+
+    public TrajectorySequenceBuilder run(double displacement, MarkerCallback callback) {
+        return this.addDisplacementMarker(displacement, callback);
+    }
+
+    public TrajectorySequenceBuilder run(double scale, double offset, MarkerCallback callback) {
+        return this.addDisplacementMarker(scale, offset, callback);
+    }
+
+    public TrajectorySequenceBuilder run(DisplacementProducer displacement, MarkerCallback callback) {
+        return this.addDisplacementMarker(displacement, callback);
+    }
+
     public TrajectorySequenceBuilder turn(double angle) {
         return turn(angle, currentTurnConstraintMaxAngVel, currentTurnConstraintMaxAngAccel);
     }
