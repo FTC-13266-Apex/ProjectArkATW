@@ -119,6 +119,9 @@ public class RightSide extends LinearOpMode {
             drive.followTrajectorySequence(cycle1Drop);
         }
 
+        lift.moveInitial();
+        sleep(2000);
+
         // Put pose in pose storage (so it can be used in teleOp)
         PoseStorage.currentPose = drive.getPoseEstimate();
     }
