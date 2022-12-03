@@ -57,21 +57,21 @@ public class Constants {
 
     public static Tuners tuners;
     public static class Tuners {
-        AutomaticFeedforwardTuner.Constants automaticFeedforwardTuner;
-        BackAndForth.Constants backAndForth;
-        DriveVelocityPIDTuner.Constants driveVelocityPIDTuner;
-        ManualFeedforwardTuner.Constants manualFeedforwardTuner;
-        MaxAngularVeloTuner.Constants maxAngularVeloTuner;
-        MaxVelocityTuner.Constants maxVelocityTuner;
-        MotorDirectionDebugger.Constants motorDirectionDebugger;
-        SplineTest.Constants splineTest;
-        StrafeTest.Constants strafeTest;
-        StraightTest.Constants straightTest;
-        TrackingWheelForwardOffsetTuner.Constants trackingWheelForwardOffsetTuner;
-        TrackingWheelLateralDistanceTuner.Constants trackingWheelLateralDistanceTuner;
-        TrackWidthTuner.Constants trackWidthTuner;
-        TurnTest.Constants turnTest;
-        ServoPositionTuner.Constants servoPositionTuner;
+        public static AutomaticFeedforwardTuner.Constants automaticFeedforwardTuner;
+        public static BackAndForth.Constants backAndForth;
+        public static DriveVelocityPIDTuner.Constants driveVelocityPIDTuner;
+        public static ManualFeedforwardTuner.Constants manualFeedforwardTuner;
+        public static MaxAngularVeloTuner.Constants maxAngularVeloTuner;
+        public static MaxVelocityTuner.Constants maxVelocityTuner;
+        public static MotorDirectionDebugger.Constants motorDirectionDebugger;
+        public static SplineTest.Constants splineTest;
+        public static StrafeTest.Constants strafeTest;
+        public static StraightTest.Constants straightTest;
+        public static TrackingWheelForwardOffsetTuner.Constants trackingWheelForwardOffsetTuner;
+        public static TrackingWheelLateralDistanceTuner.Constants trackingWheelLateralDistanceTuner;
+        public static TrackWidthTuner.Constants trackWidthTuner;
+        public static TurnTest.Constants turnTest;
+        public static ServoPositionTuner.Constants servoPositionTuner;
     }
 
     public static Utilities utilities;
