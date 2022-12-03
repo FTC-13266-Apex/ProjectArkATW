@@ -42,7 +42,7 @@ public class RightSide extends LinearOpMode {
                 public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(32, -6, 135, 135);
 
             }
-            public static long dropWaitMS = 2000;
+            public static double dropWaitMS = 2000;
         }
     }
 
@@ -91,7 +91,7 @@ public class RightSide extends LinearOpMode {
 
         for (int i = 1; i <= 1; i++) { // Code to be looped
             gripper.open();
-            sleep(Constants.Path.dropWaitMS);
+            sleep((long) Constants.Path.dropWaitMS);
             switch (i) {
                 case 1:
                     lift.moveCone5();
@@ -113,7 +113,7 @@ public class RightSide extends LinearOpMode {
             gripper.close();
             // If the distance sensor detected it, then we know we got here and we can reset pose estimate
             // drive.setPoseEstimate(cycle1Pickup.end());
-            sleep(Constants.Path.dropWaitMS);
+            sleep((long) Constants.Path.dropWaitMS);
             lift.moveHigh();
 
             drive.followTrajectorySequence(cycle1Drop);
