@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmode.auto;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.trajectory.MarkerCallback;
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryAccelerationConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -10,6 +11,7 @@ import org.firstinspires.ftc.teamcode.subsystem.Drive;
 import org.firstinspires.ftc.teamcode.subsystem.Gripper;
 import org.firstinspires.ftc.teamcode.subsystem.Lift;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
+import org.firstinspires.ftc.teamcode.trajectorysequence.container.LineToLinearHeading;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.Pose2dContainer;
 import org.firstinspires.ftc.teamcode.util.PoseStorage;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.SplineToSplineHeading;
@@ -42,6 +44,11 @@ public class RightSide extends LinearOpMode {
                 public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(32, -1, 135, 115);
 
             }
+            public static Park park;
+            public static class Park {
+                public static LineToLinearHeading lineToLinearHeading = new LineToLinearHeading(36, -12, 180);
+                public static double parkDistance = 24;
+            }
             public static double dropWaitMS = 1500;
         }
     }
@@ -70,6 +77,7 @@ public class RightSide extends LinearOpMode {
 
         TrajectorySequence cycle1Pickup = drive.trajectorySequenceBuilder(preLoad.end())
                 .setReversed(true)
+                .addDisplacementMarker(5, lift::moveCone5)
                 .splineToSplineHeading(Constants.Path.Cycle1Pickup.splineToSplineHeading, vel, accel)
                 .forward(Constants.Path.Cycle1Pickup.forwardDistance, vel, accel)
                 .build();
@@ -79,6 +87,19 @@ public class RightSide extends LinearOpMode {
                 .back(Constants.Path.Cycle1Drop.backDistance, vel, accel)
                 .splineToSplineHeading(Constants.Path.Cycle1Drop.splineToSplineHeading, vel, accel)
                 .build();
+
+        TrajectorySequence park = drive.trajectorySequenceBuilder(cycle1Drop.end())
+                .lineToLinearHeading(Constants.Path.Park.lineToLinearHeading, vel, accel)
+                .build();
+
+        TrajectorySequence parkMove = null;
+        if (Constants.Path.Park.parkDistance != 0) {
+            parkMove = drive.trajectorySequenceBuilder(park.end())
+                    .forward(Constants.Path.Park.parkDistance)
+                    .build();
+        }
+
+
 
         drive.setPoseEstimate(startPose);
 
@@ -92,20 +113,20 @@ public class RightSide extends LinearOpMode {
         for (int i = 1; i <= 2; i++) { // Code to be looped
             gripper.open();
             sleep((long) Constants.Path.dropWaitMS);
-            switch (i) {
-                case 1:
-                    lift.moveCone5();
-                    break;
-                case 2:
-                    lift.moveCone4();
-                    break;
-                case 3:
-                    lift.moveCone3();
-                    break;
-                case 4:
-                    lift.moveCone2();
-                    break;
-            }
+//            switch (i) {
+//                case 1:
+//                    lift.moveCone5();
+//                    break;
+//                case 2:
+//                    lift.moveCone4();
+//                    break;
+//                case 3:
+//                    lift.moveCone3();
+//                   break;
+//                case 4:
+//                    lift.moveCone2();
+//                    break;
+//            }
 
 
             drive.followTrajectorySequence(cycle1Pickup);
@@ -117,6 +138,11 @@ public class RightSide extends LinearOpMode {
             lift.moveHigh();
 
             drive.followTrajectorySequence(cycle1Drop);
+        }
+        drive.followTrajectorySequence(park);
+
+        if (parkMove != null) {
+            drive.followTrajectorySequence(parkMove);
         }
 
         lift.moveInitial();
