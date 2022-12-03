@@ -1,12 +1,8 @@
 package org.firstinspires.ftc.teamcode.trajectorysequence.container;
 
 public class LineToSplineHeading {
-    public double x = 0;
-    public double y = 0;
-    public double heading = 0;
+    public Pose2dContainer pose2dContainer;
     public LineToSplineHeading(double x, double y, double heading) {
-        this.x = x;
-        this.y = y;
-        this.heading = heading;
+        pose2dContainer = new Pose2dContainer(x, y, heading);
     }
 }

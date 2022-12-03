@@ -1,12 +1,10 @@
 package org.firstinspires.ftc.teamcode.trajectorysequence.container;
 
 public class SplineToConstantHeading {
-    public double x = 0;
-    public double y = 0;
-    public double endHeading = 0;
-    public SplineToConstantHeading(double x, double y, double endHeading) {
-        this.x = x;
-        this.y = y;
-        this.endHeading = endHeading;
+    public Vector2dContainer vector2dContainer;
+    public double endHeadingDegrees = 0;
+    public SplineToConstantHeading(double x, double y, double endHeadingDegrees) {
+        vector2dContainer = new Vector2dContainer(x, y);
+        this.endHeadingDegrees = endHeadingDegrees;
     }
 }

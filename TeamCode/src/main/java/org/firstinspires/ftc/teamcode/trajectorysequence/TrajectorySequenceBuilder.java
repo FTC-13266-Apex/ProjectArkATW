@@ -296,11 +296,7 @@ public class TrajectorySequenceBuilder {
      * */
 
     public TrajectorySequenceBuilder lineTo(LineTo lineTo) {
-        return lineTo(
-                new Vector2d(
-                        lineTo.x,
-                        lineTo.y)
-        );
+        return lineTo(lineTo.vector2dContainer.getVector());
     }
 
     public TrajectorySequenceBuilder lineTo(
@@ -309,20 +305,13 @@ public class TrajectorySequenceBuilder {
             TrajectoryAccelerationConstraint accelConstraint
     ) {
         return lineTo(
-                new Vector2d(
-                        lineTo.x,
-                        lineTo.y),
+                lineTo.vector2dContainer.getVector(),
                 velConstraint,
-                accelConstraint
-        );
+                accelConstraint);
     }
 
     public TrajectorySequenceBuilder lineToConstantHeading(LineToConstantHeading lineToConstantHeading) {
-        return lineToConstantHeading(
-                new Vector2d(
-                        lineToConstantHeading.x,
-                        lineToConstantHeading.y)
-        );
+        return lineToConstantHeading(lineToConstantHeading.vector2dContainer.getVector());
     }
 
     public TrajectorySequenceBuilder lineToConstantHeading(
@@ -331,21 +320,13 @@ public class TrajectorySequenceBuilder {
             TrajectoryAccelerationConstraint accelConstraint
     ) {
         return lineToConstantHeading(
-                new Vector2d(
-                        lineToConstantHeading.x,
-                        lineToConstantHeading.y),
+                lineToConstantHeading.vector2dContainer.getVector(),
                 velConstraint,
-                accelConstraint
-        );
+                accelConstraint);
     }
 
     public TrajectorySequenceBuilder lineToLinearHeading(LineToLinearHeading lineToLinearHeading) {
-        return lineToLinearHeading(
-                new Pose2d(
-                        lineToLinearHeading.x,
-                        lineToLinearHeading.y,
-                        Math.toRadians(lineToLinearHeading.heading))
-        );
+        return lineToLinearHeading(lineToLinearHeading.pose2dContainer.getPose());
     }
 
     public TrajectorySequenceBuilder lineToLinearHeading(
@@ -354,22 +335,13 @@ public class TrajectorySequenceBuilder {
             TrajectoryAccelerationConstraint accelConstraint
     ) {
         return lineToLinearHeading(
-                new Pose2d(
-                        lineToLinearHeading.x,
-                        lineToLinearHeading.y,
-                        Math.toRadians(lineToLinearHeading.heading)),
+                lineToLinearHeading.pose2dContainer.getPose(),
                 velConstraint,
-                accelConstraint
-        );
+                accelConstraint);
     }
 
     public TrajectorySequenceBuilder lineToSplineHeading(LineToSplineHeading lineToSplineHeading) {
-        return lineToSplineHeading(
-                new Pose2d(
-                        lineToSplineHeading.x,
-                        lineToSplineHeading.y,
-                        Math.toRadians(lineToSplineHeading.heading))
-        );
+        return lineToSplineHeading(lineToSplineHeading.pose2dContainer.getPose());
     }
 
     public TrajectorySequenceBuilder lineToSplineHeading(
@@ -378,13 +350,9 @@ public class TrajectorySequenceBuilder {
             TrajectoryAccelerationConstraint accelConstraint
     ) {
         return lineToSplineHeading(
-                new Pose2d(
-                        lineToSplineHeading.x,
-                        lineToSplineHeading.y,
-                        Math.toRadians(lineToSplineHeading.heading)),
+                lineToSplineHeading.pose2dContainer.getPose(),
                 velConstraint,
-                accelConstraint
-        );
+                accelConstraint);
     }
 
     /**
@@ -397,10 +365,8 @@ public class TrajectorySequenceBuilder {
 
     public TrajectorySequenceBuilder splineTo(SplineTo splineTo) {
         return splineTo(
-                new Vector2d(
-                        splineTo.x,
-                        splineTo.y),
-                Math.toRadians(splineTo.endHeading));
+                splineTo.vector2dContainer.getVector(),
+                Math.toRadians(splineTo.endHeadingDegrees));
     }
 
     public TrajectorySequenceBuilder splineTo(
@@ -409,20 +375,16 @@ public class TrajectorySequenceBuilder {
             TrajectoryAccelerationConstraint accelConstraint
     ) {
         return splineTo(
-                new Vector2d(
-                        splineTo.x,
-                        splineTo.y),
-                Math.toRadians(splineTo.endHeading),
+                splineTo.vector2dContainer.getVector(),
+                Math.toRadians(splineTo.endHeadingDegrees),
                 velConstraint,
                 accelConstraint);
     }
 
     public TrajectorySequenceBuilder splineToConstantHeading(SplineToConstantHeading splineToConstantHeading) {
         return splineToConstantHeading(
-                new Vector2d(
-                        splineToConstantHeading.x,
-                        splineToConstantHeading.y),
-                Math.toRadians(splineToConstantHeading.endHeading));
+                splineToConstantHeading.vector2dContainer.getVector(),
+                Math.toRadians(splineToConstantHeading.endHeadingDegrees));
     }
 
     public TrajectorySequenceBuilder splineToConstantHeading(
@@ -431,19 +393,16 @@ public class TrajectorySequenceBuilder {
             TrajectoryAccelerationConstraint accelConstraint
     ) {
         return splineToConstantHeading(
-                new Vector2d(
-                        splineToConstantHeading.x,
-                        splineToConstantHeading.y),
-                Math.toRadians(splineToConstantHeading.endHeading), velConstraint, accelConstraint);
+                splineToConstantHeading.vector2dContainer.getVector(),
+                Math.toRadians(splineToConstantHeading.endHeadingDegrees),
+                velConstraint,
+                accelConstraint);
     }
 
     public TrajectorySequenceBuilder splineToLinearHeading(SplineToLinearHeading splineToLinearHeading) {
         return splineToLinearHeading(
-                new Pose2d(
-                        splineToLinearHeading.x,
-                        splineToLinearHeading.y,
-                        Math.toRadians(splineToLinearHeading.heading)),
-                Math.toRadians(splineToLinearHeading.endHeading));
+                splineToLinearHeading.pose2dContainer.getPose(),
+                Math.toRadians(splineToLinearHeading.endHeadingDegrees));
     }
 
     public TrajectorySequenceBuilder splineToLinearHeading(
@@ -452,22 +411,16 @@ public class TrajectorySequenceBuilder {
             TrajectoryAccelerationConstraint accelConstraint
     ) {
         return splineToLinearHeading(
-                new Pose2d(
-                        splineToLinearHeading.x,
-                        splineToLinearHeading.y,
-                        Math.toRadians(splineToLinearHeading.heading)),
-                Math.toRadians(splineToLinearHeading.endHeading),
+                splineToLinearHeading.pose2dContainer.getPose(),
+                Math.toRadians(splineToLinearHeading.endHeadingDegrees),
                 velConstraint,
                 accelConstraint);
     }
 
     public TrajectorySequenceBuilder splineToSplineHeading(SplineToSplineHeading splineToSplineHeading) {
         return splineToSplineHeading(
-                new Pose2d(
-                        splineToSplineHeading.x,
-                        splineToSplineHeading.y,
-                        Math.toRadians(splineToSplineHeading.heading)),
-                Math.toRadians(splineToSplineHeading.endHeading));
+                splineToSplineHeading.pose2dContainer.getPose(),
+                Math.toRadians(splineToSplineHeading.endHeadingDegrees));
     }
 
     public TrajectorySequenceBuilder splineToSplineHeading(
@@ -476,11 +429,8 @@ public class TrajectorySequenceBuilder {
             TrajectoryAccelerationConstraint accelConstraint
     ) {
         return splineToSplineHeading(
-                new Pose2d(
-                        splineToSplineHeading.x,
-                        splineToSplineHeading.y,
-                        Math.toRadians(splineToSplineHeading.heading)),
-                Math.toRadians(splineToSplineHeading.endHeading),
+                splineToSplineHeading.pose2dContainer.getPose(),
+                Math.toRadians(splineToSplineHeading.endHeadingDegrees),
                 velConstraint,
                 accelConstraint);
     }

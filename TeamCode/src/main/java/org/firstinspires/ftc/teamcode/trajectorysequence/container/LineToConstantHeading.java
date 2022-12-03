@@ -1,10 +1,8 @@
 package org.firstinspires.ftc.teamcode.trajectorysequence.container;
 
 public class LineToConstantHeading {
-    public double x = 0;
-    public double y = 0;
+    public Vector2dContainer vector2dContainer;
     public LineToConstantHeading(double x, double y) {
-        this.x = x;
-        this.y = y;
+        vector2dContainer = new Vector2dContainer(x, y);
     }
 }
