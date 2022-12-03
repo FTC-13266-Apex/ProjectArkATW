@@ -29,6 +29,7 @@ import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigu
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceRunner;
+import org.firstinspires.ftc.teamcode.trajectorysequence.container.Pose2dContainer;
 import org.firstinspires.ftc.teamcode.util.LynxModuleUtil;
 import org.firstinspires.ftc.teamcode.util.StandardTrackingWheelLocalizer;
 
@@ -159,7 +160,7 @@ public class Drive extends MecanumDrive {
             public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(8, 0, 0);
             public static PIDCoefficients HEADING_PID = new PIDCoefficients(8, 0, 0);
 
-            public static Pose2d ADMISSIBLE_ERROR = new Pose2d(0.5, 0.5, Math.toRadians(5.0));
+            public static Pose2dContainer ADMISSIBLE_ERROR = new Pose2dContainer(0.5, 0.5, 5.0);
             public static double TIMEOUT = 0.5;
         }
 
@@ -196,7 +197,7 @@ public class Drive extends MecanumDrive {
         this.opMode = opMode;
 
         TrajectoryFollower follower = new HolonomicPIDVAFollower(Follower.TRANSLATIONAL_PID, Follower.TRANSLATIONAL_PID, Follower.HEADING_PID,
-                Follower.ADMISSIBLE_ERROR, Follower.TIMEOUT);
+                Follower.ADMISSIBLE_ERROR.getPose(), Follower.TIMEOUT);
 
         LynxModuleUtil.ensureMinimumFirmwareVersion(opMode.hardwareMap);
 
