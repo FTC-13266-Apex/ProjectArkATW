@@ -19,7 +19,7 @@ public class RightSide extends LinearOpMode {
     public static class Constants {
         public static Speed speed;
         public static class Speed {
-            public static double velocity = 40; // value
+            public static double velocity = 35; // value
             public static double acceleration = 60; // value
         }
 
@@ -89,7 +89,7 @@ public class RightSide extends LinearOpMode {
         lift.moveHigh();
         drive.followTrajectorySequence(preLoad);
 
-        for (int i = 1; i <= 3; i++) { // Code to be looped
+        for (int i = 1; i <= 2; i++) { // Code to be looped
             gripper.open();
             sleep((long) Constants.Path.dropWaitMS);
             switch (i) {
