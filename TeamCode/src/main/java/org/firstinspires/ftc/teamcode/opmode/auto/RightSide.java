@@ -19,7 +19,7 @@ public class RightSide extends LinearOpMode {
     public static class Constants {
         public static Speed speed;
         public static class Speed {
-            public static double velocity = 50; // value
+            public static double velocity = 40; // value
             public static double acceleration = 60; // value
         }
 
@@ -28,21 +28,21 @@ public class RightSide extends LinearOpMode {
             public static Pose2dContainer startPose = new Pose2dContainer(31, -62, 90);
             public static PreLoad preload;
             public static class PreLoad {
-                public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(32, -6, 135, 115);
+                public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(31, -1, 135, 115);
 
             }
             public static Cycle1Pickup cycle1Pickup;
             public static class Cycle1Pickup {
-                public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(59, -12, 0, 0);
-                public static double forwardDistance = 5;
+                public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(57, -11, 0, 0);
+                public static double forwardDistance = 7;
             }
             public static Cycle1Drop cycle1Drop;
             public static class Cycle1Drop {
                 public static double backDistance = 5;
-                public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(32, -6, 135, 135);
+                public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(32, -1, 135, 115);
 
             }
-            public static double dropWaitMS = 2000;
+            public static double dropWaitMS = 1500;
         }
     }
 
@@ -89,7 +89,7 @@ public class RightSide extends LinearOpMode {
         lift.moveHigh();
         drive.followTrajectorySequence(preLoad);
 
-        for (int i = 1; i <= 1; i++) { // Code to be looped
+        for (int i = 1; i <= 3; i++) { // Code to be looped
             gripper.open();
             sleep((long) Constants.Path.dropWaitMS);
             switch (i) {

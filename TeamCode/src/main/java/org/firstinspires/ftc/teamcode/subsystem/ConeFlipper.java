@@ -17,11 +17,11 @@ public class ConeFlipper extends Subsystem {
         }
         private static class Position {
             public static double
-                    LIFT = .63,
-                    DROP = .32;
+                    LIFT = .7,
+                    DROP = .34;
             public static double
                     HIDDEN = 1,
-                    GET_CONE = 0.6,
+                    GET_CONE = 0.65,
                     FEED_CONE = .3;
         }
     }

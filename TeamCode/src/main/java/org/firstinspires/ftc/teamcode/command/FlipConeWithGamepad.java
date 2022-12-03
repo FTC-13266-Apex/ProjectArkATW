@@ -20,10 +20,10 @@ public class FlipConeWithGamepad extends Command{
     }
 
     public static class Constants {
-        public static double A_WAIT = 1.5;
+        public static double A_WAIT = 1;
         public static double B_WAIT = 2;
-        public static double C_WAIT = 2;
-        public static double D_WAIT = 2;
+        public static double C_WAIT = 1;
+        public static double D_WAIT = .5;
     }
 
     private final ConeFlipper coneFlipper;
