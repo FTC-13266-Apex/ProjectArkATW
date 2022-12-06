@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.util.PoseStorage;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.SplineToSplineHeading;
 
 @Autonomous
-public class RightSide extends LinearOpMode {
+public class Chrisautomightwork extends LinearOpMode {
     public static class Constants {
         public static Speed speed;
         public static class Speed {
@@ -68,7 +68,7 @@ public class RightSide extends LinearOpMode {
 
         Vision vision = new Vision(this);
         telemetry.setMsTransmissionInterval(50);
-        double forwardDistance = 1;
+        double forwardDistance = 0;
 
         gripper.close();
 
@@ -95,15 +95,27 @@ public class RightSide extends LinearOpMode {
                 .splineToSplineHeading(Constants.Path.Cycle1Drop.splineToSplineHeading, vel, accel)
                 .build();
 
+
         TrajectorySequence park = drive.trajectorySequenceBuilder(cycle1Drop.end())
                 .lineToLinearHeading(Constants.Path.Park.lineToLinearHeading, vel, accel)
                 .forward(forwardDistance)
                 .build();
 
-
+          drive.followTrajectorySequence(drive.trajectorySequenceBuilder(park.end())
+                .lineToLinearHeading(Constants.Path.Park.lineToLinearHeading, vel, accel)
+                .build());
+        ;
 
 
         drive.setPoseEstimate(startPose);
+
+        drive.followTrajectorySequence(cycle1Pickup);
+
+        drive.followTrajectorySequence(cycle1Drop);
+
+        drive.followTrajectorySequence(park);
+
+
 
 
         while (!isStarted() && !isStopRequested())
@@ -134,26 +146,26 @@ public class RightSide extends LinearOpMode {
         lift.moveHigh();
         drive.followTrajectorySequence(preLoad);
 
-        for (int i = 1; i <= 1; i++) { // Code to be looped
+        for (int i = 1; i <= 3; i++) { // Code to be looped
             gripper.open();
             sleep((long) Constants.Path.dropWaitMS);
-//            switch (i) {
-//                case 1:
-//                    lift.moveCone5();
-//                    break;
-//                case 2:
-//                    lift.moveCone4();
-//                    break;
-//                case 3:
-//                    lift.moveCone3();
-//                   break;
-//                case 4:
-//                    lift.moveCone2();
-//                    break;
-//            }
+            switch (i) {
+                case 1:
+                    lift.moveCone5();
+                    break;
+                case 2:
+                    lift.moveCone4();
+                    break;
+                case 3:
+                    lift.moveCone3();
+                   break;
+                case 4:
+                    lift.moveCone2();
+                    break;
+            }
 
 
-            drive.followTrajectorySequence(cycle1Pickup);
+
 
             gripper.close();
             // If the distance sensor detected it, then we know we got here and we can reset pose estimate
@@ -161,13 +173,13 @@ public class RightSide extends LinearOpMode {
             sleep((long) Constants.Path.dropWaitMS);
             lift.moveHigh();
 
-            drive.followTrajectorySequence(cycle1Drop);
 
-            drive.followTrajectorySequence(park);
-        drive.followTrajectorySequence(drive.trajectorySequenceBuilder(park.end())
-                .lineToLinearHeading(Constants.Path.Park.lineToLinearHeading, vel, accel)
-                .build());
-        drive.followTrajectorySequence(park);
+
+
+            drive.followTrajectorySequence(drive.trajectorySequenceBuilder(park.end())
+                    .lineToLinearHeading(Constants.Path.Park.lineToLinearHeading, vel, accel)
+                    .build());
+
 
         }
 

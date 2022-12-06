@@ -66,7 +66,7 @@ public class Drive extends MecanumDrive {
             public static double TRACK_WIDTH = 10.8; // in
 
             public static boolean IS_FIELD_CENTRIC = true;
-            public static boolean USING_FINE_CONTROL = true;
+            public static boolean USING_FINE_CONTROL = false;
 
 
 
@@ -80,7 +80,7 @@ public class Drive extends MecanumDrive {
                 public static double OMEGA_MULTIPLIER = 1;
 
                 public static final double NORMAL_SPEED = 1;
-                public static final double FAST_SPEED = 0.5;
+                public static final double FAST_SPEED = 0.7;
                 public static final double SLOW_SPEED = 0.3;
             }
             public static Direction direction;
@@ -88,7 +88,7 @@ public class Drive extends MecanumDrive {
                 public static DcMotorSimple.Direction
                         LEFT_FRONT = DcMotorSimple.Direction.FORWARD,
                         LEFT_REAR = DcMotorSimple.Direction.REVERSE,
-                        RIGHT_FRONT = DcMotorSimple.Direction.REVERSE,
+                        RIGHT_FRONT = DcMotorSimple.Direction.FORWARD,
                         RIGHT_REAR = DcMotorSimple.Direction.FORWARD;
             }
         }

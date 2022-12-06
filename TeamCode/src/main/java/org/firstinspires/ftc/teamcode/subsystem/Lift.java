@@ -40,7 +40,7 @@ public class Lift extends Subsystem {
                     FLIPPED_CONE = 400,
                     MAX_POSITION = 2100,
                     MIN_POSITION = -70,
-                    AUTO_5CONE = 318,
+                    AUTO_5CONE = 305,
                     AUTO_4CONE = 223,
                     AUTO_3CONE = 133,
                     AUTO_2CONE = 55;
