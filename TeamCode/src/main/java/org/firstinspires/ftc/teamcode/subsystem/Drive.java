@@ -79,9 +79,9 @@ public class Drive extends MecanumDrive {
                 public static double VY_MULTIPLIER = 1;
                 public static double OMEGA_MULTIPLIER = 1;
 
-                public static final double NORMAL_SPEED = 1;
-                public static final double FAST_SPEED = 0.7;
-                public static final double SLOW_SPEED = 0.3;
+                public static double NORMAL_SPEED = 1;
+                public static double FAST_SPEED = 0.7;
+                public static double SLOW_SPEED = 0.3;
             }
             public static Direction direction;
             public static class Direction {
@@ -494,6 +494,7 @@ public class Drive extends MecanumDrive {
         double strafeSpeed;
         double forwardSpeed;
         double turnSpeed;
+
 
         if (Drivetrain.USING_FINE_CONTROL) {
             strafeSpeed = squareInput(opMode.gamepad1.left_stick_x);
