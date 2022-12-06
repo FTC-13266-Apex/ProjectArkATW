@@ -10,6 +10,8 @@ import org.firstinspires.ftc.teamcode.subsystem.ConeFlipper;
 import org.firstinspires.ftc.teamcode.subsystem.Drive;
 import org.firstinspires.ftc.teamcode.subsystem.Gripper;
 import org.firstinspires.ftc.teamcode.subsystem.Lift;
+import org.firstinspires.ftc.teamcode.util.PoseStorage;
+
 @TeleOp
 public class TeleOpMain extends LinearOpMode {
 
@@ -25,10 +27,9 @@ public class TeleOpMain extends LinearOpMode {
         Sensor sensor = new Sensor(this, gripper, lift);
         FlipConeWithGamepad flipConeWithGamepad = new FlipConeWithGamepad(this, coneFlipper, lift, gripper);
 
+        drive.setPoseEstimate(PoseStorage.currentPose);
         gripper.open();
-
         sussy.runOnce();
-
         telemetry.update();
 
         waitForStart();

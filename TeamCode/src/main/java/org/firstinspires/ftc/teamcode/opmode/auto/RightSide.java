@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmode.auto;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.trajectory.MarkerCallback;
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryAccelerationConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -28,21 +27,13 @@ public class RightSide extends LinearOpMode {
 
         public static Path path;
         public static class Path {
+            public static double dropWaitMS = 1500;
             public static Pose2dContainer startPose = new Pose2dContainer(31, -62, 90);
+            public static double liftDisplacement = 5;
+
             public static PreLoad preload;
             public static class PreLoad {
                 public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(31, -2, 135, 115);
-
-            }
-            public static Cycle1Pickup cycle1Pickup;
-            public static class Cycle1Pickup {
-                public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(57, -11, 0, 0);
-                public static double forwardDistance = 7;
-            }
-            public static Cycle1Drop cycle1Drop;
-            public static class Cycle1Drop {
-                public static double backDistance = 5;
-                public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(32, -1, 135, 115);
 
             }
             public static Park park;
@@ -52,7 +43,45 @@ public class RightSide extends LinearOpMode {
                 public static double midDistance = 3;
                 public static double rightDistance = -24;
             }
-            public static double dropWaitMS = 1500;
+            public static class Cycle1 {
+                public static Pickup pickup;
+                public static class Pickup {
+                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(57, -11, 0, 0);
+                    public static double forwardDistance = 7;
+                }
+                public static Drop drop;
+                public static class Drop {
+                    public static double backDistance = 5;
+                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(32, -1, 135, 115);
+
+                }
+            }
+            public static class Cycle2 {
+                public static Pickup pickup;
+                public static class Pickup {
+                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(57, -11, 0, 0);
+                    public static double forwardDistance = 7;
+                }
+                public static Drop drop;
+                public static class Drop {
+                    public static double backDistance = 5;
+                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(32, -1, 135, 115);
+
+                }
+            }
+            public static class Cycle3 {
+                public static Pickup pickup;
+                public static class Pickup {
+                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(57, -11, 0, 0);
+                    public static double forwardDistance = 7;
+                }
+                public static Drop drop;
+                public static class Drop {
+                    public static double backDistance = 5;
+                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(32, -1, 135, 115);
+
+                }
+            }
         }
     }
 
@@ -68,46 +97,71 @@ public class RightSide extends LinearOpMode {
 
         Vision vision = new Vision(this);
         telemetry.setMsTransmissionInterval(50);
-        double forwardDistance = 1;
 
         gripper.close();
 
+        /* Create start pose based on the Start Pose Constant*/
         Pose2d startPose = new Pose2d(
                 Constants.Path.startPose.x,
                 Constants.Path.startPose.y,
-                Math.toRadians(Constants.Path.startPose.heading));
+                Math.toRadians(Constants.Path.startPose.heading)
+        );
 
+        /* Trajectory sequences */
         TrajectorySequence preLoad = drive.trajectorySequenceBuilder(startPose)
                 .setReversed(false)
                 .splineToSplineHeading(Constants.Path.PreLoad.splineToSplineHeading, vel, accel) // The lower the right number is, the more the bot will go right. Higher = more straight of a path
                 .build();
 
+        /* Cycle 1 */
+
         TrajectorySequence cycle1Pickup = drive.trajectorySequenceBuilder(preLoad.end())
                 .setReversed(true)
-                .addDisplacementMarker(5, lift::moveCone5)
-                .splineToSplineHeading(Constants.Path.Cycle1Pickup.splineToSplineHeading, vel, accel)
-                .forward(Constants.Path.Cycle1Pickup.forwardDistance, vel, accel)
+                .addDisplacementMarker(Constants.Path.liftDisplacement, lift::moveCone5)
+                .splineToSplineHeading(Constants.Path.Cycle1.Pickup.splineToSplineHeading, vel, accel)
+                .forward(Constants.Path.Cycle1.Pickup.forwardDistance, vel, accel)
                 .build();
 
         TrajectorySequence cycle1Drop = drive.trajectorySequenceBuilder(cycle1Pickup.end())
                 .setReversed(false)
-                .back(Constants.Path.Cycle1Drop.backDistance, vel, accel)
-                .splineToSplineHeading(Constants.Path.Cycle1Drop.splineToSplineHeading, vel, accel)
+                .back(Constants.Path.Cycle1.Drop.backDistance, vel, accel)
+                .splineToSplineHeading(Constants.Path.Cycle1.Drop.splineToSplineHeading, vel, accel)
                 .build();
 
-        TrajectorySequence park = drive.trajectorySequenceBuilder(cycle1Drop.end())
-                .lineToLinearHeading(Constants.Path.Park.lineToLinearHeading, vel, accel)
-                .forward(forwardDistance)
+        /* Cycle 2 */
+
+        TrajectorySequence cycle2Pickup = drive.trajectorySequenceBuilder(preLoad.end())
+                .setReversed(true)
+                .addDisplacementMarker(Constants.Path.liftDisplacement, lift::moveCone4)
+                .splineToSplineHeading(Constants.Path.Cycle2.Pickup.splineToSplineHeading, vel, accel)
+                .forward(Constants.Path.Cycle2.Pickup.forwardDistance, vel, accel)
                 .build();
 
+        TrajectorySequence cycle2Drop = drive.trajectorySequenceBuilder(cycle1Pickup.end())
+                .setReversed(false)
+                .back(Constants.Path.Cycle2.Drop.backDistance, vel, accel)
+                .splineToSplineHeading(Constants.Path.Cycle2.Drop.splineToSplineHeading, vel, accel)
+                .build();
 
+        /* Cycle 3 */
 
+        TrajectorySequence cycle3Pickup = drive.trajectorySequenceBuilder(preLoad.end())
+                .setReversed(true)
+                .addDisplacementMarker(Constants.Path.liftDisplacement, lift::moveCone3)
+                .splineToSplineHeading(Constants.Path.Cycle3.Pickup.splineToSplineHeading, vel, accel)
+                .forward(Constants.Path.Cycle3.Pickup.forwardDistance, vel, accel)
+                .build();
+
+        TrajectorySequence cycle3Drop = drive.trajectorySequenceBuilder(cycle1Pickup.end())
+                .setReversed(false)
+                .back(Constants.Path.Cycle3.Drop.backDistance, vel, accel)
+                .splineToSplineHeading(Constants.Path.Cycle3.Drop.splineToSplineHeading, vel, accel)
+                .build();
 
         drive.setPoseEstimate(startPose);
 
-
-        while (!isStarted() && !isStopRequested())
-        {
+        double forwardDistance = 1;
+        while (!isStarted() && !isStopRequested()) {
             vision.updateTagOfInterest();
             vision.printTagData();
             telemetry.update();
@@ -128,53 +182,64 @@ public class RightSide extends LinearOpMode {
             }
         }
 
-        waitForStart();
-        if (isStopRequested()) return;
-
         lift.moveHigh();
+
+        // Forward distance cannot equal 0 or trajectory will not generate
+        if (forwardDistance == 0) forwardDistance = 1;
+
+        /* Right after we have found out the forward distance, we need to develop the last trajectory */
+        /* This ends on cycle3Drop.end */
+        TrajectorySequence park = drive.trajectorySequenceBuilder(cycle3Drop.end())
+                .lineToLinearHeading(Constants.Path.Park.lineToLinearHeading, vel, accel)
+                .forward(forwardDistance)
+                .build();
+
         drive.followTrajectorySequence(preLoad);
 
-        for (int i = 1; i <= 1; i++) { // Code to be looped
+        for (int i = 1; i <= 3; i++) { // Code to be looped
+
+            // Drop
             gripper.open();
             sleep((long) Constants.Path.dropWaitMS);
-//            switch (i) {
-//                case 1:
-//                    lift.moveCone5();
-//                    break;
-//                case 2:
-//                    lift.moveCone4();
-//                    break;
-//                case 3:
-//                    lift.moveCone3();
-//                   break;
-//                case 4:
-//                    lift.moveCone2();
-//                    break;
-//            }
 
+            // Pickup (move lift also)
+            switch (i) {
+                case 1:
+                    drive.followTrajectorySequence(cycle1Pickup);
+                    break;
+                case 2:
+                    drive.followTrajectorySequence(cycle2Pickup);
+                    break;
+                case 3:
+                    drive.followTrajectorySequence(cycle3Pickup);
+                    break;
+            }
 
-            drive.followTrajectorySequence(cycle1Pickup);
-
-            gripper.close();
+            // After at stack, grab element
             // If the distance sensor detected it, then we know we got here and we can reset pose estimate
             // drive.setPoseEstimate(cycle1Pickup.end());
+            gripper.close();
             sleep((long) Constants.Path.dropWaitMS);
             lift.moveHigh();
 
-            drive.followTrajectorySequence(cycle1Drop);
-
-            drive.followTrajectorySequence(park);
-        drive.followTrajectorySequence(drive.trajectorySequenceBuilder(park.end())
-                .lineToLinearHeading(Constants.Path.Park.lineToLinearHeading, vel, accel)
-                .build());
-        drive.followTrajectorySequence(park);
-
+            switch (i) {
+                case 1:
+                    drive.followTrajectorySequence(cycle1Drop);
+                    break;
+                case 2:
+                    drive.followTrajectorySequence(cycle2Drop);
+                    break;
+                case 3:
+                    drive.followTrajectorySequence(cycle3Drop);
+                    break;
+            }
         }
-
+        drive.followTrajectorySequence(park);
         lift.moveInitial();
-        sleep(2000);
 
         // Put pose in pose storage (so it can be used in teleOp)
+        // TODO: figure out how to make this work right
         PoseStorage.currentPose = drive.getPoseEstimate();
+        sleep(2000);
     }
 }
