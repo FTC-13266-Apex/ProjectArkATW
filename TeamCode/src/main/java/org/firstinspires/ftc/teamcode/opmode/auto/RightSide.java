@@ -36,6 +36,7 @@ public class RightSide extends LinearOpMode {
                 public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(31, -2, 135, 115);
 
             }
+
             public static Park park;
             public static class Park {
                 public static LineToLinearHeading lineToLinearHeading = new LineToLinearHeading(36, -12, 180);
@@ -43,6 +44,8 @@ public class RightSide extends LinearOpMode {
                 public static double midDistance = 3;
                 public static double rightDistance = -24;
             }
+
+            public static Cycle1 cycle1;
             public static class Cycle1 {
                 public static Pickup pickup;
                 public static class Pickup {
@@ -56,6 +59,8 @@ public class RightSide extends LinearOpMode {
 
                 }
             }
+
+            public static Cycle2 cycle2;
             public static class Cycle2 {
                 public static Pickup pickup;
                 public static class Pickup {
@@ -69,6 +74,8 @@ public class RightSide extends LinearOpMode {
 
                 }
             }
+
+            public static Cycle3 cycle3;
             public static class Cycle3 {
                 public static Pickup pickup;
                 public static class Pickup {
