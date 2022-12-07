@@ -10,21 +10,24 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 public class Gripper extends Subsystem {
     public static class Constants {
-        public static Hardware hardware;
-        public static Position position;
-        public static Sensor sensor;
 
+
+
+
+        public static Hardware hardware;
         private static class Hardware {
 
             public static Servo.Direction DIRECTION = Servo.Direction.FORWARD;
 
         }
 
+        public static Position position;
         private static class Position {
             public static double OPEN = .8;
             public static double CLOSE = 1;
         }
 
+        public static Sensor sensor;
         private static class Sensor {
             public static double GRAB_DISTANCE_MM = 30;
         }
