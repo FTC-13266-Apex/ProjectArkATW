@@ -32,13 +32,13 @@ public class Lift extends Subsystem {
         }
         public static class Position {
             public static int
-                    HIGH = 2000,
+                    HIGH = 2300,
                     MID = 1371,
                     LOW = 890,
                     GROUND_JUNCTION = 200,
-                    INITIAL = -70,
-                    FLIPPED_CONE = 400,
-                    MAX_POSITION = 2100,
+                    INITIAL = 0,
+                    FLIPPED_CONE = 430,
+                    MAX_POSITION = 3000,
                     MIN_POSITION = -70,
                     AUTO_5CONE = 305,
                     AUTO_4CONE = 223,
