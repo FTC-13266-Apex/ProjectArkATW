@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.trajectorysequence.container;
 
-public class SplineToConstantHeading {
+public class SplineToConstantHeading extends PathSegment {
     public Vector2dContainer vector2dContainer;
     public double endHeadingDegrees = 0;
     public SplineToConstantHeading(double x, double y, double endHeadingDegrees) {
