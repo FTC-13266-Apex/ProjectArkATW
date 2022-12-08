@@ -21,7 +21,7 @@ public class RightSide extends LinearOpMode {
     public static class Constants {
         public static Speed speed;
         public static class Speed {
-            public static double velocity = 35; // value
+            public static double velocity = 30; // value
             public static double acceleration = 60; // value
         }
 
@@ -29,11 +29,11 @@ public class RightSide extends LinearOpMode {
         public static class Path {
             public static double dropWaitMS = 1500;
             public static Pose2dContainer startPose = new Pose2dContainer(31, -62, 90);
-            public static double liftDisplacement = 5;
+            public static double liftDisplacement = 15;
 
             public static PreLoad preload;
             public static class PreLoad {
-                public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(31, -2, 135, 115);
+                public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(32, -3, 135, 115);
 
             }
 
@@ -50,12 +50,12 @@ public class RightSide extends LinearOpMode {
                 public static Pickup pickup;
                 public static class Pickup {
                     public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(57, -11, 0, 0);
-                    public static double forwardDistance = 7;
+                    public static double forwardDistance = 6;
                 }
                 public static Drop drop;
                 public static class Drop {
-                    public static double backDistance = 5;
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(32, -1, 135, 115);
+                    public static double backDistance = 13;
+                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(32, -3, 135, 115);
 
                 }
             }
@@ -64,13 +64,13 @@ public class RightSide extends LinearOpMode {
             public static class Cycle2 {
                 public static Pickup pickup;
                 public static class Pickup {
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(57, -11, 0, 0);
-                    public static double forwardDistance = 7;
+                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(57, -12, 0, 0);
+                    public static double forwardDistance = 6;
                 }
                 public static Drop drop;
                 public static class Drop {
-                    public static double backDistance = 5;
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(32, -1, 135, 115);
+                    public static double backDistance = 13;
+                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(33, -3, 135, 115);
 
                 }
             }
@@ -79,13 +79,13 @@ public class RightSide extends LinearOpMode {
             public static class Cycle3 {
                 public static Pickup pickup;
                 public static class Pickup {
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(57, -11, 0, 0);
-                    public static double forwardDistance = 7;
+                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(57, -13, 0, 0);
+                    public static double forwardDistance = 6;
                 }
                 public static Drop drop;
                 public static class Drop {
-                    public static double backDistance = 5;
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(32, -1, 135, 115);
+                    public static double backDistance = 13;
+                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(33, -3, 135, 115);
 
                 }
             }
@@ -203,7 +203,7 @@ public class RightSide extends LinearOpMode {
 
         drive.followTrajectorySequence(preLoad);
 
-        for (int i = 1; i <= 3; i++) { // Code to be looped
+        for (int i = 1; i <= 2; i++) { // Code to be looped
 
             // Drop
             gripper.open();
@@ -238,6 +238,7 @@ public class RightSide extends LinearOpMode {
                     break;
                 case 3:
                     drive.followTrajectorySequence(cycle3Drop);
+                    drive.followTrajectorySequence(park);
                     break;
             }
         }

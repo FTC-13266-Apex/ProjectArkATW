@@ -46,7 +46,7 @@ public class Lift extends Subsystem {
                     AUTO_2CONE = 55;
         }
         public static class Speed {
-            public static double NORMAL        = 1;
+            public static double NORMAL        = 10;   // ill use this but im testing something
             public static int MANUAL_MOVE_SPEED = 6;
 
         }
@@ -107,6 +107,7 @@ public class Lift extends Subsystem {
         opMode.telemetry.addData("Slide D", leftLift.getPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION).d);
         opMode.telemetry.addData("Slide F", leftLift.getPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION).f);
         opMode.telemetry.addData("Slide Tolerance", leftLift.getTargetPositionTolerance());
+        opMode.telemetry.addData("Motor RPM",m)
     }
 
     public void moveMotors(int position) {
@@ -117,8 +118,8 @@ public class Lift extends Subsystem {
         leftLift.setTargetPosition(position);
         rightLift.setTargetPosition(position);
 
-        leftLift.setPower(Constants.Speed.NORMAL);
-        rightLift.setPower(Constants.Speed.NORMAL);
+        leftLift.setPower(1);
+        rightLift.setPower(1);
     }
 
     public void moveInitial() {
