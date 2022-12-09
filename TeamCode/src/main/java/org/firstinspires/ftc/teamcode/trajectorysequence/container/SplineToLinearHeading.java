@@ -1,10 +1,11 @@
 package org.firstinspires.ftc.teamcode.trajectorysequence.container;
 
 public class SplineToLinearHeading extends PathSegment {
-    public Pose2dContainer pose2dContainer;
-    public double endHeadingDegrees = 0;
-    public SplineToLinearHeading(double x, double y, double headingDegrees, double endHeadingDegrees) {
-        pose2dContainer = new Pose2dContainer(x, y, headingDegrees);
-        this.endHeadingDegrees = endHeadingDegrees;
+    public double x, y, heading, endHeading;
+    public SplineToLinearHeading(double x, double y, double heading, double endHeading) {
+        this.x = x;
+        this.y = y;
+        this.heading = heading;
+        this.endHeading = endHeading;
     }
 }

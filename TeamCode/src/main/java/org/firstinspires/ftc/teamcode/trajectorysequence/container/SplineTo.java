@@ -1,10 +1,10 @@
 package org.firstinspires.ftc.teamcode.trajectorysequence.container;
 
 public class SplineTo extends PathSegment {
-    public Vector2dContainer vector2dContainer;
-    public double endHeadingDegrees = 0;
-    public SplineTo(double x, double y, double endHeadingDegrees) {
-        vector2dContainer = new Vector2dContainer(x, y);
-        this.endHeadingDegrees = endHeadingDegrees;
+    public double x, y, endHeading;
+    public SplineTo(double x, double y, double endHeading) {
+        this.x = x;
+        this.y = y;
+        this.endHeading = endHeading;
     }
 }
