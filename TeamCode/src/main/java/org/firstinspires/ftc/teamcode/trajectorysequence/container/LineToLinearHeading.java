@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode.trajectorysequence.container;
 
-public class LineToLinearHeading {
-    public Pose2dContainer pose2dContainer;
+public class LineToLinearHeading extends PathSegment {
+    public double x, y, heading;
     public LineToLinearHeading(double x, double y, double heading) {
-        pose2dContainer = new Pose2dContainer(x, y, heading);
+        this.x = x;
+        this.y = y;
+        this.heading = heading;
     }
 }

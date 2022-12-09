@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.trajectorysequence.container;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 
-public class Pose2dContainer {
+public class Pose2dContainer extends PathSegment {
     public double x = 0;
     public double y = 0;
     public double heading = 0;
