@@ -32,12 +32,12 @@ public class Lift extends Subsystem {
         }
         public static class Position {
             public static int
-                    HIGH = 2300,
-                    MID = 1371,
-                    LOW = 890,
+                    HIGH = 2240,
+                    MID = 1611,
+                    LOW = 959,
                     GROUND_JUNCTION = 200,
                     INITIAL = 0,
-                    FLIPPED_CONE = 430,
+                    FLIPPED_CONE = 470,
                     MAX_POSITION = 3000,
                     MIN_POSITION = -70,
                     AUTO_5CONE = 305,
@@ -107,7 +107,6 @@ public class Lift extends Subsystem {
         opMode.telemetry.addData("Slide D", leftLift.getPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION).d);
         opMode.telemetry.addData("Slide F", leftLift.getPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION).f);
         opMode.telemetry.addData("Slide Tolerance", leftLift.getTargetPositionTolerance());
-        opMode.telemetry.addData("Motor RPM",m)
     }
 
     public void moveMotors(int position) {

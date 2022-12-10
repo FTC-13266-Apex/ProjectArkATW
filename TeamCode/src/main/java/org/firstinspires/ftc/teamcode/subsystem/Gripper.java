@@ -23,7 +23,7 @@ public class Gripper extends Subsystem {
 
         public static Position position;
         private static class Position {
-            public static double OPEN = .8;
+            public static double OPEN = .88;
             public static double CLOSE = 1;
         }
 
