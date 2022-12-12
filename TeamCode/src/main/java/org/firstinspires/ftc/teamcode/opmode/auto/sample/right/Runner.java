@@ -54,7 +54,7 @@ public class Runner extends Command {
     private Runnable currentLiftCommand;
     private int cycleNumber = 1;
 
-    private AutoState autoState;
+    private AutoState autoState = AutoState.PRELOAD;
     private CycleState cycleState;
 
     public Runner(@NonNull LinearOpMode opMode, Drive drive, Lift lift, Gripper gripper) {
