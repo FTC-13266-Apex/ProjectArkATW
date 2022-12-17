@@ -24,7 +24,7 @@ public class Lift extends Subsystem {
         }
         public static class Controller {
             public static double
-                    P = 4,
+                    P = 2,
                     I = 0,
                     D = 0,
                     F = 0;
@@ -32,7 +32,7 @@ public class Lift extends Subsystem {
         }
         public static class Position {
             public static int
-                    HIGH = 2240,
+                    HIGH = 2220,
                     MID = 1611,
                     LOW = 959,
                     GROUND_JUNCTION = 200,
