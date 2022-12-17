@@ -80,7 +80,7 @@ public class Drive extends MecanumDrive {
                 public static double OMEGA_MULTIPLIER = 1;
 
                 public static double NORMAL_SPEED = 1;
-                public static double FAST_SPEED = 0.7;
+                public static double FAST_SPEED = 0.5;
                 public static double SLOW_SPEED = 0.3;
             }
             public static Direction direction;
