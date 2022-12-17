@@ -23,13 +23,14 @@ public class Gripper extends Subsystem {
 
         public static Position position;
         private static class Position {
-            public static double OPEN = .88;
+            public static double FULL_OPEN = 0.72;
+            public static double OPEN = .86;
             public static double CLOSE = 1;
         }
 
         public static Sensor sensor;
         private static class Sensor {
-            public static double GRAB_DISTANCE_MM = 30;
+            public static double GRAB_DISTANCE_MM = 35;
         }
     }
 
@@ -60,6 +61,10 @@ public class Gripper extends Subsystem {
 
     public boolean ignoreSensor() {
         return ignoreSensor;
+    }
+
+    public void fullOpen() {
+        gripper.setPosition(Constants.Position.FULL_OPEN);
     }
 
     public void open() {
