@@ -55,7 +55,7 @@ public class Runner extends Command {
     private int cycleNumber = 1;
 
     private AutoState autoState = AutoState.PRELOAD;
-    private CycleState cycleState;
+    private CycleState cycleState = CycleState.PICKUP_PATH;
 
     public Runner(@NonNull LinearOpMode opMode, Drive drive, Lift lift, Gripper gripper) {
         super(opMode);
