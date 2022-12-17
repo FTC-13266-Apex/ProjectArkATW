@@ -25,7 +25,8 @@ public class ConeFlipper extends Subsystem {
                     HIDDEN = 1,
                     GET_CONE = 0.65,
                     FEED_CONE = .3,
-                    SIGNAL_CONE_PUSHER = .4;
+                    SIGNAL_CONE_PUSHER = .4,
+                    SIGNCAL_CONE_YEET = .8;
         }
     }
 
@@ -70,4 +71,6 @@ public class ConeFlipper extends Subsystem {
     }
 
     public void SignalConePusher(){coneFlipperTop.setPosition(Constants.Position.SIGNAL_CONE_PUSHER);}
+
+    public void SignalConeYeet(){coneFlipperTop.setPosition(Constants.Position.SIGNCAL_CONE_YEET);}
 }
