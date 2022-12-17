@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.container.Pose2dContain
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.SplineToSplineHeading;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.TrajectorySequenceContainer;
 
-@Autonomous(name = "Other Experimental Right")
+@Autonomous(name = "FSM Right")
 public class Container extends RoadRunnerAuto {
     public static class Constants {
         public static Speed speed;
