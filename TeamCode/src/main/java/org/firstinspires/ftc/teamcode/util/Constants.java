@@ -4,7 +4,7 @@ import com.acmerobotics.dashboard.config.Config;
 
 import org.firstinspires.ftc.teamcode.command.FlipConeWithGamepad;
 import org.firstinspires.ftc.teamcode.command.Sensor;
-import org.firstinspires.ftc.teamcode.opmode.auto.RightSide;
+import org.firstinspires.ftc.teamcode.opmode.auto.LeftSide;
 import org.firstinspires.ftc.teamcode.opmode.auto.sample.right.Container;
 import org.firstinspires.ftc.teamcode.opmode.tuner.AutomaticFeedforwardTuner;
 import org.firstinspires.ftc.teamcode.opmode.tuner.BackAndForth;
@@ -40,7 +40,7 @@ public class Constants {
 
     public static Autos autos;
     public static class Autos {
-        public static RightSide.Constants rightSideOnly;
+        public static LeftSide.Constants rightSideOnly;
         public static Container.Constants experimentalRight;
     }
 
