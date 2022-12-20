@@ -24,7 +24,7 @@ public class RightSide extends LinearOpMode {
         public static Speed speed;
         public static class Speed {
             public static double velocity = 30; // value
-            public static double acceleration = 60; // value
+            public static double acceleration = 30; // value
         }
 
         public static Path path;
@@ -35,7 +35,7 @@ public class RightSide extends LinearOpMode {
 
             public static PreLoad preload;
             public static class PreLoad {
-                public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(29, -3, 135, 115);
+                public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(30, -3, 135, 115);
 
             }
 
@@ -52,12 +52,12 @@ public class RightSide extends LinearOpMode {
                 public static Pickup pickup;
                 public static class Pickup {
                     public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(57, -11, 0, 0);
-                    public static double forwardDistance = 6;
+                    public static double forwardDistance =7 ;
                 }
                 public static Drop drop;
                 public static class Drop {
                     public static double backDistance = 7;
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(29, -4, 135, 115);
+                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(31, -3, 135, 115);
 
                 }
             }
@@ -66,13 +66,13 @@ public class RightSide extends LinearOpMode {
             public static class Cycle2 {
                 public static Pickup pickup;
                 public static class Pickup {
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(57, -12, 0, 0);
-                    public static double forwardDistance = 6;
+                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(57, -11, 0, 0);
+                    public static double forwardDistance = 7;
                 }
                 public static Drop drop;
                 public static class Drop {
                     public static double backDistance = 7;
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(29, -4, 135, 115);
+                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(31, -3, 135, 115);
 
                 }
             }
@@ -81,13 +81,13 @@ public class RightSide extends LinearOpMode {
             public static class Cycle3 {
                 public static Pickup pickup;
                 public static class Pickup {
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(57, -13, 0, 0);
-                    public static double forwardDistance = 6;
+                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(57, -11, 0, 0);
+                    public static double forwardDistance = 8;
                 }
                 public static Drop drop;
                 public static class Drop {
                     public static double backDistance = 7;
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(30, -4, 135, 115);
+                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(31, -3, 135, 115);
 
                 }
             }
@@ -122,7 +122,7 @@ public class RightSide extends LinearOpMode {
                 .setReversed(false)
                 .addDisplacementMarker(ConeFlipper::SignalConePusher)
                 .addDisplacementMarker(ConeFlipper::drop)
-                .addDisplacementMarker(13,ConeFlipper::SignalConeYeet)
+                .addDisplacementMarker(15,ConeFlipper::SignalConeYeet)
                 .splineToSplineHeading(Constants.Path.PreLoad.splineToSplineHeading, vel, accel) // The lower the right number is, the more the bot will go right. Higher = more straight of a path
                 .addDisplacementMarker(30,ConeFlipper::hide)
                 .addDisplacementMarker(30,ConeFlipper::lift)

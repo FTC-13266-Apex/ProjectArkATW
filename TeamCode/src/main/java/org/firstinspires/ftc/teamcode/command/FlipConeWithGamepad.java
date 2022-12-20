@@ -57,6 +57,7 @@ public class FlipConeWithGamepad extends Command{
                 break;
             case LIFT_CONE:
                 if (opMode.gamepad2.y) break; // wait till y is let go
+                gripper.fullOpen();
                 coneFlipper.lift();
                 waitTimer.reset();
                 flipState = FlipState.FEED_CONE;
