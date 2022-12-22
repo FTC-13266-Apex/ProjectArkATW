@@ -28,9 +28,10 @@ public class Cycle5RightSide extends LinearOpMode {
 
         public static Path path;
         public static class Path {
-            public static double dropWaitMS = 500;
+            public static double dropWaitMS = 500,
+                                 grabWaitMS = 500;
             public static Pose2dContainer startPose = new Pose2dContainer(31, -62, 90);
-            public static double liftDisplacement = 15;
+            public static double liftDisplacement = 5;
 
             public static PreLoad preload;
             public static class PreLoad {
@@ -105,7 +106,7 @@ public class Cycle5RightSide extends LinearOpMode {
                     public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(31, -3, 135, 115);
                 }
             }
-            public static Cycle3 cycle5;
+            public static Cycle5 cycle5;
             public static class Cycle5 {
                 public static Pickup pickup;
 
@@ -267,7 +268,7 @@ public class Cycle5RightSide extends LinearOpMode {
 
         drive.followTrajectorySequence(preLoad);
 
-        for (int i = 1; i <= 4; i++) { // Code to be looped
+        for (int i = 1; i <= 6; i++) { // Code to be looped
 
             // Drop
             gripper.open();
@@ -278,20 +279,30 @@ public class Cycle5RightSide extends LinearOpMode {
             switch (i) {
                 case 1:
                     drive.followTrajectorySequence(cycle1Pickup);
+                    drive.setPoseEstimate(cycle1Pickup.end());
                     break;
                 case 2:
                     drive.followTrajectorySequence(cycle2Pickup);
+                    drive.setPoseEstimate(cycle2Pickup.end());
                     break;
                 case 3:
                     drive.followTrajectorySequence(cycle3Pickup);
+                    drive.setPoseEstimate(cycle3Pickup.end());
+                    break;
+                case 4:
+                    drive.followTrajectorySequence(cycle4Pickup);
+                    drive.setPoseEstimate(cycle4Pickup.end());
+                    break;
+                case 5:
+                    drive.followTrajectorySequence(cycle5Pickup);
+                    drive.setPoseEstimate(cycle5Pickup.end());
                     break;
             }
 
             // After at stack, grab element
             // If the distance sensor detected it, then we know we got here and we can reset pose estimate
-            // drive.setPoseEstimate(cycle1Pickup.end());
             gripper.close();
-            sleep((long) Constants.Path.dropWaitMS);
+            sleep((long) Constants.Path.grabWaitMS);
             lift.moveHigh();
 
             switch (i) {
@@ -304,14 +315,20 @@ public class Cycle5RightSide extends LinearOpMode {
                 case 3:
                     drive.followTrajectorySequence(cycle3Drop);
                     break;
+                case 4:
+                    drive.followTrajectorySequence(cycle4Drop);
+                    break;
+                case 5:
+                    drive.followTrajectorySequence(cycle5Drop);
+                    break;
             }
         }
-        drive.followTrajectorySequence(park);
         lift.moveInitial();
+        drive.followTrajectorySequence(park);
 
         // Put pose in pose storage (so it can be used in teleOp)
         // TODO: figure out how to make this work right
         PoseStorage.currentPose = drive.getPoseEstimate();
-        sleep(2000);
+        sleep(1000);
     }
 }
