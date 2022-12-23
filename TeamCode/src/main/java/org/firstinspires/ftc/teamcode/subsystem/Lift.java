@@ -24,7 +24,7 @@ public class Lift extends Subsystem {
         }
         public static class Controller {
             public static double
-                    P = 4,
+                    P = 2,
                     I = 0,
                     D = 0,
                     F = 0;
@@ -32,20 +32,21 @@ public class Lift extends Subsystem {
         }
         public static class Position {
             public static int
-                    HIGH = 2020,
-                    MID = 1510,
-                    LOW = 940,
-                    INITIAL = -0,
-                    FLIPPED_CONE = 330,
-                    MAX_POSITION = 2100,
+                    HIGH = 2220,
+                    MID = 1611,
+                    LOW = 959,
+                    GROUND_JUNCTION = 200,
+                    INITIAL = 0,
+                    FLIPPED_CONE = 470,
+                    MAX_POSITION = 3000,
                     MIN_POSITION = -70,
-                    AUTO_5CONE = 400,
-                    AUTO_4CONE = 350,
-                    AUTO_3CONE = 300,
-                    AUTO_2CONE = 250;
+                    AUTO_5CONE = 305,
+                    AUTO_4CONE = 223,
+                    AUTO_3CONE = 133,
+                    AUTO_2CONE = 55;
         }
         public static class Speed {
-            public static double NORMAL        = 1;
+            public static double NORMAL        = 10;   // ill use this but im testing something
             public static int MANUAL_MOVE_SPEED = 6;
 
         }
@@ -116,36 +117,40 @@ public class Lift extends Subsystem {
         leftLift.setTargetPosition(position);
         rightLift.setTargetPosition(position);
 
-        leftLift.setPower(Constants.Speed.NORMAL);
-        rightLift.setPower(Constants.Speed.NORMAL);
+        leftLift.setPower(1);
+        rightLift.setPower(1);
     }
 
     public void moveInitial() {
-        moveMotors(Constants.Position.INITIAL);
         if (isMovingManually) {
             Constants.Position.INITIAL = motorPosition;
         }
+        moveMotors(Constants.Position.INITIAL);
     }
 
     public void moveHigh() {
-        moveMotors(Constants.Position.HIGH);
         if (isMovingManually) {
             Constants.Position.HIGH = motorPosition;
         }
+        moveMotors(Constants.Position.HIGH);
     }
 
     public void moveMid() {
-        moveMotors(Constants.Position.MID);
         if (isMovingManually) {
             Constants.Position.MID = motorPosition;
         }
+        moveMotors(Constants.Position.MID);
     }
 
     public void moveLow() {
-        moveMotors(Constants.Position.LOW);
         if (isMovingManually) {
             Constants.Position.LOW = motorPosition;
         }
+        moveMotors(Constants.Position.LOW);
+    }
+
+    public void moveGroundJunction() {
+        moveMotors(Constants.Position.GROUND_JUNCTION);
     }
 
     public void moveCone5() {
@@ -166,5 +171,9 @@ public class Lift extends Subsystem {
 
     public void moveToPickUpFlippedCone() {
         moveMotors(Constants.Position.FLIPPED_CONE);
+    }
+
+    public boolean isDown() {
+        return motorPosition <= Constants.Position.INITIAL;
     }
 }

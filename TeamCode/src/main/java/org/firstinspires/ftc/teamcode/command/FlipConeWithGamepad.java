@@ -15,7 +15,15 @@ public class FlipConeWithGamepad extends Command{
         LIFT_CONE, // lift is at coneflip position gripper open and coneflipper is down
         FEED_CONE, // cone flipper moves up
         GRAB_CONE,
+        GRAB_WAIT,
         RETURN // Move back to initial state
+    }
+
+    public static class Constants {
+        public static double A_WAIT = 1;
+        public static double B_WAIT = 2;
+        public static double C_WAIT = 1;
+        public static double D_WAIT = .5;
     }
 
     private final ConeFlipper coneFlipper;
@@ -49,24 +57,30 @@ public class FlipConeWithGamepad extends Command{
                 break;
             case LIFT_CONE:
                 if (opMode.gamepad2.y) break; // wait till y is let go
+                gripper.fullOpen();
                 coneFlipper.lift();
                 waitTimer.reset();
                 flipState = FlipState.FEED_CONE;
                 break;
             case FEED_CONE:
-                if (!(waitTimer.seconds() > 1.5)) break; // wait till its been 0.5 second
+                if (!(waitTimer.seconds() > Constants.A_WAIT)) break; // wait till its been 0.5 second
                 coneFlipper.feedCone();
                 flipState = FlipState.GRAB_CONE;
                 break;
             case GRAB_CONE:
-                if (!(waitTimer.seconds() > 2)) break; // wait till its been 0.5 second
+                if (!(waitTimer.seconds() > Constants.B_WAIT)) break; // wait till its been 0.5 second
                 gripper.close();
+                waitTimer.reset();
+                flipState = FlipState.GRAB_WAIT;
+                break;
+            case GRAB_WAIT:
+                if (!(waitTimer.seconds() > Constants.C_WAIT)) break; // wait till its been 0.5 second
                 lift.moveMid();
                 waitTimer.reset();
                 flipState = FlipState.RETURN;
                 break;
             case RETURN:
-                if (!(waitTimer.seconds() > 2)) break; // wait till its been 0.5 second
+                if (!(waitTimer.seconds() > Constants.D_WAIT)) break; // wait till its been 0.5 second
                 coneFlipper.hide();
 
                 gripper.unlock();

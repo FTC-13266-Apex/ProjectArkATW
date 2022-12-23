@@ -27,7 +27,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-@Config
 public class TrajectorySequenceRunner {
     public static class Constants {
         public static String COLOR_INACTIVE_TRAJECTORY = "#4caf507a";

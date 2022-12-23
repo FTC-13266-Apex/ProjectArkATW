@@ -6,14 +6,11 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-public class Sussy extends Command {
-    private final Telemetry telemetry = opMode.telemetry;
+public class Sussy extends InstantCommand {
     public Sussy(@NonNull LinearOpMode opMode) {
         super(opMode);
-    }
+        Telemetry telemetry = opMode.telemetry;
 
-    @Override
-    protected void run() {
         int randomNumber = (int) (Math.random() * 20);
         if (randomNumber == 0) {
             telemetry.addLine("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
