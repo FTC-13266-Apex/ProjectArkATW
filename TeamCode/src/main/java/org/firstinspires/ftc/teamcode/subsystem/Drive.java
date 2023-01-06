@@ -86,9 +86,9 @@ public class Drive extends MecanumDrive {
             public static Direction direction;
             public static class Direction {
                 public static DcMotorSimple.Direction
-                        LEFT_FRONT = DcMotorSimple.Direction.FORWARD,
+                        LEFT_FRONT = DcMotorSimple.Direction.REVERSE,
                         LEFT_REAR = DcMotorSimple.Direction.REVERSE,
-                        RIGHT_FRONT = DcMotorSimple.Direction.FORWARD,
+                        RIGHT_FRONT = DcMotorSimple.Direction.REVERSE,
                         RIGHT_REAR = DcMotorSimple.Direction.FORWARD;
             }
         }
@@ -113,7 +113,7 @@ public class Drive extends MecanumDrive {
              * empirically tuned.
              */
             public static double kV = 0.01635;
-            public static double kA = 0.0025;
+            public static double kA = 0.003;
             public static double kStatic = 0;
 
             /**
@@ -150,9 +150,9 @@ public class Drive extends MecanumDrive {
              * </p>
              */
             public static double MAX_VEL       = 50; // 85% of the max for this drive would be 52
-            public static double MAX_ACCEL     = 60; // 60 is about as high as this should be
-            public static double MAX_ANG_VEL   = Math.toRadians(230); // 242 is about 85% of what it could do
-            public static double MAX_ANG_ACCEL = Math.toRadians(230); // do maybe 242 also idk
+            public static double MAX_ACCEL     = 40; // 60 is about as high as this should be
+            public static double MAX_ANG_VEL   = Math.toRadians(180); // 242 is about 85% of what it could do
+            public static double MAX_ANG_ACCEL = Math.toRadians(180); // do maybe 242 also idk
         }
 
         public static Follower follower;
