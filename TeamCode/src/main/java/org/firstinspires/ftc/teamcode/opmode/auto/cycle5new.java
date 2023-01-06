@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.util.PoseStorage;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.SplineToSplineHeading;
 
 @Autonomous
-public class Cycle5RightSide extends LinearOpMode {
+public class cycle5new extends LinearOpMode {
     public static class Constants {
         public static Speed speed;
         public static class Speed {
@@ -52,13 +52,13 @@ public class Cycle5RightSide extends LinearOpMode {
             public static class Cycle1 {
                 public static Pickup pickup;
                 public static class Pickup {
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(57, -14, 0, 0);
-                    public static double forwardDistance =8;
+                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(59, -14, 0, 0);
+                    public static double forwardDistance =6;
                 }
                 public static Drop drop;
                 public static class Drop {
-                    public static double backDistance = 8;
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(32, -3, 135, 115);
+                    public static double backDistance = 6;
+                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(3, -3, 135, 115);
 
                 }
             }
@@ -67,13 +67,13 @@ public class Cycle5RightSide extends LinearOpMode {
             public static class Cycle2 {
                 public static Pickup pickup;
                 public static class Pickup {
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(57, -14, 0, 0);
-                    public static double forwardDistance = 8;
+                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(59, -14, 0, 0);
+                    public static double forwardDistance = 6;
                 }
                 public static Drop drop;
                 public static class Drop {
-                    public static double backDistance = 8;
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(32, -3, 135, 115);
+                    public static double backDistance = 6;
+                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(31, -3, 135, 115);
 
                 }
             }
@@ -82,13 +82,13 @@ public class Cycle5RightSide extends LinearOpMode {
             public static class Cycle3 {
                 public static Pickup pickup;
                 public static class Pickup {
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(57, -14, 0, 0);
-                    public static double forwardDistance = 8;
+                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(59, -14, 0, 0);
+                    public static double forwardDistance = 6;
                 }
                 public static Drop drop;
                 public static class Drop {
-                    public static double backDistance = 8;
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(34, -3, 135, 115);
+                    public static double backDistance = 6;
+                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(31, -3, 135, 115);
 
                 }
             }
@@ -97,14 +97,14 @@ public class Cycle5RightSide extends LinearOpMode {
                 public static Pickup pickup;
 
                 public static class Pickup {
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(57, -14, 0, 0);
-                    public static double forwardDistance = 8;
+                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(59, -14, 0, 0);
+                    public static double forwardDistance = 6;
                 }
 
                 public static Drop drop;
                 public static class Drop {
-                    public static double backDistance = 8;
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(34, -3, 135, 115);
+                    public static double backDistance = 6;
+                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(31, -3, 135, 115);
                 }
             }
             public static Cycle5 cycle5;
@@ -112,15 +112,15 @@ public class Cycle5RightSide extends LinearOpMode {
                 public static Pickup pickup;
 
                 public static class Pickup {
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(57, -14, 10, 10);
-                    public static double forwardDistance = 8;
+                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(59, -14, 0, 0);
+                    public static double forwardDistance = 6;
                 }
 
                 public static Drop drop;
 
                 public static class Drop {
-                    public static double backDistance = 8;
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(34, -3, 135, 115);
+                    public static double backDistance = 6;
+                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(31, -3, 135, 115);
                 }
             }
         }
@@ -302,7 +302,7 @@ public class Cycle5RightSide extends LinearOpMode {
             // After at stack, grab element
             // If the distance sensor detected it, then we know we got here and we can reset pose estimate
             gripper.close();
-        //    drive.setPoseEstimate(new Pose2d(55,-12));
+            //    drive.setPoseEstimate(new Pose2d(55,-12));
             sleep((long) Constants.Path.grabWaitMS);
             lift.moveHigh();
 

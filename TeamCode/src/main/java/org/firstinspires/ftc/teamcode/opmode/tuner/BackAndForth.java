@@ -29,7 +29,7 @@ import static org.firstinspires.ftc.teamcode.opmode.tuner.BackAndForth.Constants
 public class BackAndForth extends LinearOpMode {
 
     public static class Constants {
-        public static double DISTANCE = 50;
+        public static double DISTANCE = 70;
     }
 
 
