@@ -22,14 +22,14 @@ public class cycle5new extends LinearOpMode {
     public static class Constants {
         public static Speed speed;
         public static class Speed {
-            public static double velocity = 50; // value
-            public static double acceleration = 45; // value
+            public static double velocity = 60; // value
+            public static double acceleration = 50; // value
         }
 
         public static Path path;
         public static class Path {
             public static double dropWaitMS = 100,
-                                 grabWaitMS = 200;
+                                 grabWaitMS = 150;
             public static Pose2dContainer pickupPose = new Pose2dContainer(57,-11,0);
             public static Pose2dContainer startPose = new Pose2dContainer(31, -62, 90);
             public static double liftDisplacement = 5;
@@ -52,13 +52,13 @@ public class cycle5new extends LinearOpMode {
             public static class Cycle1 {
                 public static Pickup pickup;
                 public static class Pickup {
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(59, -14, 0, 0);
-                    public static double forwardDistance =6;
+                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(57, -12, 0, 0);
+                    public static double forwardDistance =5;
                 }
                 public static Drop drop;
                 public static class Drop {
-                    public static double backDistance = 6;
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(3, -3, 135, 115);
+                    public static double backDistance = 10;
+                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(27, -7, 115, 115);
 
                 }
             }
@@ -67,13 +67,13 @@ public class cycle5new extends LinearOpMode {
             public static class Cycle2 {
                 public static Pickup pickup;
                 public static class Pickup {
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(59, -14, 0, 0);
-                    public static double forwardDistance = 6;
+                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(57, -12, 0, 0);
+                    public static double forwardDistance = 5;
                 }
                 public static Drop drop;
                 public static class Drop {
-                    public static double backDistance = 6;
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(31, -3, 135, 115);
+                    public static double backDistance = 10;
+                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(27, -7, 115, 115);
 
                 }
             }
@@ -82,13 +82,13 @@ public class cycle5new extends LinearOpMode {
             public static class Cycle3 {
                 public static Pickup pickup;
                 public static class Pickup {
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(59, -14, 0, 0);
-                    public static double forwardDistance = 6;
+                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(57, -12, 0, 0);
+                    public static double forwardDistance = 5;
                 }
                 public static Drop drop;
                 public static class Drop {
-                    public static double backDistance = 6;
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(31, -3, 135, 115);
+                    public static double backDistance = 10;
+                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(27, -7, 115, 115);
 
                 }
             }
@@ -97,14 +97,14 @@ public class cycle5new extends LinearOpMode {
                 public static Pickup pickup;
 
                 public static class Pickup {
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(59, -14, 0, 0);
-                    public static double forwardDistance = 6;
+                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(57, -12, 0, 0);
+                    public static double forwardDistance = 5;
                 }
 
                 public static Drop drop;
                 public static class Drop {
-                    public static double backDistance = 6;
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(31, -3, 135, 115);
+                    public static double backDistance = 10;
+                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(27, -7, 135, 115);
                 }
             }
             public static Cycle5 cycle5;
@@ -112,15 +112,15 @@ public class cycle5new extends LinearOpMode {
                 public static Pickup pickup;
 
                 public static class Pickup {
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(59, -14, 0, 0);
-                    public static double forwardDistance = 6;
+                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(57, -12, 0, 0);
+                    public static double forwardDistance = 5;
                 }
 
                 public static Drop drop;
 
                 public static class Drop {
-                    public static double backDistance = 6;
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(31, -3, 135, 115);
+                    public static double backDistance = 10;
+                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(27, -7, 115, 115);
                 }
             }
         }
@@ -302,7 +302,7 @@ public class cycle5new extends LinearOpMode {
             // After at stack, grab element
             // If the distance sensor detected it, then we know we got here and we can reset pose estimate
             gripper.close();
-            //    drive.setPoseEstimate(new Pose2d(55,-12));
+            drive.setPoseEstimate(new Pose2d(62,-12));
             sleep((long) Constants.Path.grabWaitMS);
             lift.moveHigh();
 
@@ -324,8 +324,10 @@ public class cycle5new extends LinearOpMode {
                     break;
             }
         }
-        lift.moveInitial();
         drive.followTrajectorySequence(park);
+        gripper.open();
+        lift.moveInitial();
+
 
 
         // Put pose in pose storage (so it can be used in teleOp)
