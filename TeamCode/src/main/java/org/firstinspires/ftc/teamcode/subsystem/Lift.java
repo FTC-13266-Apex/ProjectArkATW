@@ -2,11 +2,15 @@ package org.firstinspires.ftc.teamcode.subsystem;
 
 import androidx.annotation.NonNull;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.ValueProvider;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Lift extends Subsystem {
     public static class Constants {
@@ -53,17 +57,19 @@ public class Lift extends Subsystem {
 
         }
     }
-    private final DcMotor leftLift;
-    private final DcMotor rightLift;
+    private final DcMotorEx leftLift;
+    private final DcMotorEx rightLift;
     private int targetPosition;
     private boolean isMovingManually;
 
     private final ElapsedTime timeSinceLastRefresh = new ElapsedTime();
+    private final Telemetry dashboard = FtcDashboard.getInstance().getTelemetry();
 
 
 
 
     public Lift(@NonNull OpMode opMode) {
+
         super(opMode);
         leftLift = opMode.hardwareMap.get(DcMotorEx.class, "leftLift");
         rightLift = opMode.hardwareMap.get(DcMotorEx.class, "rightLift");
@@ -76,6 +82,9 @@ public class Lift extends Subsystem {
 
         leftLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        leftLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         targetPosition = 0;
     }
@@ -107,8 +116,16 @@ public class Lift extends Subsystem {
         } else {
             isMovingManually = false;
         }
+    }
 
+    public void updateDashboard() {
+        dashboard.addData("Slide Target Position", targetPosition);
 
+        dashboard.addData("Left Slide Measured Position", leftLift.getCurrentPosition());
+        dashboard.addData("Left Slide Measured Velocity", leftLift.getVelocity());
+
+        dashboard.addData("Right Slide Measured Position", rightLift.getCurrentPosition());
+        dashboard.addData("Right Slide Measured Velocity", rightLift.getVelocity());
     }
 
     private double leftLastError, rightLastError;
