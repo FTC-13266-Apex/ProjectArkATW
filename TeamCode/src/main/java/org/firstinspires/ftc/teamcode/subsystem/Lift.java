@@ -109,7 +109,7 @@ public class Lift extends Subsystem {
         if (opMode.gamepad2.dpad_down) moveInitial();
         else if(opMode.gamepad2.dpad_left) moveLow();
         else if(opMode.gamepad2.dpad_right) moveMid();
-        else if (opMode.gamepad2.dpad_up) moveHigh();
+//        else if (opMode.gamepad2.dpad_up) moveHigh();
 
         if (opMode.gamepad2.right_stick_y < -0.2 || opMode.gamepad2.right_stick_y > 0.2) {
             changeTargetTo((int)(targetPosition + Constants.Speed.MANUAL_MOVE_SPEED * -opMode.gamepad2.right_stick_y));
