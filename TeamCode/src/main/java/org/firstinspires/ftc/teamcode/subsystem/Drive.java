@@ -9,6 +9,7 @@ import com.acmerobotics.roadrunner.followers.HolonomicPIDVAFollower;
 import com.acmerobotics.roadrunner.followers.TrajectoryFollower;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.kinematics.MecanumKinematics;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
 import com.acmerobotics.roadrunner.trajectory.constraints.AngularVelocityConstraint;
@@ -61,31 +62,35 @@ public class Drive extends MecanumDrive {
              * angular distances although most angular parameters are wrapped in Math.toRadians() for
              * convenience. Make sure to exclude any gear ratio included in MOTOR_CONFIG from GEAR_RATIO.
              */
-            public static double WHEEL_RADIUS = 1.88976; // in
-            public static double GEAR_RATIO = 1; // output (wheel) speed / input (motor) speed
-            public static double TRACK_WIDTH = 10.8; // in
+            public static final double WHEEL_RADIUS = 1.88976; // in
+            public static final double GEAR_RATIO = 1; // output (wheel) speed / input (motor) speed
+            public static volatile double TRACK_WIDTH = 10.8; // in
 
-            public static boolean IS_FIELD_CENTRIC = true;
-            public static boolean USING_FINE_CONTROL = false;
+            public static volatile boolean IS_FIELD_CENTRIC = true;
+            public static volatile boolean USING_FINE_CONTROL = false;
 
 
-
-            //TODO: what does this do exactly?
-            public static double LATERAL_MULTIPLIER = 1;
+            /**
+             * Justin Note BTW:
+             * The Lateral Multiplier will be multiplied by the y value (strafing) of the drive
+             * train (I believe to account for imperfect strafing). It will do for autonomous
+             * only due to overriding set drive power method
+             */
+            public static volatile double LATERAL_MULTIPLIER = 1;
 
             public static Speed speed;
             public static class Speed {
-                public static double VX_MULTIPLIER = 1.1;
-                public static double VY_MULTIPLIER = 1;
-                public static double OMEGA_MULTIPLIER = 1;
+                public static volatile double VX_MULTIPLIER = 1.1;
+                public static volatile double VY_MULTIPLIER = 1;
+                public static volatile double OMEGA_MULTIPLIER = 1;
 
-                public static double NORMAL_SPEED = 1;
-                public static double FAST_SPEED = 0.5;
-                public static double SLOW_SPEED = 0.3;
+                public static volatile double NORMAL_SPEED = 1;
+                public static volatile double FAST_SPEED = 0.5;
+                public static volatile double SLOW_SPEED = 0.3;
             }
             public static Direction direction;
             public static class Direction {
-                public static DcMotorSimple.Direction
+                public static volatile DcMotorSimple.Direction
                         LEFT_FRONT = DcMotorSimple.Direction.REVERSE,
                         LEFT_REAR = DcMotorSimple.Direction.REVERSE,
                         RIGHT_FRONT = DcMotorSimple.Direction.REVERSE,
@@ -103,7 +108,7 @@ public class Drive extends MecanumDrive {
              * If using the built-in motor velocity PID, update MOTOR_VELO_PID with the tuned coefficients
              * from DriveVelocityPIDTuner.
              */
-            public static boolean RUN_USING_BUILT_IN_CONTROLLER = false;
+            public static final boolean RUN_USING_BUILT_IN_CONTROLLER = false;
             public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(0, 0, 0,
                     getMotorVelocityF(Drivetrain.MAX_RPM / 60 * Drivetrain.TICKS_PER_REV));
             /**
@@ -112,9 +117,9 @@ public class Drive extends MecanumDrive {
              * motor encoders or have elected not to use them for velocity control, these values should be
              * empirically tuned.
              */
-            public static double kV = 0.01635;
-            public static double kA = 0.003;
-            public static double kStatic = 0;
+            public static volatile double kV = 0.01635;
+            public static volatile double kA = 0.003;
+            public static volatile double kStatic = 0;
 
             /**
              * <p>
@@ -149,10 +154,10 @@ public class Drive extends MecanumDrive {
              * You are free to raise this on your own if you would like. It is best determined through experimentation.
              * </p>
              */
-            public static double MAX_VEL       = 50; // 85% of the max for this drive would be 52
-            public static double MAX_ACCEL     = 40; // 60 is about as high as this should be
-            public static double MAX_ANG_VEL   = Math.toRadians(180); // 242 is about 85% of what it could do
-            public static double MAX_ANG_ACCEL = Math.toRadians(180); // do maybe 242 also idk
+            public static volatile double MAX_VEL       = 50; // 85% of the max for this drive would be 52
+            public static volatile double MAX_ACCEL     = 40; // 60 is about as high as this should be
+            public static volatile double MAX_ANG_VEL   = Math.toRadians(180); // 242 is about 85% of what it could do
+            public static volatile double MAX_ANG_ACCEL = Math.toRadians(180); // do maybe 242 also idk
         }
 
         public static Follower follower;
@@ -161,7 +166,7 @@ public class Drive extends MecanumDrive {
             public static PIDCoefficients HEADING_PID = new PIDCoefficients(8, 0, 0);
 
             public static Pose2dContainer ADMISSIBLE_ERROR = new Pose2dContainer(0.5, 0.5, 5.0);
-            public static double TIMEOUT = 0.5;
+            public static volatile double TIMEOUT = 0.5;
         }
 
         public static double encoderTicksToInches(double ticks) {
@@ -378,29 +383,53 @@ public class Drive extends MecanumDrive {
         }
     }
 
+    /**
+     * This method was overridden by Justin
+     * It is almost identical, but the y value (strafing) is not multiplied by the lateral multiplier.
+     *
+     * The lateral multiplier can instead be used for Trajectory following to account for imperfect
+     * strafing, and the VY weight can be used for manually powering motors for the same purpose
+     */
+    @Override
+    public void setDrivePower(@NonNull Pose2d drivePower) {
+        double x = drivePower.getX(); // Forward and back
+        double y = drivePower.getY(); // Strafe
+        double heading = drivePower.getHeading(); // Heading
+        double[] powers = {
+                x - y - heading,
+                x + y - heading,
+                x - y + heading,
+                x + y + heading
+        };
+        setMotorPowers(powers[0], powers[1], powers[2], powers[3]);
+    }
+
+    /**
+     * This method has been modified by Justin
+     * In Stock RoadRunner, this method does not make use of VX, VY, and OMEGA weights unless
+     * the total of x, y, and heading was greater than 1. This has been modified to always
+     * make use of these weights
+     */
     public void setWeightedDrivePower(Pose2d drivePower) {
         // re-normalize the powers according to the weights
-        drivePower = new Pose2d(
-                Drivetrain.Speed.VX_MULTIPLIER * drivePower.getX(),
-                Drivetrain.Speed.VY_MULTIPLIER * drivePower.getY(),
-                Drivetrain.Speed.OMEGA_MULTIPLIER * drivePower.getHeading());
+        double x = Drivetrain.Speed.VX_MULTIPLIER * drivePower.getX(); // forward/back
+        double y = Drivetrain.Speed.VY_MULTIPLIER * drivePower.getY(); // strafe
+        double heading = Drivetrain.Speed.OMEGA_MULTIPLIER * drivePower.getHeading(); // turn
 
-        if (Math.abs(drivePower.getX()) + Math.abs(drivePower.getY())
-                + Math.abs(drivePower.getHeading()) > 1) {
+        // Apply re-normalized weights
+        drivePower = new Pose2d(x, y , heading);
 
-            // re-normalize the powers according to the weights
-            double denom = Drivetrain.Speed.VX_MULTIPLIER * Math.abs(drivePower.getX())
-                    + Drivetrain.Speed.VY_MULTIPLIER * Math.abs(drivePower.getY())
-                    + Drivetrain.Speed.OMEGA_MULTIPLIER * Math.abs(drivePower.getHeading());
+        // (from gm0)
+        // Denominator is the largest motor power (absolute value) or 1
+        // This ensures all the powers maintain the same ratio, but only when
+        // at least one is out of the range [-1, 1]
+        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(heading), 1);
 
-            drivePower = drivePower
-                    .div(denom)
-                    .times(speed); // incorporate speed
+        drivePower = drivePower.div(denominator);
 
-        }
-
-        setDrivePower(drivePower);
+        setDrivePower(drivePower.times(speed)); // incorporate speed
     }
+
 
     @NonNull
     @Override
