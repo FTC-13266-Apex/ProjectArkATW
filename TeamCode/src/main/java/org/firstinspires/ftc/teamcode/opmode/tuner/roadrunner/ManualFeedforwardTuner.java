@@ -1,7 +1,6 @@
-package org.firstinspires.ftc.teamcode.opmode.tuner;
+package org.firstinspires.ftc.teamcode.opmode.tuner.roadrunner;
 
 import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.kinematics.Kinematics;
@@ -17,7 +16,7 @@ import org.firstinspires.ftc.teamcode.subsystem.Drive;
 
 import java.util.Objects;
 
-import static org.firstinspires.ftc.teamcode.opmode.tuner.ManualFeedforwardTuner.Constants.*;
+import static org.firstinspires.ftc.teamcode.opmode.tuner.roadrunner.ManualFeedforwardTuner.Constants.*;
 /*
  * This routine is designed to tune the open-loop feedforward coefficients. Although it may seem unnecessary,
  * tuning these coefficients is just as important as the positional parameters. Like the other

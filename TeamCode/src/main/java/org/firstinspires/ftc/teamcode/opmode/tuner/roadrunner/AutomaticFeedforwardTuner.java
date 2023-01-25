@@ -1,7 +1,6 @@
-package org.firstinspires.ftc.teamcode.opmode.tuner;
+package org.firstinspires.ftc.teamcode.opmode.tuner.roadrunner;
 
 import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.util.NanoClock;
@@ -17,7 +16,7 @@ import org.firstinspires.ftc.teamcode.util.RegressionUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.firstinspires.ftc.teamcode.opmode.tuner.AutomaticFeedforwardTuner.Constants.*;
+import static org.firstinspires.ftc.teamcode.opmode.tuner.roadrunner.AutomaticFeedforwardTuner.Constants.*;
 
 /*
  * Op mode for computing kV, kStatic, and kA from various drive routines. For the curious, here's an

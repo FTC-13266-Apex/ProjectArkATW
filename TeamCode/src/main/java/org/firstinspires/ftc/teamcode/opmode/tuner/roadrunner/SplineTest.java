@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.tuner;
+package org.firstinspires.ftc.teamcode.opmode.tuner.roadrunner;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.subsystem.Drive;
 
-import static org.firstinspires.ftc.teamcode.opmode.tuner.SplineTest.Constants.*;
+import static org.firstinspires.ftc.teamcode.opmode.tuner.roadrunner.SplineTest.Constants.*;
 /*
  * This is an example of a more complex path to really test the tuning.
  */

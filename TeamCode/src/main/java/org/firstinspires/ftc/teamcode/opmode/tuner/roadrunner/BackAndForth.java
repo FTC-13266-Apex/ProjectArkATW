@@ -1,6 +1,5 @@
-package org.firstinspires.ftc.teamcode.opmode.tuner;
+package org.firstinspires.ftc.teamcode.opmode.tuner.roadrunner;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -8,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.subsystem.Drive;
 
-import static org.firstinspires.ftc.teamcode.opmode.tuner.BackAndForth.Constants.*;
+import static org.firstinspires.ftc.teamcode.opmode.tuner.roadrunner.BackAndForth.Constants.*;
 /*
  * Op mode for preliminary tuning of the follower PID coefficients (located in the drive base
  * classes). The robot drives back and forth in a straight line indefinitely. Utilization of the

@@ -1,12 +1,11 @@
-package org.firstinspires.ftc.teamcode.opmode.tuner;
+package org.firstinspires.ftc.teamcode.opmode.tuner.roadrunner;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.subsystem.Drive;
 
-import static org.firstinspires.ftc.teamcode.opmode.tuner.TurnTest.Constants.*;
+import static org.firstinspires.ftc.teamcode.opmode.tuner.roadrunner.TurnTest.Constants.*;
 /*
  * This is a simple routine to test turning capabilities.
  */
