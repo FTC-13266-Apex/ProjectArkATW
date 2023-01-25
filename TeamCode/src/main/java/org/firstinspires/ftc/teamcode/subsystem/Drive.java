@@ -117,6 +117,8 @@ public class Drive extends MecanumDrive {
              * motor encoders or have elected not to use them for velocity control, these values should be
              * empirically tuned.
              */
+
+            // TODO: adjust kV and maybe kA depending on the battery voltage. (maybe kstatic also)
             public static volatile double kV = 0.01635;
             public static volatile double kA = 0.003;
             public static volatile double kStatic = 0;
@@ -213,7 +215,7 @@ public class Drive extends MecanumDrive {
             module.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
         }
 
-        // TODO: adjust the names of the following hardware devices to match your configuration
+        // adjust the names of the following hardware devices to match your configuration
         if(isUsingImu) {
             imu = opMode.hardwareMap.get(BNO055IMU.class, "imu");
             BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -222,7 +224,7 @@ public class Drive extends MecanumDrive {
         }
 
 
-        // TODO: If the hub containing the IMU you are using is mounted so that the "REV" logo does
+        // If the hub containing the IMU you are using is mounted so that the "REV" logo does
         // not face up, remap the IMU axes so that the z-axis points upward (normal to the floor.)
         //
         //             | +Z axis
@@ -272,7 +274,7 @@ public class Drive extends MecanumDrive {
         rightRear.setDirection(Drivetrain.Direction.RIGHT_REAR);
         leftRear.setDirection(Drivetrain.Direction.LEFT_REAR);
 
-        // TODO: if desired, use setLocalizer() to change the localization method
+        // if desired, use setLocalizer() to change the localization method
         // for instance, setLocalizer(new ThreeTrackingWheelLocalizer(...));
         setLocalizer(new StandardTrackingWheelLocalizer(opMode.hardwareMap));
 

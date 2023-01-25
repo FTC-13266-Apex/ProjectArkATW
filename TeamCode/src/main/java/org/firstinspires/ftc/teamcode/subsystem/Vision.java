@@ -58,8 +58,6 @@ public class Vision extends Subsystem {
 
     public Vision(@NonNull OpMode opMode) {
         super(opMode);
-        // TODO: we might want to do this
-        //  telemetry.setMsTransmissionInterval(50);
 
         // Obtain camera id to allow for camera preview
         int cameraMonitorViewId = opMode.hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", opMode.hardwareMap.appContext.getPackageName());
