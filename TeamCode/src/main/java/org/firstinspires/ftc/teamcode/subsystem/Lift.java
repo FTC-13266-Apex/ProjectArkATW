@@ -18,22 +18,22 @@ public class Lift extends Subsystem {
         public static class Hardware {
             public static DcMotorSimple.Direction LEFT_DIRECTION = DcMotorSimple.Direction.REVERSE;
             public static DcMotorSimple.Direction RIGHT_DIRECTION = DcMotorSimple.Direction.FORWARD;
-            public static double
+            public static final double
                     RPM = 1150,
                     CPR = 145.090909;
 
         }
         public static class Controller {
-            public static double
+            public static volatile double
                     P = 0,
                     I = 0,
                     D = 0,
                     F = 0.1;
 //            public static int TOLERANCE = 8;
-            public static double INTEGRAL_SUM_LIMIT = I == 0 ? 0 : 0.25 / I;
+            public static volatile double INTEGRAL_SUM_LIMIT = I == 0 ? 0 : 0.25 / I;
         }
         public static class Position {
-            public static int
+            public static volatile int
                     HIGH = 2220,
                     MID = 1611,
                     LOW = 959,
@@ -48,8 +48,8 @@ public class Lift extends Subsystem {
                     AUTO_2CONE = 55;
         }
         public static class Speed {
-            public static double NORMAL        = 10;   // ill use this but im testing something
-            public static int MANUAL_MOVE_SPEED = 6;
+            public static volatile double NORMAL        = 10;   // ill use this but im testing something
+            public static volatile int MANUAL_MOVE_SPEED = 6;
 
         }
     }
@@ -167,7 +167,7 @@ public class Lift extends Subsystem {
                 leftIntegralSum = -integralSumLimit;
             }
         }
-        
+
         double out =
                 (Constants.Controller.P * error) +
                 (Constants.Controller.I * rightIntegralSum) +

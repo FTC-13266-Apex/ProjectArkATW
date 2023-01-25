@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode.trajectorysequence.container;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 
 public class Vector2dContainer {
-    public double x = 0;
-    public double y = 0;
+    public volatile double x = 0;
+    public volatile double y = 0;
     public Vector2dContainer(double x, double y) {
         this.x = x;
         this.y = y;

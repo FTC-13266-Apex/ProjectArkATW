@@ -23,14 +23,14 @@ public class Gripper extends Subsystem {
 
         public static Position position;
         private static class Position {
-            public static double FULL_OPEN = 0.72;
-            public static double OPEN = .86;
-            public static double CLOSE = 1;
+            public static volatile double FULL_OPEN = 0.72;
+            public static volatile double OPEN = .86;
+            public static volatile double CLOSE = 1;
         }
 
         public static Sensor sensor;
         private static class Sensor {
-            public static double GRAB_DISTANCE_MM = 35;
+            public static volatile double GRAB_DISTANCE_MM = 35;
         }
     }
 

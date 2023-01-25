@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.trajectorysequence.container;
 
 public class SplineToLinearHeading extends PathSegment {
-    public double x, y, heading, endHeading;
+    public volatile double x, y, heading, endHeading;
     public SplineToLinearHeading(double x, double y, double heading, double endHeading) {
         this.x = x;
         this.y = y;

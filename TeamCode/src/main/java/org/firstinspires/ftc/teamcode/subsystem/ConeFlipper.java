@@ -5,8 +5,6 @@ import androidx.annotation.NonNull;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.robotcore.external.Const;
-
 public class ConeFlipper extends Subsystem {
     public static class Constants {
         public static Hardware hardware;
@@ -18,15 +16,15 @@ public class ConeFlipper extends Subsystem {
 
         }
         private static class Position {
-            public static double
+            public static volatile double
                     LIFT = .7,
                     DROP = .34;
-            public static double
+            public static volatile double
                     HIDDEN = 1,
                     GET_CONE = 0.65,
                     FEED_CONE = .3,
                     SIGNAL_CONE_PUSHER = .4,
-                    SIGNCAL_CONE_YEET = .8;
+                    SIGNAL_CONE_YEET = .8;
         }
     }
 
@@ -72,5 +70,5 @@ public class ConeFlipper extends Subsystem {
 
     public void SignalConePusher(){coneFlipperTop.setPosition(Constants.Position.SIGNAL_CONE_PUSHER);}
 
-    public void SignalConeYeet(){coneFlipperTop.setPosition(Constants.Position.SIGNCAL_CONE_YEET);}
+    public void SignalConeYeet(){coneFlipperTop.setPosition(Constants.Position.SIGNAL_CONE_YEET);}
 }

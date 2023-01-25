@@ -1,10 +1,10 @@
 package org.firstinspires.ftc.teamcode.trajectorysequence.container;
 
 public class TrajectorySequenceConstraints {
-    double baseVelConstraint;
-    double baseAccelConstraint;
-    double baseTurnConstraintMaxAngVel;
-    double baseTurnConstraintMaxAngAccel;
+    public volatile double baseVelConstraint;
+    public volatile double baseAccelConstraint;
+    public volatile double baseTurnConstraintMaxAngVel;
+    public volatile double baseTurnConstraintMaxAngAccel;
 
     public TrajectorySequenceConstraints(
             double baseVelConstraint,

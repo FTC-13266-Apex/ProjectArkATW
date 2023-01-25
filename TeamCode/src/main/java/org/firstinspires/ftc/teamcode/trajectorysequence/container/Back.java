@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.trajectorysequence.container;
 
 public class Back extends PathSegment {
-    public double distance;
+    public volatile double distance;
     public Back(double distance) {
         this.distance = distance;
     }
