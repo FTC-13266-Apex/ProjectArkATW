@@ -29,12 +29,13 @@ public class Lift extends Subsystem {
         }
         public static class Controller {
             public static volatile double
-                    P = 0,
+                    P = 0.008,
                     I = 0,
                     D = 0,
                     F = 0.1;
 //            public static int TOLERANCE = 8;
             public static volatile double INTEGRAL_SUM_LIMIT = I == 0 ? 0 : 0.25 / I;
+            public static volatile double POWER_LIMIT = 1;
         }
         public static class Position {
             public static volatile int
@@ -126,10 +127,14 @@ public class Lift extends Subsystem {
 
         dashboard.addData("Right Slide Measured Position", rightLift.getCurrentPosition());
         dashboard.addData("Right Slide Measured Velocity", rightLift.getVelocity());
+
+        dashboard.addData("Left Slide Power", leftOut);
+        dashboard.addData("Right Slide Power", rightOut);
     }
 
     private double leftLastError, rightLastError;
     private double leftIntegralSum, rightIntegralSum;
+    private double leftOut, rightOut;
     public void leftPID() {
 
         // calculate the error
@@ -152,13 +157,19 @@ public class Lift extends Subsystem {
             }
         }
 
-        double out =
+        leftOut =
                 (Constants.Controller.P * error) +
                 (Constants.Controller.I * leftIntegralSum) +
                 (Constants.Controller.D * derivative) +
                 (Constants.Controller.F);
 
-        leftLift.setPower(out);
+        if (leftOut > Constants.Controller.POWER_LIMIT) {
+            leftOut = Constants.Controller.POWER_LIMIT;
+        }
+        if (leftOut < -Constants.Controller.POWER_LIMIT) {
+            leftOut = -Constants.Controller.POWER_LIMIT;
+        }
+        leftLift.setPower(leftOut);
 
         leftLastError = error;
     }
@@ -185,13 +196,19 @@ public class Lift extends Subsystem {
             }
         }
 
-        double out =
+        rightOut =
                 (Constants.Controller.P * error) +
                 (Constants.Controller.I * rightIntegralSum) +
                 (Constants.Controller.D * derivative) +
                 (Constants.Controller.F);
 
-        rightLift.setPower(out);
+        if (rightOut > Constants.Controller.POWER_LIMIT) {
+            rightOut = Constants.Controller.POWER_LIMIT;
+        }
+        if (rightOut < -Constants.Controller.POWER_LIMIT) {
+            rightOut = -Constants.Controller.POWER_LIMIT;
+        }
+        rightLift.setPower(rightOut);
 
         rightLastError = error;
     }
