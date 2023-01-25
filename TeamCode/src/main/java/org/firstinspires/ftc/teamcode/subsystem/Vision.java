@@ -52,13 +52,7 @@ public class Vision extends Subsystem {
 
         }
         public static class Value {
-            public double
-                    BLUE_WAREHOUSE             = 1, // Degrees
-                    BLUE_CAROUSEL              = 1, // Degrees
-                    RED_WAREHOUSE              = 1, // Degrees
-                    RED_CAROUSEL               = 1; // Degrees
-            public double CAMERA_WAIT_TIME_DOUBLE = 5;
-            public long CAMERA_WAIT_TIME = (long) (CAMERA_WAIT_TIME_DOUBLE * 1000);
+
         }
     }
 
