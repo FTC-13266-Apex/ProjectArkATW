@@ -13,6 +13,7 @@ public abstract class Subsystem {
     }
 
     protected abstract void manualControl();
+    protected void iterative() {};
 
     /**
      * Checks if the subsystem can be controlled with the gamepad
@@ -42,5 +43,6 @@ public abstract class Subsystem {
     public void runIteratively() {
         if (isLocked()) return;
         manualControl();
+        iterative();
     }
 }
