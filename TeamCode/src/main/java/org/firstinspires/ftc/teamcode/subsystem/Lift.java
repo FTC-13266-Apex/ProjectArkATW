@@ -2,15 +2,10 @@ package org.firstinspires.ftc.teamcode.subsystem;
 
 import androidx.annotation.NonNull;
 
-import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.config.ValueProvider;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Lift extends Subsystem {
     public static class Constants {
@@ -22,23 +17,21 @@ public class Lift extends Subsystem {
         public static class Hardware {
             public static DcMotorSimple.Direction LEFT_DIRECTION = DcMotorSimple.Direction.REVERSE;
             public static DcMotorSimple.Direction RIGHT_DIRECTION = DcMotorSimple.Direction.FORWARD;
-            public static final double
+            public static double
                     RPM = 1150,
                     CPR = 145.090909;
 
         }
         public static class Controller {
-            public static volatile double
-                    P = 0.008,
+            public static double
+                    P = 2,
                     I = 0,
                     D = 0,
-                    F = 0.1;
-//            public static int TOLERANCE = 8;
-            public static volatile double INTEGRAL_SUM_LIMIT = I == 0 ? 0 : 0.25 / I;
-            public static volatile double POWER_LIMIT = 1;
+                    F = 0;
+            public static int TOLERANCE = 8;
         }
         public static class Position {
-            public static volatile int
+            public static int
                     HIGH = 2220,
                     MID = 1611,
                     LOW = 959,
@@ -53,24 +46,20 @@ public class Lift extends Subsystem {
                     AUTO_2CONE = 55;
         }
         public static class Speed {
-            public static volatile double NORMAL        = 10;   // ill use this but im testing something
-            public static volatile int MANUAL_MOVE_SPEED = 6;
+            public static double NORMAL        = 10;   // ill use this but im testing something
+            public static int MANUAL_MOVE_SPEED = 6;
 
         }
     }
     private final DcMotorEx leftLift;
     private final DcMotorEx rightLift;
-    private int targetPosition;
+    private int motorPosition;
     private boolean isMovingManually;
-
-    private final ElapsedTime timeSinceLastRefresh = new ElapsedTime();
-    private final Telemetry dashboard = FtcDashboard.getInstance().getTelemetry();
 
 
 
 
     public Lift(@NonNull OpMode opMode) {
-
         super(opMode);
         leftLift = opMode.hardwareMap.get(DcMotorEx.class, "leftLift");
         rightLift = opMode.hardwareMap.get(DcMotorEx.class, "rightLift");
@@ -78,30 +67,24 @@ public class Lift extends Subsystem {
         rightLift.setDirection(Constants.Hardware.RIGHT_DIRECTION);
         leftLift.setDirection(Constants.Hardware.LEFT_DIRECTION);
 
-        leftLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        rightLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        // TODO: Find out what these constants are by default
+//        leftLift.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION, new PIDFCoefficients(Constants.Controller.P, Constants.Controller.I, Constants.Controller.D, Constants.Controller.F));
+//        leftLift.setTargetPositionTolerance(Constants.Controller.TOLERANCE);
+
+        leftLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         leftLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        leftLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftLift.setTargetPosition(0);
+        rightLift.setTargetPosition(0);
 
-        targetPosition = 0;
-    }
+        leftLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-    @Override
-    protected void iterative() {
-        leftPID();
-        rightPID();
 
-        opMode.telemetry.addData("Slide Target Position", targetPosition);
-        opMode.telemetry.addData("Slide P", Constants.Controller.P);
-        opMode.telemetry.addData("Slide I", Constants.Controller.I);
-        opMode.telemetry.addData("Slide D", Constants.Controller.D);
-        opMode.telemetry.addData("Slide F", Constants.Controller.F);
-        opMode.telemetry.addData("Slide Integral Sum Limit", Constants.Controller.INTEGRAL_SUM_LIMIT);
-        timeSinceLastRefresh.reset();
+
     }
 
     @Override
@@ -109,168 +92,88 @@ public class Lift extends Subsystem {
         if (opMode.gamepad2.dpad_down) moveInitial();
         else if(opMode.gamepad2.dpad_left) moveLow();
         else if(opMode.gamepad2.dpad_right) moveMid();
-//        else if (opMode.gamepad2.dpad_up) moveHigh();
+        else if (opMode.gamepad2.dpad_up) moveHigh();
 
         if (opMode.gamepad2.right_stick_y < -0.2 || opMode.gamepad2.right_stick_y > 0.2) {
-            changeTargetTo((int)(targetPosition + Constants.Speed.MANUAL_MOVE_SPEED * -opMode.gamepad2.right_stick_y));
+            moveMotors((int)(motorPosition + Constants.Speed.MANUAL_MOVE_SPEED * -opMode.gamepad2.right_stick_y));
             isMovingManually = true;
         } else {
             isMovingManually = false;
         }
+
+        opMode.telemetry.addData("Slide position", motorPosition);
+        opMode.telemetry.addData("Slide P", leftLift.getPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION).p);
+        opMode.telemetry.addData("Slide I", leftLift.getPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION).i);
+        opMode.telemetry.addData("Slide D", leftLift.getPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION).d);
+        opMode.telemetry.addData("Slide F", leftLift.getPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION).f);
+        opMode.telemetry.addData("Slide Tolerance", leftLift.getTargetPositionTolerance());
     }
 
-    public void updateDashboard() {
-        dashboard.addData("Slide Target Position", targetPosition);
-
-        dashboard.addData("Left Slide Measured Position", leftLift.getCurrentPosition());
-        dashboard.addData("Left Slide Measured Velocity", leftLift.getVelocity());
-
-        dashboard.addData("Right Slide Measured Position", rightLift.getCurrentPosition());
-        dashboard.addData("Right Slide Measured Velocity", rightLift.getVelocity());
-
-        dashboard.addData("Left Slide Power", leftOut);
-        dashboard.addData("Right Slide Power", rightOut);
-    }
-
-    private double leftLastError, rightLastError;
-    private double leftIntegralSum, rightIntegralSum;
-    private double leftOut, rightOut;
-    public void leftPID() {
-
-        // calculate the error
-        double error = targetPosition - leftLift.getCurrentPosition();
-
-        // rate of change of the error
-        double derivative = (error - leftLastError) / timeSinceLastRefresh.seconds();
-
-        // sum of all error over time
-        leftIntegralSum = leftIntegralSum + (error * timeSinceLastRefresh.seconds());
-
-        double integralSumLimit = Constants.Controller.INTEGRAL_SUM_LIMIT;
-
-        if (integralSumLimit != 0) {
-            if (leftIntegralSum > integralSumLimit) {
-                leftIntegralSum = integralSumLimit;
-            }
-            if (leftIntegralSum < -integralSumLimit) {
-                leftIntegralSum = -integralSumLimit;
-            }
-        }
-
-        leftOut =
-                (Constants.Controller.P * error) +
-                (Constants.Controller.I * leftIntegralSum) +
-                (Constants.Controller.D * derivative) +
-                (Constants.Controller.F);
-
-        if (leftOut > Constants.Controller.POWER_LIMIT) {
-            leftOut = Constants.Controller.POWER_LIMIT;
-        }
-        if (leftOut < -Constants.Controller.POWER_LIMIT) {
-            leftOut = -Constants.Controller.POWER_LIMIT;
-        }
-        leftLift.setPower(leftOut);
-
-        leftLastError = error;
-    }
-
-    public void rightPID() {
-
-        // calculate the error
-        double error = targetPosition - rightLift.getCurrentPosition();
-
-        // rate of change of the error
-        double derivative = (error - rightLastError) / timeSinceLastRefresh.seconds();
-
-        // sum of all error over time
-        rightIntegralSum = rightIntegralSum + (error * timeSinceLastRefresh.seconds());
-
-        double integralSumLimit = Constants.Controller.INTEGRAL_SUM_LIMIT;
-
-        if (integralSumLimit != 0) {
-            if (leftIntegralSum > integralSumLimit) {
-                leftIntegralSum = integralSumLimit;
-            }
-            if (leftIntegralSum < -integralSumLimit) {
-                leftIntegralSum = -integralSumLimit;
-            }
-        }
-
-        rightOut =
-                (Constants.Controller.P * error) +
-                (Constants.Controller.I * rightIntegralSum) +
-                (Constants.Controller.D * derivative) +
-                (Constants.Controller.F);
-
-        if (rightOut > Constants.Controller.POWER_LIMIT) {
-            rightOut = Constants.Controller.POWER_LIMIT;
-        }
-        if (rightOut < -Constants.Controller.POWER_LIMIT) {
-            rightOut = -Constants.Controller.POWER_LIMIT;
-        }
-        rightLift.setPower(rightOut);
-
-        rightLastError = error;
-    }
-
-    public void changeTargetTo(int position) {
+    public void moveMotors(int position) {
         if (position > Constants.Position.MAX_POSITION || position < Constants.Position.MIN_POSITION) return;
-        this.targetPosition = position;
+
+        this.motorPosition = position;
+
+        leftLift.setTargetPosition(position);
+        rightLift.setTargetPosition(position);
+
+        leftLift.setPower(1);
+        rightLift.setPower(1);
     }
 
     public void moveInitial() {
         if (isMovingManually) {
-            Constants.Position.INITIAL = targetPosition;
+            Constants.Position.INITIAL = motorPosition;
         }
-        changeTargetTo(Constants.Position.INITIAL);
+        moveMotors(Constants.Position.INITIAL);
     }
 
     public void moveHigh() {
         if (isMovingManually) {
-            Constants.Position.HIGH = targetPosition;
+            Constants.Position.HIGH = motorPosition;
         }
-        changeTargetTo(Constants.Position.HIGH);
+        moveMotors(Constants.Position.HIGH);
     }
 
     public void moveMid() {
         if (isMovingManually) {
-            Constants.Position.MID = targetPosition;
+            Constants.Position.MID = motorPosition;
         }
-        changeTargetTo(Constants.Position.MID);
+        moveMotors(Constants.Position.MID);
     }
 
     public void moveLow() {
         if (isMovingManually) {
-            Constants.Position.LOW = targetPosition;
+            Constants.Position.LOW = motorPosition;
         }
-        changeTargetTo(Constants.Position.LOW);
+        moveMotors(Constants.Position.LOW);
     }
 
     public void moveGroundJunction() {
-        changeTargetTo(Constants.Position.GROUND_JUNCTION);
+        moveMotors(Constants.Position.GROUND_JUNCTION);
     }
 
     public void moveCone5() {
-        changeTargetTo(Constants.Position.AUTO_5CONE);
+        moveMotors(Constants.Position.AUTO_5CONE);
     }
 
     public void moveCone4() {
-        changeTargetTo(Constants.Position.AUTO_4CONE);
+        moveMotors(Constants.Position.AUTO_4CONE);
     }
 
     public void moveCone3() {
-        changeTargetTo(Constants.Position.AUTO_3CONE);
+        moveMotors(Constants.Position.AUTO_3CONE);
     }
 
     public void moveCone2() {
-        changeTargetTo(Constants.Position.AUTO_2CONE);
+        moveMotors(Constants.Position.AUTO_2CONE);
     }
 
     public void moveToPickUpFlippedCone() {
-        changeTargetTo(Constants.Position.FLIPPED_CONE);
+        moveMotors(Constants.Position.FLIPPED_CONE);
     }
 
     public boolean isDown() {
-        return targetPosition <= Constants.Position.INITIAL;
+        return motorPosition <= Constants.Position.INITIAL;
     }
 }

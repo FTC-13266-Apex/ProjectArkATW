@@ -29,7 +29,7 @@ public class LiftTuner extends LinearOpMode {
         waitForStart();
         while (opModeIsActive()) {
             lift.runIteratively();
-            lift.updateDashboard();
+//            lift.updateDashboard();
             telemetry.update();
         }
 
