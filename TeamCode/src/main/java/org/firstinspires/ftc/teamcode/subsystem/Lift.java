@@ -15,8 +15,8 @@ public class Lift extends Subsystem {
         public static Speed speed;
 
         public static class Hardware {
-            public static DcMotorSimple.Direction LEFT_DIRECTION = DcMotorSimple.Direction.REVERSE;
-            public static DcMotorSimple.Direction RIGHT_DIRECTION = DcMotorSimple.Direction.FORWARD;
+            public static DcMotorSimple.Direction LEFT_DIRECTION = DcMotorSimple.Direction.FORWARD;
+            public static DcMotorSimple.Direction RIGHT_DIRECTION = DcMotorSimple.Direction.REVERSE;
             public static double
                     RPM = 1150,
                     CPR = 145.090909;
@@ -32,12 +32,12 @@ public class Lift extends Subsystem {
         }
         public static class Position {
             public static int
-                    HIGH = 2300,
-                    MID = 1611,
-                    LOW = 959,
+                    HIGH = 1100,
+                    MID = 700,
+                    LOW = 500,
                     GROUND_JUNCTION = 200,
                     INITIAL = 0,
-                    FLIPPED_CONE = 470,
+                    FLIPPED_CONE = 270,
                     MAX_POSITION = 3000,
                     MIN_POSITION = -70,
                     AUTO_5CONE = 250,
