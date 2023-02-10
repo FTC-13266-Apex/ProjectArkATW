@@ -24,7 +24,7 @@ public class Gripper extends Subsystem {
         public static Position position;
         private static class Position {
             public static volatile double FULL_OPEN = 0.4;
-            public static volatile double OPEN = .67;
+            public static volatile double OPEN = .65;
             public static volatile double CLOSE = .78;
         }
 

@@ -6,6 +6,7 @@ import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityCons
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.apache.commons.math3.geometry.euclidean.twod.Line;
 import org.firstinspires.ftc.teamcode.subsystem.ConeFlipper;
 import org.firstinspires.ftc.teamcode.subsystem.Drive;
 import org.firstinspires.ftc.teamcode.subsystem.Gripper;
@@ -31,12 +32,12 @@ public class NewCycleAutonomous extends LinearOpMode {
             public static double dropWaitMS = 500,
                     grabWaitMS = 500;
             public static Pose2dContainer pickupPose = new Pose2dContainer(57,-11,0);
-            public static Pose2dContainer startPose = new Pose2dContainer(31, -62, 90);
+            public static Pose2dContainer startPose = new Pose2dContainer(36, -62, 90);
             public static double liftDisplacement = 5;
 
             public static PreLoad preload;
             public static class PreLoad {
-                public static LineToLinearHeading lineToLinearHeading = new LineToLinearHeading(20,20,90);
+                public static LineToLinearHeading lineToLinearHeading = new LineToLinearHeading(36,-24,180);
 
             }
 
@@ -52,13 +53,13 @@ public class NewCycleAutonomous extends LinearOpMode {
             public static class Cycle1 {
                 public static Pickup pickup;
                 public static class Pickup {
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(57, -13, 0, 0);
-                    public static double forwardDistance =5.5;
+                    public static double strafeDistance =12;
+                    public static LineToLinearHeading LineToLinearHeading = new LineToLinearHeading(57, -13, 0);
                 }
                 public static Drop drop;
                 public static class Drop {
-                    public static double backDistance = 1;
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(26, -4, 115, 115);
+                    public static double backDistance = 3;
+                    public static LineToLinearHeading LineToLinearHeading = new LineToLinearHeading(24, -13,  -90);
 
                 }
             }
@@ -67,13 +68,13 @@ public class NewCycleAutonomous extends LinearOpMode {
             public static class Cycle2 {
                 public static Pickup pickup;
                 public static class Pickup {
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(57, -13, 0, 0);
-                    public static double forwardDistance = 5.5;
+                    public static double strafeDistance =12;
+                    public static LineToLinearHeading LineToLinearHeading = new LineToLinearHeading(57, -13, 0);
                 }
                 public static Drop drop;
                 public static class Drop {
-                    public static double backDistance = 1;
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(27, -4, 115, 115);
+                    public static double backDistance = 3;
+                    public static LineToLinearHeading LineToLinearHeading = new LineToLinearHeading(24, -13,  -90);
 
                 }
             }
@@ -82,13 +83,13 @@ public class NewCycleAutonomous extends LinearOpMode {
             public static class Cycle3 {
                 public static Pickup pickup;
                 public static class Pickup {
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(57, -13, 0, 0);
-                    public static double forwardDistance = 5.5;
+                    public static double strafeDistance =12;
+                    public static LineToLinearHeading LineToLinearHeading = new LineToLinearHeading(57, -13, 0);
                 }
                 public static Drop drop;
                 public static class Drop {
-                    public static double backDistance = 1;
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(27, -4, 115, 115);
+                    public static double backDistance = 3;
+                    public static LineToLinearHeading LineToLinearHeading = new LineToLinearHeading(24, -13,  -90);
 
                 }
             }
@@ -97,14 +98,14 @@ public class NewCycleAutonomous extends LinearOpMode {
                 public static Pickup pickup;
 
                 public static class Pickup {
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(57, -13, 0, 0);
-                    public static double forwardDistance = 6;
+                    public static double strafeDistance =12;
+                    public static LineToLinearHeading LineToLinearHeading = new LineToLinearHeading(57, -13, 0);
                 }
 
                 public static Drop drop;
                 public static class Drop {
-                    public static double backDistance = 1;
-                    public static SplineToSplineHeading splineToSplineHeading = new SplineToSplineHeading(27, -5, 115, 115);
+                    public static double backDistance = 3;
+                    public static LineToLinearHeading LineToLinearHeading = new LineToLinearHeading(24, -13,  -90);
                 }
             }
 
@@ -149,59 +150,48 @@ public class NewCycleAutonomous extends LinearOpMode {
         /* Cycle 1 */
 
         TrajectorySequence cycle1Pickup = drive.trajectorySequenceBuilder(preLoad.end())
-                .setReversed(true)
+                .strafeRight(Constants.Path.Cycle1.Pickup.strafeDistance, vel, accel)
                 .addDisplacementMarker(Constants.Path.liftDisplacement, lift::moveCone5)
-                .splineToSplineHeading(Constants.Path.Cycle1.Pickup.splineToSplineHeading, vel, accel)
-                .forward(Constants.Path.Cycle1.Pickup.forwardDistance, vel, accel)
+                .lineToLinearHeading(Constants.Path.Cycle1.Pickup.LineToLinearHeading, vel, accel)
                 .build();
 
         TrajectorySequence cycle1Drop = drive.trajectorySequenceBuilder(cycle1Pickup.end())
-                .setReversed(false)
                 .back(Constants.Path.Cycle1.Drop.backDistance, vel, accel)
-                .splineToSplineHeading(Constants.Path.Cycle1.Drop.splineToSplineHeading, vel, accel)
+                .lineToLinearHeading(Constants.Path.Cycle1.Drop.LineToLinearHeading, vel, accel)
                 .build();
 
         /* Cycle 2 */
 
         TrajectorySequence cycle2Pickup = drive.trajectorySequenceBuilder(preLoad.end())
-                .setReversed(true)
                 .addDisplacementMarker(Constants.Path.liftDisplacement, lift::moveCone4)
-                .splineToSplineHeading(Constants.Path.Cycle2.Pickup.splineToSplineHeading, vel, accel)
-                .forward(Constants.Path.Cycle2.Pickup.forwardDistance, vel, accel)
+                .lineToLinearHeading(Constants.Path.Cycle2.Pickup.LineToLinearHeading, vel, accel)
                 .build();
 
         TrajectorySequence cycle2Drop = drive.trajectorySequenceBuilder(cycle1Pickup.end())
-                .setReversed(false)
                 .back(Constants.Path.Cycle2.Drop.backDistance, vel, accel)
-                .splineToSplineHeading(Constants.Path.Cycle2.Drop.splineToSplineHeading, vel, accel)
+                .lineToLinearHeading(Constants.Path.Cycle2.Drop.LineToLinearHeading, vel, accel)
                 .build();
 
         /* Cycle 3 */
 
         TrajectorySequence cycle3Pickup = drive.trajectorySequenceBuilder(preLoad.end())
-                .setReversed(true)
                 .addDisplacementMarker(Constants.Path.liftDisplacement, lift::moveCone3)
-                .splineToSplineHeading(Constants.Path.Cycle3.Pickup.splineToSplineHeading, vel, accel)
-                .forward(Constants.Path.Cycle3.Pickup.forwardDistance, vel, accel)
+                .lineToLinearHeading(Constants.Path.Cycle3.Pickup.LineToLinearHeading, vel, accel)
                 .build();
 
         TrajectorySequence cycle3Drop = drive.trajectorySequenceBuilder(cycle1Pickup.end())
-                .setReversed(false)
                 .back(Constants.Path.Cycle3.Drop.backDistance, vel, accel)
-                .splineToSplineHeading(Constants.Path.Cycle3.Drop.splineToSplineHeading, vel, accel)
+                .lineToLinearHeading(Constants.Path.Cycle3.Drop.LineToLinearHeading, vel, accel)
                 .build();
 
         TrajectorySequence cycle4Pickup = drive.trajectorySequenceBuilder(preLoad.end())
-                .setReversed(true)
                 .addDisplacementMarker(Constants.Path.liftDisplacement, lift::moveCone2)
-                .splineToSplineHeading(Constants.Path.Cycle4.Pickup.splineToSplineHeading, vel, accel)
-                .forward(Constants.Path.Cycle4.Pickup.forwardDistance, vel, accel)
+                .lineToLinearHeading(Constants.Path.Cycle4.Pickup.LineToLinearHeading, vel, accel)
                 .build();
 
         TrajectorySequence cycle4Drop = drive.trajectorySequenceBuilder(cycle1Pickup.end())
-                .setReversed(false)
                 .back(Constants.Path.Cycle4.Drop.backDistance, vel, accel)
-                .splineToSplineHeading(Constants.Path.Cycle4.Drop.splineToSplineHeading, vel, accel)
+                .lineToLinearHeading(Constants.Path.Cycle4.Drop.LineToLinearHeading, vel, accel)
                 .build();
 
 
