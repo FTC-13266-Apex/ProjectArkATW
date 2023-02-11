@@ -67,7 +67,7 @@ public class Drive extends MecanumDrive {
             public static volatile double TRACK_WIDTH = 10.8; // in
 
             public static volatile boolean IS_FIELD_CENTRIC = true;
-            public static volatile boolean USING_FINE_CONTROL = false;
+            public static volatile boolean USING_FINE_CONTROL = true;
 
 
             /**
