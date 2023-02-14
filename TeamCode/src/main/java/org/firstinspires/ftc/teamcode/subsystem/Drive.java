@@ -119,9 +119,9 @@ public class Drive extends MecanumDrive {
              */
 
             // TODO: adjust kV and maybe kA depending on the battery voltage. (maybe kstatic also)
-            public static volatile double kV = 0.01635;
+            public static volatile double kV = 0.0168;
             public static volatile double kA = 0.003;
-            public static volatile double kStatic = 0;
+            public static volatile double kStatic = 0.02;
 
             /**
              * <p>
@@ -157,7 +157,7 @@ public class Drive extends MecanumDrive {
              * </p>
              */
             public static volatile double MAX_VEL       = 50; // 85% of the max for this drive would be 52
-            public static volatile double MAX_ACCEL     = 40; // 60 is about as high as this should be
+            public static volatile double MAX_ACCEL     = 50; // 60 is about as high as this should be
             public static volatile double MAX_ANG_VEL   = Math.toRadians(180); // 242 is about 85% of what it could do
             public static volatile double MAX_ANG_ACCEL = Math.toRadians(180); // do maybe 242 also idk
         }
