@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.command.FlipConeWithGamepad;
+import org.firstinspires.ftc.teamcode.command.JunctionDetection;
 import org.firstinspires.ftc.teamcode.command.OptimizeStuff;
 import org.firstinspires.ftc.teamcode.command.Sensor;
 import org.firstinspires.ftc.teamcode.command.Sussy;
@@ -28,6 +29,7 @@ public class TeleOpMain extends LinearOpMode {
         new Sussy(this);
 
         Sensor sensor = new Sensor(this, gripper, lift);
+        JunctionDetection junction = new JunctionDetection(this, gripper, lift);
         FlipConeWithGamepad flipConeWithGamepad = new FlipConeWithGamepad(this, coneFlipper, lift, gripper);
 
         drive.setPoseEstimate(PoseStorage.currentPose);
@@ -38,6 +40,7 @@ public class TeleOpMain extends LinearOpMode {
         while (opModeIsActive()) {
             lift.runIteratively();
             sensor.runIteratively();
+            junction.runIteratively();
             gripper.runIteratively();
 
             flipConeWithGamepad.runIteratively();

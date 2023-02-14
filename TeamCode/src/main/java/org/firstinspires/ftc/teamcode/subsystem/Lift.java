@@ -176,4 +176,6 @@ public class Lift extends Subsystem {
     public boolean isDown() {
         return motorPosition <= Constants.Position.INITIAL;
     }
+
+    public boolean isUp() {return motorPosition > Constants.Position.INITIAL;}
 }

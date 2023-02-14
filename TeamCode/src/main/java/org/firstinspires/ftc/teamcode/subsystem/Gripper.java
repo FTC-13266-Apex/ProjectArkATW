@@ -31,12 +31,14 @@ public class Gripper extends Subsystem {
         public static Sensor sensor;
         private static class Sensor {
             public static volatile double GRAB_DISTANCE_MM = 35;
+            public static volatile double JUNCTION_DISTANCE_MM = 20;
         }
     }
 
     private final Servo gripper;
     private final ColorRangeSensor distanceSensor;
     private boolean ignoreSensor = false;
+    private boolean noJunction = false;
 
     public Gripper (@NonNull OpMode opMode) {
         super(opMode);
@@ -53,15 +55,33 @@ public class Gripper extends Subsystem {
         else ignoreSensor = false;
     }
 
+    protected void disableJunction() {
+        if (opMode.gamepad1.dpad_right) {
+            noJunction = true;
+        } else if (opMode.gamepad1.dpad_left) {
+            noJunction = false;
+        } else {
+            noJunction = false;
+        }
+    }
+
     public boolean isInRange() {
         double distance = distanceSensor.getDistance(DistanceUnit.MM);
         opMode.telemetry.addData("Distance", distance);
         return (distance) < Constants.Sensor.GRAB_DISTANCE_MM;
     }
 
+    public boolean isInJunction() {
+        double distance = distanceSensor.getDistance(DistanceUnit.MM);
+        opMode.telemetry.addData("DistanceJunction", distance);
+        return (distance) < Constants.Sensor.JUNCTION_DISTANCE_MM;
+    }
+
     public boolean ignoreSensor() {
         return ignoreSensor;
     }
+
+    public boolean noJunction() {return noJunction;}
 
     public void fullOpen() {
         gripper.setPosition(Constants.Position.FULL_OPEN);
