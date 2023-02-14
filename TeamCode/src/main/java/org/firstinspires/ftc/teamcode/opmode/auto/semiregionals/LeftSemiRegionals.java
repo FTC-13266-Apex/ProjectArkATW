@@ -21,7 +21,7 @@ public class LeftSemiRegionals extends RoadRunnerAuto {
         public static class Speed {
             public static double baseVel = 35; // value
             public static double baseAccel = 60; // value
-            public static double turnVel = 35; // value
+            public static double turnVel = 60; // value
             public static double turnAccel = 60; // value
         }
 
@@ -52,7 +52,7 @@ public class LeftSemiRegionals extends RoadRunnerAuto {
             public static Forward cycle1Pickup3 = new Forward(10);
             static TrajectorySequenceContainer cycle1Pickup = new TrajectorySequenceContainer(cycle1Pickup1, cycle1Pickup2, cycle1Pickup3);
 
-            public static Back cycle1Drop1 = new Back(5);
+            public static Back cycle1Drop1 = new Back(0);
             public static LineToSplineHeading cycle1Drop2 = new LineToSplineHeading(-24, -11, -90);
             static TrajectorySequenceContainer cycle1Drop = new TrajectorySequenceContainer(cycle1Drop1, cycle1Drop2);
 
