@@ -40,7 +40,7 @@ public class StandardTrackingWheelLocalizer extends ThreeTrackingWheelLocalizer 
         public static Direction direction;
         public static class Direction {
             public static Encoder.Direction
-                LEFT = Encoder.Direction.REVERSE,
+                LEFT = Encoder.Direction.FORWARD,
                 RIGHT = Encoder.Direction.REVERSE,
                 BACK = Encoder.Direction.REVERSE;
         }

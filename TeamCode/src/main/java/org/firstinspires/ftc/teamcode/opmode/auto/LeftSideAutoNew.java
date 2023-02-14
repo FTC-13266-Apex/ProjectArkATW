@@ -6,7 +6,6 @@ import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityCons
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.apache.commons.math3.geometry.euclidean.twod.Line;
 import org.firstinspires.ftc.teamcode.subsystem.ConeFlipper;
 import org.firstinspires.ftc.teamcode.subsystem.Drive;
 import org.firstinspires.ftc.teamcode.subsystem.Gripper;
@@ -16,10 +15,9 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.LineToLinearHeading;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.Pose2dContainer;
 import org.firstinspires.ftc.teamcode.util.PoseStorage;
-import org.firstinspires.ftc.teamcode.trajectorysequence.container.SplineToSplineHeading;
 
 @Autonomous
-public class NewCycleAutonomous extends LinearOpMode {
+public class LeftSideAutoNew extends LinearOpMode {
     public static class Constants {
         public static Speed speed;
         public static class Speed {
@@ -37,13 +35,13 @@ public class NewCycleAutonomous extends LinearOpMode {
 
             public static PreLoad preload;
             public static class PreLoad {
-                public static LineToLinearHeading lineToLinearHeading = new LineToLinearHeading(36,-24,180);
+                public static LineToLinearHeading lineToLinearHeading = new LineToLinearHeading(-36,-24,0);
 
             }
 
             public static Park park;
             public static class Park {
-                public static LineToLinearHeading lineToLinearHeading = new LineToLinearHeading(36, -11, 180);
+                public static LineToLinearHeading lineToLinearHeading = new LineToLinearHeading(-36, -11, 0);
                 public static double leftDistance = 24;
                 public static double midDistance = 3;
                 public static double rightDistance = -24;
@@ -54,12 +52,12 @@ public class NewCycleAutonomous extends LinearOpMode {
                 public static Pickup pickup;
                 public static class Pickup {
                     public static double strafeDistance =12;
-                    public static LineToLinearHeading LineToLinearHeading = new LineToLinearHeading(57, -13, 0);
+                    public static LineToLinearHeading LineToLinearHeading = new LineToLinearHeading(-57, -13, 180);
                 }
                 public static Drop drop;
                 public static class Drop {
                     public static double backDistance = 3;
-                    public static LineToLinearHeading LineToLinearHeading = new LineToLinearHeading(24, -13,  -90);
+                    public static LineToLinearHeading LineToLinearHeading = new LineToLinearHeading(-24, -13,  -90);
 
                 }
             }
@@ -69,12 +67,12 @@ public class NewCycleAutonomous extends LinearOpMode {
                 public static Pickup pickup;
                 public static class Pickup {
                     public static double strafeDistance =12;
-                    public static LineToLinearHeading LineToLinearHeading = new LineToLinearHeading(57, -13, 0);
+                    public static LineToLinearHeading LineToLinearHeading = new LineToLinearHeading(-57, -13, 0);
                 }
                 public static Drop drop;
                 public static class Drop {
                     public static double backDistance = 3;
-                    public static LineToLinearHeading LineToLinearHeading = new LineToLinearHeading(24, -13,  -90);
+                    public static LineToLinearHeading LineToLinearHeading = new LineToLinearHeading(-24, -13,  -90);
 
                 }
             }
@@ -84,12 +82,12 @@ public class NewCycleAutonomous extends LinearOpMode {
                 public static Pickup pickup;
                 public static class Pickup {
                     public static double strafeDistance =12;
-                    public static LineToLinearHeading LineToLinearHeading = new LineToLinearHeading(57, -13, 0);
+                    public static LineToLinearHeading LineToLinearHeading = new LineToLinearHeading(-57, -13, 0);
                 }
                 public static Drop drop;
                 public static class Drop {
                     public static double backDistance = 3;
-                    public static LineToLinearHeading LineToLinearHeading = new LineToLinearHeading(24, -13,  -90);
+                    public static LineToLinearHeading LineToLinearHeading = new LineToLinearHeading(-24, -13,  -90);
 
                 }
             }
@@ -99,13 +97,13 @@ public class NewCycleAutonomous extends LinearOpMode {
 
                 public static class Pickup {
                     public static double strafeDistance =12;
-                    public static LineToLinearHeading LineToLinearHeading = new LineToLinearHeading(57, -13, 0);
+                    public static LineToLinearHeading LineToLinearHeading = new LineToLinearHeading(-57, -13, 0);
                 }
 
                 public static Drop drop;
                 public static class Drop {
                     public static double backDistance = 3;
-                    public static LineToLinearHeading LineToLinearHeading = new LineToLinearHeading(24, -13,  -90);
+                    public static LineToLinearHeading LineToLinearHeading = new LineToLinearHeading(-24, -13,  -90);
                 }
             }
 
