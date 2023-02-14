@@ -46,6 +46,9 @@ public class TrajectorySequenceContainer {
             if (pathSegment.getClass() == Back.class)
                 trajectorySequenceBuilder = trajectorySequenceBuilder.back(((Back) pathSegment).distance);
 
+            if (pathSegment.getClass() == StrafeRight.class)
+                trajectorySequenceBuilder = trajectorySequenceBuilder.strafeRight(((StrafeRight) pathSegment).distance);
+
         }
         trajectorySequence = trajectorySequenceBuilder.build();
         return trajectorySequence;
