@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.auto.semiregionals.Left;
+package org.firstinspires.ftc.teamcode.opmode.auto.semiregionals;
 
 import androidx.annotation.NonNull;
 
@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.subsystem.Lift;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.TrajectorySequenceConstraints;
 
-public class FiniteStateMachine extends Command {
+public class Path extends Command {
 
     enum AutoState {
         PRELOAD,
@@ -45,10 +45,10 @@ public class FiniteStateMachine extends Command {
     private final Gripper gripper;
     private final ElapsedTime waitTimer = new ElapsedTime();
     private final TrajectorySequenceConstraints constraints = new TrajectorySequenceConstraints(
-            SemiRegionalLeft.Constants.Speed.baseVel,
-            SemiRegionalLeft.Constants.Speed.baseAccel,
-            SemiRegionalLeft.Constants.Speed.turnVel,
-            SemiRegionalLeft.Constants.Speed.turnAccel
+            LeftSemiRegionals.Constants.Speed.baseVel,
+            LeftSemiRegionals.Constants.Speed.baseAccel,
+            LeftSemiRegionals.Constants.Speed.turnVel,
+            LeftSemiRegionals.Constants.Speed.turnAccel
     );
 
     private TrajectorySequence currentPickupTrajectorySequence;
@@ -59,19 +59,19 @@ public class FiniteStateMachine extends Command {
     private AutoState autoState = AutoState.PRELOAD;
     private CycleState cycleState = CycleState.PICKUP_PATH;
 
-    public FiniteStateMachine(@NonNull LinearOpMode opMode, Drive drive, Lift lift, Gripper gripper) {
+    public Path(@NonNull LinearOpMode opMode, Drive drive, Lift lift, Gripper gripper) {
         super(opMode);
         this.drive = drive;
         this.lift = lift;
         this.gripper = gripper;
 
-        drive.setPoseEstimate(SemiRegionalLeft.Constants.Path.startPose.getPose());
+        drive.setPoseEstimate(LeftSemiRegionals.Constants.Path.startPose.getPose());
 
 
-        preLoad = SemiRegionalLeft.Constants.Path.preload.build(SemiRegionalLeft.Constants.Path.startPose.getPose(), constraints);
+        preLoad = LeftSemiRegionals.Constants.Path.preload.build(LeftSemiRegionals.Constants.Path.startPose.getPose(), constraints);
 
-        cycle1Pickup = SemiRegionalLeft.Constants.Path.cycle1Pickup.build(preLoad.end(), constraints);
-        cycle1Drop = SemiRegionalLeft.Constants.Path.cycle1Drop.build(cycle1Pickup.end(), constraints);
+        cycle1Pickup = LeftSemiRegionals.Constants.Path.cycle1Pickup.build(preLoad.end(), constraints);
+        cycle1Drop = LeftSemiRegionals.Constants.Path.cycle1Drop.build(cycle1Pickup.end(), constraints);
 
         cycle2Pickup = LeftSemiRegionals.Constants.Path.cycle2Pickup.build(cycle1Drop.end(), constraints);
         cycle2Drop = LeftSemiRegionals.Constants.Path.cycle2Drop.build(cycle2Pickup.end(), constraints);
@@ -141,7 +141,7 @@ public class FiniteStateMachine extends Command {
 
                 drive.followTrajectorySequenceAsync(
                         //TODO make srue to update this if you add more cycles!!!!!!
-                        SemiRegionalLeft.Constants.Path.park.build(cycle1Drop.end(), constraints));
+                        LeftSemiRegionals.Constants.Path.park.build(cycle1Drop.end(), constraints));
                 autoState = AutoState.END;
 
                 waitTimer.reset();
@@ -161,14 +161,14 @@ public class FiniteStateMachine extends Command {
         switch (cycleState) {
             case PICKUP_PATH:
                 if (drive.isBusy()) break;
-                if (waitTimer.seconds() < SemiRegionalLeft.Constants.WaitSeconds.dropWait) break;
+                if (waitTimer.seconds() < LeftSemiRegionals.Constants.WaitSeconds.dropWait) break;
                 drive.followTrajectorySequenceAsync(currentPickupTrajectorySequence);
 
                 waitTimer.reset();
                 cycleState = CycleState.PICKUP_LIFT;
                 break;
             case PICKUP_LIFT:
-                if (waitTimer.seconds() < SemiRegionalLeft.Constants.WaitSeconds.pickupLiftWait) break;
+                if (waitTimer.seconds() < LeftSemiRegionals.Constants.WaitSeconds.pickupLiftWait) break;
                 currentLiftCommand.run();
 
                 cycleState = CycleState.PICKUP;
@@ -182,7 +182,7 @@ public class FiniteStateMachine extends Command {
                 break;
             case DROP_PATH:
                 if (drive.isBusy()) break;
-                if (waitTimer.seconds() < SemiRegionalLeft.Constants.WaitSeconds.pickupLiftWait) break;
+                if (waitTimer.seconds() < LeftSemiRegionals.Constants.WaitSeconds.pickupLiftWait) break;
                 drive.followTrajectorySequenceAsync(currentDropTrajectorySequence);
 
                 cycleState = CycleState.DROP;
