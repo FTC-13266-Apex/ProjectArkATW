@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.subsystem.Gripper;
 import org.firstinspires.ftc.teamcode.subsystem.Lift;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.Back;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.Forward;
+import org.firstinspires.ftc.teamcode.trajectorysequence.container.LineToConstantHeading;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.LineToLinearHeading;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.LineToSplineHeading;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.Pose2dContainer;
@@ -29,7 +30,7 @@ public class LeftSemiRegionals extends RoadRunnerAuto {
         public static WaitSeconds waitSeconds;
         public static class WaitSeconds {
             public static double dropWait = .5;
-            public static double pickupLiftWait = 0;
+            public static double pickupLiftWait = 1.0;
         }
 
         public static Path path;
@@ -42,16 +43,16 @@ public class LeftSemiRegionals extends RoadRunnerAuto {
             public static double rightDistance = -12;
 
           //  public static Forward preload1 = new Forward(1);
-            public static LineToLinearHeading preload2 = new LineToLinearHeading(-42, -26, 180);
+            public static LineToLinearHeading preload2 = new LineToLinearHeading(-44, -26, 180);
             static TrajectorySequenceContainer preload = new TrajectorySequenceContainer(preload2);
 
             public static StrafeRight park1 = new StrafeRight(midDistance);
             static TrajectorySequenceContainer park = new TrajectorySequenceContainer(park1);
 
             public static SetReversed cycle1Pickup1 = new SetReversed(true);
-            public static Back cycle1Pickup2 = new Back(1);
-            public static SplineToConstantHeading cycle1Pickup3 = new SplineToConstantHeading(-54, -19, 180);
-            public static Forward cycle1Pickup4 = new Forward(10);
+            public static LineToConstantHeading cycle1Pickup2 = new LineToConstantHeading(-40, -22);
+            public static SplineToConstantHeading cycle1Pickup3 = new SplineToConstantHeading(-54, -16, 180);
+            public static Forward cycle1Pickup4 = new Forward(14);
             static TrajectorySequenceContainer cycle1Pickup = new TrajectorySequenceContainer(cycle1Pickup1, cycle1Pickup2, cycle1Pickup3, cycle1Pickup4);
 
             public static Back cycle1Drop1 = new Back(1);
