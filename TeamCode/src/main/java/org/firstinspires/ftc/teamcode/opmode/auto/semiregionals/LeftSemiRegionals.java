@@ -27,7 +27,7 @@ public class LeftSemiRegionals extends RoadRunnerAuto {
 
         public static WaitSeconds waitSeconds;
         public static class WaitSeconds {
-            public static double dropWait = .1;
+            public static double dropWait = .5;
             public static double pickupLiftWait = 0;
         }
 
@@ -41,14 +41,14 @@ public class LeftSemiRegionals extends RoadRunnerAuto {
             public static double rightDistance = -12;
 
           //  public static Forward preload1 = new Forward(1);
-            public static LineToLinearHeading preload2 = new LineToLinearHeading(-38, -26, 180);
+            public static LineToLinearHeading preload2 = new LineToLinearHeading(-42, -26, 180);
             static TrajectorySequenceContainer preload = new TrajectorySequenceContainer(preload2);
 
             public static StrafeRight park1 = new StrafeRight(midDistance);
             static TrajectorySequenceContainer park = new TrajectorySequenceContainer(park1);
 
             public static StrafeRight cycle1Pickup1 = new StrafeRight(3);
-            public static SplineToConstantHeading cycle1Pickup2 = new SplineToConstantHeading(-64, -17, 180);
+            public static SplineToConstantHeading cycle1Pickup2 = new SplineToConstantHeading(-64, -19, 180);
 //            public static Forward cycle1Pickup3 = new Forward(10);
             static TrajectorySequenceContainer cycle1Pickup = new TrajectorySequenceContainer(cycle1Pickup1, cycle1Pickup2);
 
@@ -57,7 +57,7 @@ public class LeftSemiRegionals extends RoadRunnerAuto {
             public static Back cycle1drop3 = new Back(3);
             static TrajectorySequenceContainer cycle1Drop = new TrajectorySequenceContainer(cycle1Drop1, cycle1Drop2, cycle1drop3);
 
-            public static LineToLinearHeading cycle2Pickup1 = new LineToLinearHeading(-64, -17, 180);
+            public static LineToLinearHeading cycle2Pickup1 = new LineToLinearHeading(-64, -19, 180);
 //            public static Forward cycle2Pickup2 = new Forward(10);
             static TrajectorySequenceContainer cycle2Pickup = new TrajectorySequenceContainer(cycle2Pickup1);
 
@@ -66,7 +66,7 @@ public class LeftSemiRegionals extends RoadRunnerAuto {
             public static Back cycle2drop3 = new Back(3);
             static TrajectorySequenceContainer cycle2Drop = new TrajectorySequenceContainer(cycle2Drop1, cycle2Drop2, cycle2drop3);
 
-            public static LineToLinearHeading cycle3Pickup1 = new LineToLinearHeading(-64, -17, 180);
+            public static LineToLinearHeading cycle3Pickup1 = new LineToLinearHeading(-64, -19, 180);
 //            public static Forward cycle3Pickup2 = new Forward(10);
             static TrajectorySequenceContainer cycle3Pickup = new TrajectorySequenceContainer(cycle3Pickup1);
 
@@ -75,7 +75,7 @@ public class LeftSemiRegionals extends RoadRunnerAuto {
             public static Back cycle3drop3 = new Back(3);
             static TrajectorySequenceContainer cycle3Drop = new TrajectorySequenceContainer(cycle3Drop1, cycle3Drop2, cycle3drop3);
 
-            public static LineToSplineHeading cycle4Pickup1 = new LineToSplineHeading(-56, -17, 180);
+            public static LineToSplineHeading cycle4Pickup1 = new LineToSplineHeading(-56, -19, 180);
 //            public static Forward cycle4Pickup2 = new Forward(10);
             static TrajectorySequenceContainer cycle4Pickup = new TrajectorySequenceContainer(cycle4Pickup1);
 

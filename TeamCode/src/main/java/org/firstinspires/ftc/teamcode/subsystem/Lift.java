@@ -40,10 +40,10 @@ public class Lift extends Subsystem {
                     FLIPPED_CONE = 270,
                     MAX_POSITION = 3000,
                     MIN_POSITION = -70,
-                    AUTO_5CONE = 250,
-                    AUTO_4CONE = 190,
-                    AUTO_3CONE = 100,
-                    AUTO_2CONE = 35;
+                    AUTO_5CONE = 143,
+                    AUTO_4CONE = 103,
+                    AUTO_3CONE = 56,
+                    AUTO_2CONE = 0;
         }
         public static class Speed {
             public static double NORMAL        = 10;   // ill use this but im testing something
