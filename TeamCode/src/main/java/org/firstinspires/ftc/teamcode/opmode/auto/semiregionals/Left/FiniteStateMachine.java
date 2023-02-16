@@ -34,10 +34,12 @@ public class FiniteStateMachine extends Command {
     private final TrajectorySequence preLoad;
     private final TrajectorySequence cycle1Pickup;
     private final TrajectorySequence cycle1Drop;
-//    private final TrajectorySequence cycle2Pickup;
-//    private final TrajectorySequence cycle2Drop;
-//    private final TrajectorySequence cycle3Pickup;
-//    private final TrajectorySequence cycle3Drop;
+    private final TrajectorySequence cycle2Pickup;
+    private final TrajectorySequence cycle2Drop;
+    private final TrajectorySequence cycle3Pickup;
+    private final TrajectorySequence cycle3Drop;
+    private final TrajectorySequence cycle4Pickup;
+    private final TrajectorySequence cycle4Drop;
     private final Drive drive;
     private final Lift lift;
     private final Gripper gripper;
@@ -71,11 +73,14 @@ public class FiniteStateMachine extends Command {
         cycle1Pickup = SemiRegionalLeft.Constants.Path.cycle1Pickup.build(preLoad.end(), constraints);
         cycle1Drop = SemiRegionalLeft.Constants.Path.cycle1Drop.build(cycle1Pickup.end(), constraints);
 
-//        cycle2Pickup = LeftSemiRegionals.Constants.Path.cycle2Pickup.build(cycle1Drop.end(), constraints);
-//        cycle2Drop = LeftSemiRegionals.Constants.Path.cycle2Drop.build(cycle2Pickup.end(), constraints);
-//
-//        cycle3Pickup = LeftSemiRegionals.Constants.Path.cycle3Pickup.build(cycle2Drop.end(), constraints);
-//        cycle3Drop = LeftSemiRegionals.Constants.Path.cycle3Drop.build(cycle3Pickup.end(), constraints);
+        cycle2Pickup = LeftSemiRegionals.Constants.Path.cycle2Pickup.build(cycle1Drop.end(), constraints);
+        cycle2Drop = LeftSemiRegionals.Constants.Path.cycle2Drop.build(cycle2Pickup.end(), constraints);
+
+        cycle3Pickup = LeftSemiRegionals.Constants.Path.cycle3Pickup.build(cycle2Drop.end(), constraints);
+        cycle3Drop = LeftSemiRegionals.Constants.Path.cycle3Drop.build(cycle3Pickup.end(), constraints);
+
+        cycle4Pickup = LeftSemiRegionals.Constants.Path.cycle4Pickup.build(cycle3Drop.end(), constraints);
+        cycle4Drop = LeftSemiRegionals.Constants.Path.cycle4Drop.build(cycle4Pickup.end(), constraints);
     }
 
     @Override
@@ -84,6 +89,7 @@ public class FiniteStateMachine extends Command {
             case PRELOAD:
                 if (drive.isBusy()) break;
                 drive.followTrajectorySequenceAsync(preLoad);
+                lift.moveLow();
 
                 autoState = AutoState.PRELOAD_DROP;
                 break;
@@ -103,18 +109,23 @@ public class FiniteStateMachine extends Command {
                         currentLiftCommand = lift::moveCone5;
                         autoState = AutoState.CYCLE;
                         break;
-//                    case 2:
-//                        currentPickupTrajectorySequence = cycle2Pickup;
-//                        currentDropTrajectorySequence = cycle2Drop;
-//                        currentLiftCommand = lift::moveCone4;
-//                        autoState = AutoState.CYCLE;
-//                        break;
-//                    case 3:
-//                        currentPickupTrajectorySequence = cycle3Pickup;
-//                        currentDropTrajectorySequence = cycle3Drop;
-//                        currentLiftCommand = lift::moveCone3;
-//                        autoState = AutoState.CYCLE;
-//                        break;
+                    case 2:
+                        currentPickupTrajectorySequence = cycle2Pickup;
+                        currentDropTrajectorySequence = cycle2Drop;
+                        currentLiftCommand = lift::moveCone4;
+                        autoState = AutoState.CYCLE;
+                        break;
+                    case 3:
+                        currentPickupTrajectorySequence = cycle3Pickup;
+                        currentDropTrajectorySequence = cycle3Drop;
+                        currentLiftCommand = lift::moveCone3;
+                        autoState = AutoState.CYCLE;
+                        break;
+                    case 4:
+                        currentPickupTrajectorySequence = cycle4Pickup;
+                        currentDropTrajectorySequence = cycle4Drop;
+                        currentLiftCommand = lift::moveCone3;
+                        autoState = AutoState.CYCLE;
                     default:
                         autoState = AutoState.PARK;
                 }
