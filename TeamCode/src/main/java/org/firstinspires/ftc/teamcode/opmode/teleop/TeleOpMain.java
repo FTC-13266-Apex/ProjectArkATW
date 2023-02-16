@@ -29,7 +29,7 @@ public class TeleOpMain extends LinearOpMode {
         new Sussy(this);
 
         Sensor sensor = new Sensor(this, gripper, lift);
-        JunctionDetection junction = new JunctionDetection(this, gripper, lift);
+        //JunctionDetection junction = new JunctionDetection(this, gripper, lift);
         FlipConeWithGamepad flipConeWithGamepad = new FlipConeWithGamepad(this, coneFlipper, lift, gripper);
 
         drive.setPoseEstimate(PoseStorage.currentPose);
@@ -40,7 +40,7 @@ public class TeleOpMain extends LinearOpMode {
         while (opModeIsActive()) {
             lift.runIteratively();
             sensor.runIteratively();
-            junction.runIteratively();
+            //junction.runIteratively();
             gripper.runIteratively();
 
             flipConeWithGamepad.runIteratively();
