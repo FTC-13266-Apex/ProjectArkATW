@@ -34,7 +34,7 @@ public class Lift extends Subsystem {
             public static int
                     HIGH = 1100,
                     MID = 700,
-                    LOW = 500,
+                    LOW = 437,
                     GROUND_JUNCTION = 200,
                     INITIAL = 0,
                     FLIPPED_CONE = 270,
