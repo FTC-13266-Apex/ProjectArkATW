@@ -38,6 +38,8 @@ public class Path extends Command {
     private final TrajectorySequence cycle2Drop;
     private final TrajectorySequence cycle3Pickup;
     private final TrajectorySequence cycle3Drop;
+    private final TrajectorySequence cycle4Pickup;
+    private final TrajectorySequence cycle4Drop;
     private final Drive drive;
     private final Lift lift;
     private final Gripper gripper;
@@ -76,6 +78,9 @@ public class Path extends Command {
 
         cycle3Pickup = LeftSemiRegionals.Constants.Path.cycle3Pickup.build(cycle2Drop.end(), constraints);
         cycle3Drop = LeftSemiRegionals.Constants.Path.cycle3Drop.build(cycle3Pickup.end(), constraints);
+
+        cycle4Pickup = LeftSemiRegionals.Constants.Path.cycle4Pickup.build(cycle3Drop.end(), constraints);
+        cycle4Drop = LeftSemiRegionals.Constants.Path.cycle4Drop.build(cycle4Pickup.end(), constraints);
     }
 
     @Override
@@ -84,6 +89,7 @@ public class Path extends Command {
             case PRELOAD:
                 if (drive.isBusy()) break;
                 drive.followTrajectorySequenceAsync(preLoad);
+                lift.moveLow();
 
                 autoState = AutoState.PRELOAD_DROP;
                 break;
@@ -115,6 +121,11 @@ public class Path extends Command {
                         currentLiftCommand = lift::moveCone3;
                         autoState = AutoState.CYCLE;
                         break;
+                    case 4:
+                        currentPickupTrajectorySequence = cycle4Pickup;
+                        currentDropTrajectorySequence = cycle4Drop;
+                        currentLiftCommand = lift::moveCone3;
+                        autoState = AutoState.CYCLE;
                     default:
                         autoState = AutoState.PARK;
                 }
