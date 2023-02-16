@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.auto.semiregionals;
+package org.firstinspires.ftc.teamcode.opmode.auto.semiregionals.Left;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.container.StrafeRight;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.TrajectorySequenceContainer;
 
 @Autonomous
-public class LeftSemiRegionals extends RoadRunnerAuto {
+public class SemiRegionalLeft extends RoadRunnerAuto {
     public static class Constants {
         public static Speed speed;
         public static class Speed {
@@ -75,7 +75,7 @@ public class LeftSemiRegionals extends RoadRunnerAuto {
         }
     }
 
-    private Path path;
+    private FiniteStateMachine finiteStateMachine;
 
     @Override
     protected boolean usingVision() {
@@ -86,7 +86,7 @@ public class LeftSemiRegionals extends RoadRunnerAuto {
     public void initialize() {
         Lift lift = new Lift(this);
         Gripper gripper = new Gripper(this);
-        path = new Path(
+        finiteStateMachine = new FiniteStateMachine(
                 this,
                 drive,
                 lift,
@@ -112,6 +112,6 @@ public class LeftSemiRegionals extends RoadRunnerAuto {
 
     @Override
     public void run() {
-        path.run();
+        finiteStateMachine.run();
     }
 }
