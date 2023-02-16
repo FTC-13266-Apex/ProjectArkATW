@@ -18,7 +18,7 @@ public class ConeFlipper extends Subsystem {
         private static class Position {
             public static volatile double
                     LIFT = .7,
-                    DROP = .34;
+                    DROP = .36;
             public static volatile double
                     HIDDEN = 1,
                     GET_CONE = 0.65,
