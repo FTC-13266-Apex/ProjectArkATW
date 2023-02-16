@@ -163,7 +163,7 @@ public class Path extends Command {
                 if (drive.isBusy()) break;
                 if (waitTimer.seconds() < LeftSemiRegionals.Constants.WaitSeconds.dropWait) break;
                 drive.followTrajectorySequenceAsync(currentPickupTrajectorySequence);
-
+//                lift.moveHigh();
                 waitTimer.reset();
                 cycleState = CycleState.PICKUP_LIFT;
                 break;
