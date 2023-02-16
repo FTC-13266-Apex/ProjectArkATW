@@ -10,6 +10,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.container.Forward;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.LineToLinearHeading;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.LineToSplineHeading;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.Pose2dContainer;
+import org.firstinspires.ftc.teamcode.trajectorysequence.container.SetReversed;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.SplineToConstantHeading;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.StrafeRight;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.TrajectorySequenceContainer;
@@ -47,10 +48,10 @@ public class LeftSemiRegionals extends RoadRunnerAuto {
             public static StrafeRight park1 = new StrafeRight(midDistance);
             static TrajectorySequenceContainer park = new TrajectorySequenceContainer(park1);
 
-            public static StrafeRight cycle1Pickup1 = new StrafeRight(3);
-            public static SplineToConstantHeading cycle1Pickup2 = new SplineToConstantHeading(-64, -19, 180);
-//            public static Forward cycle1Pickup3 = new Forward(10);
-            static TrajectorySequenceContainer cycle1Pickup = new TrajectorySequenceContainer(cycle1Pickup1, cycle1Pickup2);
+            public static SetReversed cycle1Pickup1 = new SetReversed(true);
+            public static SplineToConstantHeading cycle1Pickup2 = new SplineToConstantHeading(-54, -19, 180);
+            public static Forward cycle1Pickup3 = new Forward(10);
+            static TrajectorySequenceContainer cycle1Pickup = new TrajectorySequenceContainer(cycle1Pickup1, cycle1Pickup2, cycle1Pickup3);
 
             public static Back cycle1Drop1 = new Back(1);
             public static LineToSplineHeading cycle1Drop2 = new LineToSplineHeading(-26, -15, -90);
