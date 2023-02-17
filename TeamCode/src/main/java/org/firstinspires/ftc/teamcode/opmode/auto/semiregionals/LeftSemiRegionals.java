@@ -21,10 +21,10 @@ public class LeftSemiRegionals extends RoadRunnerAuto {
     public static class Constants {
         public static Speed speed;
         public static class Speed {
-            public static double baseVel = 25; // value
+            public static double baseVel = 30; // value
             public static double baseAccel = 30; // value
-            public static double turnVel = Math.toRadians(100); // value
-            public static double turnAccel = Math.toRadians(100); // value
+            public static double turnVel = Math.toRadians(120); // value
+            public static double turnAccel = Math.toRadians(120); // value
         }
 
         public static WaitSeconds waitSeconds;
@@ -43,46 +43,48 @@ public class LeftSemiRegionals extends RoadRunnerAuto {
 
         public static Cycle1 cycle1;
         public static class Cycle1 {
-            public static SetReversed p1 = new SetReversed(true);
-            public static LineToConstantHeading p2 = new LineToConstantHeading(-40, -22);
-            public static SplineToConstantHeading p3 = new SplineToConstantHeading(-54.5, -19, 180);
-            public static Forward p4 = new Forward(13);
-            static TrajectorySequenceContainer pickup = new TrajectorySequenceContainer(p1, p2, p3, p4);
+            public static LineToConstantHeading p1 = new LineToConstantHeading(-40, -22);
+            public static SplineToConstantHeading p2 = new SplineToConstantHeading(-54.5, -18, 180);
+            public static Forward p3 = new Forward(13);
+            static TrajectorySequenceContainer pickup = new TrajectorySequenceContainer(p1, p2, p3);
 
             public static Back d1 = new Back(1);
-            public static LineToSplineHeading d2 = new LineToSplineHeading(-26, -17, -90);
+            public static LineToSplineHeading d2 = new LineToSplineHeading(-27, -17.5, -90);
             static TrajectorySequenceContainer drop = new TrajectorySequenceContainer(d1, d2);
         }
         public static Cycle2 cycle2;
         public static class Cycle2 {
-            public static LineToSplineHeading p1 = new LineToSplineHeading(-54, -17, 180);
-            public static Forward p2 = new Forward(14);
-            static TrajectorySequenceContainer pickup = new TrajectorySequenceContainer(p1, p2);
+            public static Back p1 = new Back(2);
+            public static LineToSplineHeading p2 = new LineToSplineHeading(-48, Cycle1.d2.y + p1.distance, 180);
+            public static Forward p3 = new Forward(20);
+            static TrajectorySequenceContainer pickup = new TrajectorySequenceContainer(p1, p2, p3);
 
             public static Back d1 = new Back(1);
-            public static LineToSplineHeading d2 = new LineToSplineHeading(-26, -18, -90);
+            public static LineToSplineHeading d2 = new LineToSplineHeading(-27, -18, -90);
             static TrajectorySequenceContainer drop = new TrajectorySequenceContainer(d1, d2);
         }
 
         public static Cycle3 cycle3;
         public static class Cycle3 {
-            public static LineToSplineHeading p1 = new LineToSplineHeading(-54, -16, 180);
-            public static Forward p2 = new Forward(14);
-            static TrajectorySequenceContainer pickup = new TrajectorySequenceContainer(p1, p2);
+            public static Back p1 = new Back(2);
+            public static LineToSplineHeading p2 = new LineToSplineHeading(-48, Cycle2.d2.y + p1.distance, 180);
+            public static Forward p3 = new Forward(20);
+            static TrajectorySequenceContainer pickup = new TrajectorySequenceContainer(p1, p2, p3);
 
             public static Back d1 = new Back(1);
-            public static LineToSplineHeading d2 = new LineToSplineHeading(-26, -18, -90);
+            public static LineToSplineHeading d2 = new LineToSplineHeading(-27, -18, -90);
             static TrajectorySequenceContainer drop = new TrajectorySequenceContainer(d1, d2);
         }
 
         public static Cycle4 cycle4;
         public static class Cycle4 {
-            public static LineToSplineHeading p1 = new LineToSplineHeading(-54, -16, 180);
-            public static Forward p2 = new Forward(14);
-            static TrajectorySequenceContainer pickup = new TrajectorySequenceContainer(p1, p2);
+            public static Back p1 = new Back(2);
+            public static LineToSplineHeading p2 = new LineToSplineHeading(-48, Cycle3.d2.y + p1.distance, 180);
+            public static Forward p3 = new Forward(20);
+            static TrajectorySequenceContainer pickup = new TrajectorySequenceContainer(p1, p2, p3);
 
             public static Back d1 = new Back(1);
-            public static LineToSplineHeading d2 = new LineToSplineHeading(-26, -18, -90);
+            public static LineToSplineHeading d2 = new LineToSplineHeading(-27, -18, -90);
             static TrajectorySequenceContainer drop = new TrajectorySequenceContainer(d1, d2);
         }
 
