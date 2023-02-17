@@ -29,7 +29,8 @@ public class LeftSemiRegionals extends RoadRunnerAuto {
 
         public static WaitSeconds waitSeconds;
         public static class WaitSeconds {
-            public static double dropWait = .5;
+            public static double dropDriveWait = 0.5;
+            public static double dropLiftWait = 0.5;
             public static double pickupLiftWait = 1.0;
         }
 

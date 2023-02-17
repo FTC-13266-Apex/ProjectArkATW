@@ -163,14 +163,13 @@ public class Path extends Command {
         switch (cycleState) {
             case PICKUP_PATH:
                 if (drive.isBusy()) break;
-                if (waitTimer.seconds() < LeftSemiRegionals.Constants.WaitSeconds.dropWait) break;
+                if (waitTimer.seconds() < LeftSemiRegionals.Constants.WaitSeconds.dropDriveWait) break;
                 drive.followTrajectorySequenceAsync(currentPickupTrajectorySequence);
-//                lift.moveHigh();
                 waitTimer.reset();
                 cycleState = CycleState.PICKUP_LIFT;
                 break;
             case PICKUP_LIFT:
-                if (waitTimer.seconds() < LeftSemiRegionals.Constants.WaitSeconds.pickupLiftWait) break;
+                if (waitTimer.seconds() < LeftSemiRegionals.Constants.WaitSeconds.dropLiftWait) break;
                 currentLiftCommand.run();
 
                 cycleState = CycleState.PICKUP;
@@ -185,6 +184,7 @@ public class Path extends Command {
             case DROP_PATH:
                 if (drive.isBusy()) break;
                 if (waitTimer.seconds() < LeftSemiRegionals.Constants.WaitSeconds.pickupLiftWait) break;
+                lift.moveHigh();
                 drive.followTrajectorySequenceAsync(currentDropTrajectorySequence);
 
                 cycleState = CycleState.DROP;
