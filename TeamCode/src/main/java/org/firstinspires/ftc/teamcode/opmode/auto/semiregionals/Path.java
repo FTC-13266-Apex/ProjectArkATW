@@ -184,7 +184,7 @@ public class Path extends Command {
             case DROP_PATH:
                 if (drive.isBusy()) break;
                 if (waitTimer.seconds() < LeftSemiRegionals.Constants.WaitSeconds.pickupLiftWait) break;
-                lift.moveHigh();
+                lift.moveMid();
                 drive.followTrajectorySequenceAsync(currentDropTrajectorySequence);
 
                 cycleState = CycleState.DROP;
