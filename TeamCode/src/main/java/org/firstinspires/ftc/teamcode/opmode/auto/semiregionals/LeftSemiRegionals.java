@@ -22,9 +22,9 @@ public class LeftSemiRegionals extends RoadRunnerAuto {
         public static Speed speed;
         public static class Speed {
             public static double baseVel = 25; // value
-            public static double baseAccel = 60; // value
-            public static double turnVel = 60; // value
-            public static double turnAccel = 60; // value
+            public static double baseAccel = 30; // value
+            public static double turnVel = Math.toRadians(100); // value
+            public static double turnAccel = Math.toRadians(100); // value
         }
 
         public static WaitSeconds waitSeconds;
