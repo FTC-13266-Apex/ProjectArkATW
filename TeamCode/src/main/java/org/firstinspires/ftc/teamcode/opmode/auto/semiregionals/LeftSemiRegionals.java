@@ -37,7 +37,7 @@ public class LeftSemiRegionals extends RoadRunnerAuto {
         public static PreLoad preLoad;
         public static class PreLoad {
             public static Pose2dContainer startPose = new Pose2dContainer(-38, -66, 90);
-            public static LineToLinearHeading a = new LineToLinearHeading(-43.5, -26, 180);
+            public static LineToLinearHeading a = new LineToLinearHeading(-44.5, -26, 180);
             static TrajectorySequenceContainer preload = new TrajectorySequenceContainer(a);
         }
 
@@ -45,47 +45,44 @@ public class LeftSemiRegionals extends RoadRunnerAuto {
         public static class Cycle1 {
             public static SetReversed p1 = new SetReversed(true);
             public static LineToConstantHeading p2 = new LineToConstantHeading(-40, -22);
-            public static SplineToConstantHeading p3 = new SplineToConstantHeading(-54, -16.5, 180);
-            public static Forward p4 = new Forward(14);
+            public static SplineToConstantHeading p3 = new SplineToConstantHeading(-54.5, -19, 180);
+            public static Forward p4 = new Forward(13);
             static TrajectorySequenceContainer pickup = new TrajectorySequenceContainer(p1, p2, p3, p4);
 
             public static Back d1 = new Back(1);
-            public static LineToSplineHeading d2 = new LineToSplineHeading(-26, -15, -90);
+            public static LineToSplineHeading d2 = new LineToSplineHeading(-26, -17, -90);
             static TrajectorySequenceContainer drop = new TrajectorySequenceContainer(d1, d2);
         }
         public static Cycle2 cycle2;
         public static class Cycle2 {
-            public static SetReversed p1 = new SetReversed(true);
-            public static SplineToConstantHeading p2 = new SplineToConstantHeading(-54, -16, 180);
-            public static Forward p3 = new Forward(14);
-            static TrajectorySequenceContainer pickup = new TrajectorySequenceContainer(p1, p2, p3);
+            public static LineToSplineHeading p1 = new LineToSplineHeading(-54, -17, 180);
+            public static Forward p2 = new Forward(14);
+            static TrajectorySequenceContainer pickup = new TrajectorySequenceContainer(p1, p2);
 
             public static Back d1 = new Back(1);
-            public static LineToSplineHeading d2 = new LineToSplineHeading(-26, -15, -90);
+            public static LineToSplineHeading d2 = new LineToSplineHeading(-26, -18, -90);
             static TrajectorySequenceContainer drop = new TrajectorySequenceContainer(d1, d2);
         }
 
         public static Cycle3 cycle3;
         public static class Cycle3 {
-            public static SetReversed p1 = new SetReversed(true);
-            public static SplineToConstantHeading p2 = new SplineToConstantHeading(-54, -16, 180);
-            public static Forward p3 = new Forward(14);
-            static TrajectorySequenceContainer pickup = new TrajectorySequenceContainer(p1, p2, p3);
+            public static LineToSplineHeading p1 = new LineToSplineHeading(-54, -16, 180);
+            public static Forward p2 = new Forward(14);
+            static TrajectorySequenceContainer pickup = new TrajectorySequenceContainer(p1, p2);
 
             public static Back d1 = new Back(1);
-            public static LineToSplineHeading d2 = new LineToSplineHeading(-26, -15, -90);
+            public static LineToSplineHeading d2 = new LineToSplineHeading(-26, -18, -90);
             static TrajectorySequenceContainer drop = new TrajectorySequenceContainer(d1, d2);
         }
 
         public static Cycle4 cycle4;
         public static class Cycle4 {
-            public static SetReversed p1 = new SetReversed(true);
-            public static SplineToConstantHeading p2 = new SplineToConstantHeading(-54, -16, 180);
-            public static Forward p3 = new Forward(14);
-            static TrajectorySequenceContainer pickup = new TrajectorySequenceContainer(p1, p2, p3);
+            public static LineToSplineHeading p1 = new LineToSplineHeading(-54, -16, 180);
+            public static Forward p2 = new Forward(14);
+            static TrajectorySequenceContainer pickup = new TrajectorySequenceContainer(p1, p2);
 
             public static Back d1 = new Back(1);
-            public static LineToSplineHeading d2 = new LineToSplineHeading(-26, -15, -90);
+            public static LineToSplineHeading d2 = new LineToSplineHeading(-26, -18, -90);
             static TrajectorySequenceContainer drop = new TrajectorySequenceContainer(d1, d2);
         }
 
