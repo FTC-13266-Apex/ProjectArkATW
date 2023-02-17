@@ -105,6 +105,10 @@ public class Drive extends MecanumDrive {
         public static Controller controller;
         public static class Controller {
             /**
+             * This 
+             */
+        public static volatile double BATTERY_BASE_VOLTAGE = 12.5; 
+            /**
              * Set RUN_USING_ENCODER to true to enable built-in hub velocity control using drive encoders.
              * Set this flag to false if drive encoders are not present and an alternative localization
              * method is in use (e.g., tracking wheels).
@@ -304,7 +308,7 @@ public class Drive extends MecanumDrive {
         List<Double> accelerations = MecanumKinematics.robotToWheelAccelerations(
                 driveSignal.getAccel(), Drivetrain.TRACK_WIDTH, Drivetrain.WHEEL_BASE, Drivetrain.LATERAL_MULTIPLIER);
 
-        double multiplier = 12/voltage;
+        double multiplier = Controller.BATTERY_BASE_VOLTAGE/voltage;
         List<Double> powers = Kinematics.calculateMotorFeedforward(
                 velocities,
                 accelerations,
