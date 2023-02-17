@@ -139,6 +139,7 @@ public class Path extends Command {
 
             case PARK:
                 if (drive.isBusy()) break;
+                gripper.open();
                 lift.moveInitial();
 
                 drive.followTrajectorySequenceAsync(
