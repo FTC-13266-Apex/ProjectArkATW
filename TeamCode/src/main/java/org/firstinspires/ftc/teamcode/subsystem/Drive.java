@@ -9,6 +9,7 @@ import com.acmerobotics.roadrunner.followers.HolonomicPIDVAFollower;
 import com.acmerobotics.roadrunner.followers.TrajectoryFollower;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.kinematics.Kinematics;
 import com.acmerobotics.roadrunner.kinematics.MecanumKinematics;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
@@ -27,6 +28,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceRunner;
@@ -65,6 +68,7 @@ public class Drive extends MecanumDrive {
             public static final double WHEEL_RADIUS = 1.88976; // in
             public static final double GEAR_RATIO = 1; // output (wheel) speed / input (motor) speed
             public static volatile double TRACK_WIDTH = 10.8; // in
+            public static volatile double WHEEL_BASE = TRACK_WIDTH; // in
 
             public static volatile boolean IS_FIELD_CENTRIC = true;
             public static volatile boolean USING_FINE_CONTROL = true;
@@ -186,6 +190,7 @@ public class Drive extends MecanumDrive {
 
     }
     private double speed = Drivetrain.Speed.NORMAL_SPEED;
+    private double voltage = 12;
 
     private final TrajectorySequenceRunner trajectorySequenceRunner;
 
@@ -198,6 +203,7 @@ public class Drive extends MecanumDrive {
     private BNO055IMU imu;
     private final VoltageSensor batteryVoltageSensor;
     private final OpMode opMode;
+    private final ElapsedTime voltageResetTimer = new ElapsedTime();
 
     public Drive(OpMode opMode, boolean isUsingImu) {
         super(Controller.kV, Controller.kA, Controller.kStatic, Drivetrain.TRACK_WIDTH, Drivetrain.TRACK_WIDTH, Drivetrain.LATERAL_MULTIPLIER);
@@ -282,6 +288,32 @@ public class Drive extends MecanumDrive {
     }
     public Drive (OpMode opMode) {
         this(opMode,false);
+    }
+
+    @Override
+    public void setDriveSignal(@NonNull DriveSignal driveSignal) {
+
+        if(voltageResetTimer.seconds() > 0.5) {
+            voltage = batteryVoltageSensor.getVoltage();
+            voltageResetTimer.reset();
+        }
+
+        List<Double> velocities = MecanumKinematics.robotToWheelVelocities(
+                driveSignal.getVel(), Drivetrain.TRACK_WIDTH, Drivetrain.WHEEL_BASE, Drivetrain.LATERAL_MULTIPLIER);
+
+        List<Double> accelerations = MecanumKinematics.robotToWheelAccelerations(
+                driveSignal.getAccel(), Drivetrain.TRACK_WIDTH, Drivetrain.WHEEL_BASE, Drivetrain.LATERAL_MULTIPLIER);
+
+        double multiplier = 12/voltage;
+        List<Double> powers = Kinematics.calculateMotorFeedforward(
+                velocities,
+                accelerations,
+                Controller.kV*multiplier,
+                Controller.kA * multiplier,
+                Controller.kStatic*multiplier
+        );
+
+        setMotorPowers(powers.get(0), powers.get(1), powers.get(2), powers.get(3));
     }
 
     public TrajectoryBuilder trajectoryBuilder(Pose2d startPose) {
