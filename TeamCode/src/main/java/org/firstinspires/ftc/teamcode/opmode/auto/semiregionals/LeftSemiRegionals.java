@@ -51,43 +51,45 @@ public class LeftSemiRegionals extends RoadRunnerAuto {
 
             public static Back d1 = new Back(1);
             public static LineToSplineHeading d2 = new LineToSplineHeading(-26, -15, -90);
-            public static Back d3 = new Back(3);
-            static TrajectorySequenceContainer drop = new TrajectorySequenceContainer(d1, d2, d3);
+            static TrajectorySequenceContainer drop = new TrajectorySequenceContainer(d1, d2);
         }
         public static Cycle2 cycle2;
         public static class Cycle2 {
-            public static LineToLinearHeading p1 = new LineToLinearHeading(-64, -19, 180);
-            //            public static Forward p2 = new Forward(10);
-            static TrajectorySequenceContainer pickup = new TrajectorySequenceContainer(p1);
+            public static SetReversed p1 = new SetReversed(true);
+            public static LineToConstantHeading p2 = new LineToConstantHeading(-40, -22);
+            public static SplineToConstantHeading p3 = new SplineToConstantHeading(-54, -16, 180);
+            public static Forward p4 = new Forward(14);
+            static TrajectorySequenceContainer pickup = new TrajectorySequenceContainer(p1, p2, p3, p4);
 
             public static Back d1 = new Back(1);
             public static LineToSplineHeading d2 = new LineToSplineHeading(-26, -15, -90);
-            public static Back d3 = new Back(3);
-            static TrajectorySequenceContainer drop = new TrajectorySequenceContainer(d1, d2, d3);
+            static TrajectorySequenceContainer drop = new TrajectorySequenceContainer(d1, d2);
         }
 
         public static Cycle3 cycle3;
         public static class Cycle3 {
-            public static LineToLinearHeading p1 = new LineToLinearHeading(-64, -19, 180);
-            //            public static Forward p2 = new Forward(10);
-            static TrajectorySequenceContainer pickup = new TrajectorySequenceContainer(p1);
+            public static SetReversed p1 = new SetReversed(true);
+            public static LineToConstantHeading p2 = new LineToConstantHeading(-40, -22);
+            public static SplineToConstantHeading p3 = new SplineToConstantHeading(-54, -16, 180);
+            public static Forward p4 = new Forward(14);
+            static TrajectorySequenceContainer pickup = new TrajectorySequenceContainer(p1, p2, p3, p4);
 
             public static Back d1 = new Back(1);
             public static LineToSplineHeading d2 = new LineToSplineHeading(-26, -15, -90);
-            public static Back d3 = new Back(3);
-            static TrajectorySequenceContainer drop = new TrajectorySequenceContainer(d1, d2, d3);
+            static TrajectorySequenceContainer drop = new TrajectorySequenceContainer(d1, d2);
         }
 
         public static Cycle4 cycle4;
         public static class Cycle4 {
-            public static LineToSplineHeading p1 = new LineToSplineHeading(-56, -19, 180);
-            //            public static Forward p2 = new Forward(10);
-            static TrajectorySequenceContainer pickup = new TrajectorySequenceContainer(p1);
+            public static SetReversed p1 = new SetReversed(true);
+            public static LineToConstantHeading p2 = new LineToConstantHeading(-40, -22);
+            public static SplineToConstantHeading p3 = new SplineToConstantHeading(-54, -16, 180);
+            public static Forward p4 = new Forward(14);
+            static TrajectorySequenceContainer pickup = new TrajectorySequenceContainer(p1, p2, p3, p4);
 
             public static Back d1 = new Back(1);
             public static LineToSplineHeading d2 = new LineToSplineHeading(-26, -15, -90);
-            public static Back d3 = new Back(3);
-            static TrajectorySequenceContainer drop = new TrajectorySequenceContainer(d1, d2, d3);
+            static TrajectorySequenceContainer drop = new TrajectorySequenceContainer(d1, d2);
         }
 
         public static Park park;
