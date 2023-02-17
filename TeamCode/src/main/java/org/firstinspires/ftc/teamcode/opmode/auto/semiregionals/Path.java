@@ -65,22 +65,22 @@ public class Path extends Command {
         this.lift = lift;
         this.gripper = gripper;
 
-        drive.setPoseEstimate(LeftSemiRegionals.Constants.Path.startPose.getPose());
+        drive.setPoseEstimate(LeftSemiRegionals.Constants.PreLoad.startPose.getPose());
 
 
-        preLoad = LeftSemiRegionals.Constants.Path.preload.build(LeftSemiRegionals.Constants.Path.startPose.getPose(), constraints);
+        preLoad = LeftSemiRegionals.Constants.PreLoad.preload.build(LeftSemiRegionals.Constants.PreLoad.startPose.getPose(), constraints);
 
-        cycle1Pickup = LeftSemiRegionals.Constants.Path.cycle1Pickup.build(preLoad.end(), constraints);
-        cycle1Drop = LeftSemiRegionals.Constants.Path.cycle1Drop.build(cycle1Pickup.end(), constraints);
+        cycle1Pickup = LeftSemiRegionals.Constants.Cycle1.pickup.build(preLoad.end(), constraints);
+        cycle1Drop = LeftSemiRegionals.Constants.Cycle1.drop.build(cycle1Pickup.end(), constraints);
 
-        cycle2Pickup = LeftSemiRegionals.Constants.Path.cycle2Pickup.build(cycle1Drop.end(), constraints);
-        cycle2Drop = LeftSemiRegionals.Constants.Path.cycle2Drop.build(cycle2Pickup.end(), constraints);
+        cycle2Pickup = LeftSemiRegionals.Constants.Cycle2.pickup.build(cycle1Drop.end(), constraints);
+        cycle2Drop = LeftSemiRegionals.Constants.Cycle2.drop.build(cycle2Pickup.end(), constraints);
 
-        cycle3Pickup = LeftSemiRegionals.Constants.Path.cycle3Pickup.build(cycle2Drop.end(), constraints);
-        cycle3Drop = LeftSemiRegionals.Constants.Path.cycle3Drop.build(cycle3Pickup.end(), constraints);
+        cycle3Pickup = LeftSemiRegionals.Constants.Cycle3.pickup.build(cycle2Drop.end(), constraints);
+        cycle3Drop = LeftSemiRegionals.Constants.Cycle3.drop.build(cycle3Pickup.end(), constraints);
 
-        cycle4Pickup = LeftSemiRegionals.Constants.Path.cycle4Pickup.build(cycle3Drop.end(), constraints);
-        cycle4Drop = LeftSemiRegionals.Constants.Path.cycle4Drop.build(cycle4Pickup.end(), constraints);
+        cycle4Pickup = LeftSemiRegionals.Constants.Cycle4.pickup.build(cycle3Drop.end(), constraints);
+        cycle4Drop = LeftSemiRegionals.Constants.Cycle4.drop.build(cycle4Pickup.end(), constraints);
     }
 
     @Override
@@ -126,6 +126,7 @@ public class Path extends Command {
                         currentDropTrajectorySequence = cycle4Drop;
                         currentLiftCommand = lift::moveCone3;
                         autoState = AutoState.CYCLE;
+
                     default:
                         autoState = AutoState.PARK;
                 }
@@ -141,7 +142,7 @@ public class Path extends Command {
 
                 drive.followTrajectorySequenceAsync(
                         //TODO make srue to update this if you add more cycles!!!!!!
-                        LeftSemiRegionals.Constants.Path.park.build(cycle1Drop.end(), constraints));
+                        LeftSemiRegionals.Constants.Park.getPark().build(cycle1Drop.end(), constraints));
                 autoState = AutoState.END;
 
                 waitTimer.reset();
