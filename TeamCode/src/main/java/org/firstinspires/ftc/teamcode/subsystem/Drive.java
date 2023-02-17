@@ -79,6 +79,9 @@ public class Drive extends MecanumDrive {
              * The Lateral Multiplier will be multiplied by the y value (strafing) of the drive
              * train (I believe to account for imperfect strafing). It will do for autonomous
              * only due to overriding set drive power method
+             *
+             * multiplicative gain to adjust for systematic, proportional lateral (y) error
+             * (gain greater than 1.0 corresponds to overcompensation)
              */
             public static volatile double LATERAL_MULTIPLIER = 1;
 
