@@ -105,7 +105,8 @@ public class Drive extends MecanumDrive {
         public static Controller controller;
         public static class Controller {
             /**
-             * This 
+             * This number is the base voltage of the battery. This number is divided the current
+             * battery voltage to make a multiplier for kV, kA, and kStatic
              */
         public static volatile double BATTERY_BASE_VOLTAGE = 12.5; 
             /**
