@@ -126,9 +126,10 @@ public class Path extends Command {
                         currentDropTrajectorySequence = cycle4Drop;
                         currentLiftCommand = lift::moveCone3;
                         autoState = AutoState.CYCLE;
-
+                        break;
                     default:
                         autoState = AutoState.PARK;
+                        break;
                 }
                 break;
 
