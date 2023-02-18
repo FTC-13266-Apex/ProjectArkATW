@@ -176,7 +176,7 @@ public class Drive extends MecanumDrive {
 
         public static Follower follower;
         public static class Follower {
-            public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(8, 0, 0);
+            public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(9.5, 0, 0);
             public static PIDCoefficients HEADING_PID = new PIDCoefficients(8, 0, 0);
 
             public static Pose2dContainer ADMISSIBLE_ERROR = new Pose2dContainer(0.5, 0.5, 5.0);
