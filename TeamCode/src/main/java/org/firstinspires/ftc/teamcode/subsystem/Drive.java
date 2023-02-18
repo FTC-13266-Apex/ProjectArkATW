@@ -111,7 +111,7 @@ public class Drive extends MecanumDrive {
              * This number is the base voltage of the battery. This number is divided the current
              * battery voltage to make a multiplier for kV, kA, and kStatic
              */
-        public static volatile double BATTERY_BASE_VOLTAGE = 12.5; 
+        public static volatile double BATTERY_BASE_VOLTAGE = 13.5;
             /**
              * Set RUN_USING_ENCODER to true to enable built-in hub velocity control using drive encoders.
              * Set this flag to false if drive encoders are not present and an alternative localization
