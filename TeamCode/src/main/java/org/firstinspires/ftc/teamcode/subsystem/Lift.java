@@ -33,7 +33,7 @@ public class Lift extends Subsystem {
         public static class Position {
             public static int
                     HIGH = 1100,
-                    MID = 750,
+                    MID = 760,
                     LOW = 437,
                     GROUND_JUNCTION = 200,
                     INITIAL = 0,

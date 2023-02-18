@@ -3,15 +3,14 @@ package org.firstinspires.ftc.teamcode.opmode.auto.semiregionals;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.opmode.auto.RoadRunnerAuto;
+import org.firstinspires.ftc.teamcode.subsystem.ConeFlipper;
 import org.firstinspires.ftc.teamcode.subsystem.Gripper;
 import org.firstinspires.ftc.teamcode.subsystem.Lift;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.Back;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.Forward;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.LineToConstantHeading;
-import org.firstinspires.ftc.teamcode.trajectorysequence.container.LineToLinearHeading;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.LineToSplineHeading;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.Pose2dContainer;
-import org.firstinspires.ftc.teamcode.trajectorysequence.container.SetReversed;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.SplineToConstantHeading;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.StrafeRight;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.TrajectorySequenceContainer;
@@ -25,13 +24,19 @@ public class LeftSemiRegionals extends RoadRunnerAuto {
             public static double baseAccel = 25; // value
             public static double turnVel = Math.toRadians(90); // value
             public static double turnAccel = Math.toRadians(90); // value
+            public static double slowVel = baseVel * 0.8; // value
+            public static double slowAccel = baseAccel * 0.8; // value
+            public static double slowTurnVel = turnVel * 0.8; // value
+            public static double slowTurnAccel = turnAccel * 0.8; // value
         }
 
         public static WaitSeconds waitSeconds;
         public static class WaitSeconds {
             public static double dropDriveWait = 0.5;
-            public static double dropLiftWait = 0.5;
+            public static double dropLiftWait = 1;
             public static double pickupLiftWait = 1.0;
+            public static double yeetWait = 1.9;
+            public static double coneLiftWait = 0.15;
         }
 
         public static PreLoad preLoad;
@@ -45,24 +50,24 @@ public class LeftSemiRegionals extends RoadRunnerAuto {
         public static Cycle1 cycle1;
         public static class Cycle1 {
             public static LineToConstantHeading p1 = new LineToConstantHeading(-40, -22);
-            public static SplineToConstantHeading p2 = new SplineToConstantHeading(-54.5, -17, 180);
+            public static SplineToConstantHeading p2 = new SplineToConstantHeading(-54.5, -17.5, 180);
             public static Forward p3 = new Forward(13.5);
             static TrajectorySequenceContainer pickup = new TrajectorySequenceContainer(p1, p2, p3);
 
 
             public static LineToSplineHeading d1 = new LineToSplineHeading(-27.5, -12, -90);
-            public static Forward d2 = new Forward(5);
+            public static Forward d2 = new Forward(6.5);
             static TrajectorySequenceContainer drop = new TrajectorySequenceContainer(d1, d2);
         }
         public static Cycle2 cycle2;
         public static class Cycle2 {
-            public static Back p1 = new Back(5);
+            public static Back p1 = new Back(2);
             public static LineToSplineHeading p2 = new LineToSplineHeading(-48, Cycle1.d1.y - Cycle1.d2.distance + p1.distance, 180);
             public static Forward p3 = new Forward(20);
             static TrajectorySequenceContainer pickup = new TrajectorySequenceContainer(p1, p2, p3);
 
             public static LineToSplineHeading d1 = new LineToSplineHeading(-27, -12, -90);
-            public static Forward d2 = new Forward(3);
+            public static Forward d2 = new Forward(6.5);
             static TrajectorySequenceContainer drop = new TrajectorySequenceContainer(d1, d2);
         }
 
@@ -96,11 +101,6 @@ public class LeftSemiRegionals extends RoadRunnerAuto {
             public static double leftDistance = 36;
             public static double midDistance = 12;
             public static double rightDistance = -12;
-            public static volatile double distance = midDistance;
-
-            static TrajectorySequenceContainer getPark() {
-                return new TrajectorySequenceContainer(new StrafeRight(distance));
-            }
         }
     }
 
@@ -115,11 +115,13 @@ public class LeftSemiRegionals extends RoadRunnerAuto {
     public void initialize() {
         Lift lift = new Lift(this);
         Gripper gripper = new Gripper(this);
+        ConeFlipper coneFlipper = new ConeFlipper(this);
         path = new Path(
                 this,
                 drive,
                 lift,
-                gripper
+                gripper,
+                coneFlipper
         );
 
         gripper.close();
@@ -136,7 +138,7 @@ public class LeftSemiRegionals extends RoadRunnerAuto {
 
     @Override
     public void onStart() {
-        Constants.Park.distance = getDistance();
+        path.setParkTrajectory(new TrajectorySequenceContainer(new StrafeRight(getDistance())));
     }
 
     @Override

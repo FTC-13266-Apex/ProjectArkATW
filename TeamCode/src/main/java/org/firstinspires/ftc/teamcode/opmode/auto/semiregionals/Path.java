@@ -6,16 +6,21 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.command.Command;
+import org.firstinspires.ftc.teamcode.subsystem.ConeFlipper;
 import org.firstinspires.ftc.teamcode.subsystem.Drive;
 import org.firstinspires.ftc.teamcode.subsystem.Gripper;
 import org.firstinspires.ftc.teamcode.subsystem.Lift;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
+import org.firstinspires.ftc.teamcode.trajectorysequence.container.StrafeRight;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.TrajectorySequenceConstraints;
+import org.firstinspires.ftc.teamcode.trajectorysequence.container.TrajectorySequenceContainer;
 
 public class Path extends Command {
 
     enum AutoState {
         PRELOAD,
+        CONE_YEET,
+        CONE_FLIPPER_LIFT,
         PRELOAD_DROP,
         CYCLE_START,
         CYCLE,
@@ -44,6 +49,7 @@ public class Path extends Command {
     private final Drive drive;
     private final Lift lift;
     private final Gripper gripper;
+    private final ConeFlipper coneFlipper;
     private final ElapsedTime waitTimer = new ElapsedTime();
     private final TrajectorySequenceConstraints constraints = new TrajectorySequenceConstraints(
             LeftSemiRegionals.Constants.Speed.baseVel,
@@ -51,27 +57,35 @@ public class Path extends Command {
             LeftSemiRegionals.Constants.Speed.turnVel,
             LeftSemiRegionals.Constants.Speed.turnAccel
     );
+    private final TrajectorySequenceConstraints slowConstraints = new TrajectorySequenceConstraints(
+            LeftSemiRegionals.Constants.Speed.slowVel,
+            LeftSemiRegionals.Constants.Speed.slowAccel,
+            LeftSemiRegionals.Constants.Speed.slowTurnVel,
+            LeftSemiRegionals.Constants.Speed.slowTurnAccel
+    );
 
     private TrajectorySequence currentPickupTrajectorySequence;
     private TrajectorySequence currentDropTrajectorySequence;
     private Runnable currentLiftCommand;
     private int cycleNumber = 1;
+    private TrajectorySequenceContainer parkTrajectory = new TrajectorySequenceContainer(new StrafeRight(LeftSemiRegionals.Constants.Park.midDistance));
 
     private AutoState autoState = AutoState.PRELOAD;
     private CycleState cycleState = CycleState.PICKUP_PATH;
 
-    public Path(@NonNull LinearOpMode opMode, Drive drive, Lift lift, Gripper gripper) {
+    public Path(@NonNull LinearOpMode opMode, Drive drive, Lift lift, Gripper gripper, ConeFlipper coneFlipper) {
         super(opMode);
         this.drive = drive;
         this.lift = lift;
         this.gripper = gripper;
+        this.coneFlipper = coneFlipper;
 
         drive.setPoseEstimate(LeftSemiRegionals.Constants.PreLoad.startPose.getPose());
 
 
         preLoad = LeftSemiRegionals.Constants.PreLoad.preload.build(LeftSemiRegionals.Constants.PreLoad.startPose.getPose(), constraints);
 
-        cycle1Pickup = LeftSemiRegionals.Constants.Cycle1.pickup.build(preLoad.end(), constraints);
+        cycle1Pickup = LeftSemiRegionals.Constants.Cycle1.pickup.build(preLoad.end(), slowConstraints);
         cycle1Drop = LeftSemiRegionals.Constants.Cycle1.drop.build(cycle1Pickup.end(), constraints);
 
         cycle2Pickup = LeftSemiRegionals.Constants.Cycle2.pickup.build(cycle1Drop.end(), constraints);
@@ -91,7 +105,22 @@ public class Path extends Command {
                 if (drive.isBusy()) break;
                 drive.followTrajectorySequenceAsync(preLoad);
                 lift.moveLow();
+                coneFlipper.drop();
+                coneFlipper.SignalConeYeet();
 
+                waitTimer.reset();
+                autoState = AutoState.CONE_YEET;
+                break;
+            case CONE_YEET:
+                if (waitTimer.seconds() < LeftSemiRegionals.Constants.WaitSeconds.yeetWait) break;
+                coneFlipper.SignalConePusher();
+                waitTimer.reset();
+                autoState = AutoState.CONE_FLIPPER_LIFT;
+                break;
+            case CONE_FLIPPER_LIFT:
+                if (waitTimer.seconds() < LeftSemiRegionals.Constants.WaitSeconds.coneLiftWait) break;
+                coneFlipper.lift();
+                coneFlipper.hide();
                 autoState = AutoState.PRELOAD_DROP;
                 break;
             case PRELOAD_DROP:
@@ -143,7 +172,7 @@ public class Path extends Command {
                 if (waitTimer.seconds() < LeftSemiRegionals.Constants.WaitSeconds.dropDriveWait) break;
                 drive.followTrajectorySequenceAsync(
                         //TODO make srue to update this if you add more cycles!!!!!!
-                        LeftSemiRegionals.Constants.Park.getPark().build(cycle1Drop.end(), constraints));
+                        parkTrajectory.build(cycle1Drop.end(), constraints));
                 autoState = AutoState.PARK_LIFT_WAIT;
                 waitTimer.reset();
                 break;
@@ -204,5 +233,9 @@ public class Path extends Command {
                 cycleState = CycleState.PICKUP_PATH;
                 break;
         }
+    }
+
+    public void setParkTrajectory(TrajectorySequenceContainer parkTrajectory) {
+        this.parkTrajectory = parkTrajectory;
     }
 }
