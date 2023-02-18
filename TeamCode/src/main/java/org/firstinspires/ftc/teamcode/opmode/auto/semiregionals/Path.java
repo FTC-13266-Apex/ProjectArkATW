@@ -115,12 +115,12 @@ public class Path extends Command {
                         currentLiftCommand = lift::moveCone4;
                         autoState = AutoState.CYCLE;
                         break;
-                    case 3:
-                        currentPickupTrajectorySequence = cycle3Pickup;
-                        currentDropTrajectorySequence = cycle3Drop;
-                        currentLiftCommand = lift::moveCone3;
-                        autoState = AutoState.CYCLE;
-                        break;
+//                    case 3:
+//                        currentPickupTrajectorySequence = cycle3Pickup;
+//                        currentDropTrajectorySequence = cycle3Drop;
+//                        currentLiftCommand = lift::moveCone3;
+//                        autoState = AutoState.CYCLE;
+//                        break;
 //                    case 4:
 //                        currentPickupTrajectorySequence = cycle4Pickup;
 //                        currentDropTrajectorySequence = cycle4Drop;
