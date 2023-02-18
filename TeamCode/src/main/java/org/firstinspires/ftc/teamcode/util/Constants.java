@@ -6,7 +6,8 @@ import org.firstinspires.ftc.teamcode.command.FlipConeWithGamepad;
 import org.firstinspires.ftc.teamcode.command.Sensor;
 import org.firstinspires.ftc.teamcode.opmode.auto.LeftSide;
 import org.firstinspires.ftc.teamcode.opmode.auto.sample.right.Container;
-import org.firstinspires.ftc.teamcode.opmode.auto.semiregionals.LeftSemiRegionals;
+import org.firstinspires.ftc.teamcode.opmode.auto.semiregionals.left.LeftSemiRegionals;
+import org.firstinspires.ftc.teamcode.opmode.auto.semiregionals.right.RightSemiRegionals;
 import org.firstinspires.ftc.teamcode.opmode.tuner.roadrunner.AutomaticFeedforwardTuner;
 import org.firstinspires.ftc.teamcode.opmode.tuner.roadrunner.BackAndForth;
 import org.firstinspires.ftc.teamcode.opmode.tuner.roadrunner.DriveVelocityPIDTuner;
@@ -44,6 +45,7 @@ public class Constants {
         public static LeftSide.Constants rightSideOnly;
         public static Container.Constants experimentalRight;
         public static LeftSemiRegionals.Constants leftSemiRegionals;
+        public static RightSemiRegionals.Constants rightSemiRegionals;
     }
 
     public static Commands commands;
