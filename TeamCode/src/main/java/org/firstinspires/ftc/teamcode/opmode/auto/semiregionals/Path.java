@@ -20,6 +20,7 @@ public class Path extends Command {
         CYCLE_START,
         CYCLE,
         PARK,
+        PARK_LIFT_WAIT,
         END
     }
 
@@ -139,14 +140,16 @@ public class Path extends Command {
 
             case PARK:
                 if (drive.isBusy()) break;
-                gripper.open();
-                lift.moveInitial();
-
+                if (waitTimer.seconds() < LeftSemiRegionals.Constants.WaitSeconds.dropDriveWait) break;
                 drive.followTrajectorySequenceAsync(
                         //TODO make srue to update this if you add more cycles!!!!!!
                         LeftSemiRegionals.Constants.Park.getPark().build(cycle1Drop.end(), constraints));
-                autoState = AutoState.END;
-
+                autoState = AutoState.PARK_LIFT_WAIT;
+                waitTimer.reset();
+                break;
+            case PARK_LIFT_WAIT:
+                if (waitTimer.seconds() < LeftSemiRegionals.Constants.WaitSeconds.dropLiftWait) break;
+                lift.moveInitial();
                 waitTimer.reset();
                 break;
             case END:
