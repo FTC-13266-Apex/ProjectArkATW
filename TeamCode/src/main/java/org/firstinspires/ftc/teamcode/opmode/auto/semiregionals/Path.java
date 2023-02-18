@@ -68,7 +68,7 @@ public class Path extends Command {
     private TrajectorySequence currentDropTrajectorySequence;
     private Runnable currentLiftCommand;
     private int cycleNumber = 1;
-    private TrajectorySequenceContainer parkTrajectory = new TrajectorySequenceContainer(new StrafeRight(LeftSemiRegionals.Constants.Park.midDistance));
+    private TrajectorySequenceContainer parkTrajectory = new TrajectorySequenceContainer(new StrafeRight(LeftSemiRegionals.Constants.Park.rightDistance));
 
     private AutoState autoState = AutoState.PRELOAD;
     private CycleState cycleState = CycleState.PICKUP_PATH;
@@ -88,7 +88,7 @@ public class Path extends Command {
         cycle1Pickup = LeftSemiRegionals.Constants.Cycle1.pickup.build(preLoad.end(), slowConstraints);
         cycle1Drop = LeftSemiRegionals.Constants.Cycle1.drop.build(cycle1Pickup.end(), constraints);
 
-        cycle2Pickup = LeftSemiRegionals.Constants.Cycle2.pickup.build(cycle1Drop.end(), constraints);
+        cycle2Pickup = LeftSemiRegionals.Constants.Cycle2.pickup.build(cycle1Drop.end(), slowConstraints);
         cycle2Drop = LeftSemiRegionals.Constants.Cycle2.drop.build(cycle2Pickup.end(), constraints);
 
         cycle3Pickup = LeftSemiRegionals.Constants.Cycle3.pickup.build(cycle2Drop.end(), constraints);
@@ -112,13 +112,13 @@ public class Path extends Command {
                 autoState = AutoState.CONE_YEET;
                 break;
             case CONE_YEET:
-                if (waitTimer.seconds() < LeftSemiRegionals.Constants.WaitSeconds.yeetWait) break;
+                if (waitTimer.seconds() < LeftSemiRegionals.Constants.WaitSeconds.coneFlipperYeetWait) break;
                 coneFlipper.SignalConePusher();
                 waitTimer.reset();
                 autoState = AutoState.CONE_FLIPPER_LIFT;
                 break;
             case CONE_FLIPPER_LIFT:
-                if (waitTimer.seconds() < LeftSemiRegionals.Constants.WaitSeconds.coneLiftWait) break;
+                if (waitTimer.seconds() < LeftSemiRegionals.Constants.WaitSeconds.coneFlipperLiftWait) break;
                 coneFlipper.lift();
                 coneFlipper.hide();
                 autoState = AutoState.PRELOAD_DROP;
