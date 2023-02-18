@@ -47,11 +47,11 @@ public abstract class RoadRunnerAuto extends LinearOpMode {
                     position = Position.LEFT;
                     break;
                 case 2:
-                    position = Position.RIGHT;
+                    position = Position.MID;
                     break;
                 case 3:
                 default:
-                    position = Position.MID;
+                    position = Position.RIGHT;
                     break;
             }
         }
