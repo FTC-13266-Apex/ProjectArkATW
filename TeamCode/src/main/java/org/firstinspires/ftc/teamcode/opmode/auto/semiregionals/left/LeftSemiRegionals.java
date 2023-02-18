@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.auto.semiregionals;
+package org.firstinspires.ftc.teamcode.opmode.auto.semiregionals.left;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -61,9 +61,9 @@ public class LeftSemiRegionals extends RoadRunnerAuto {
         }
         public static Cycle2 cycle2;
         public static class Cycle2 {
-            public static Back p1 = new Back(3);
+            public static Back p1 = new Back(2.5);
             public static LineToSplineHeading p2 = new LineToSplineHeading(-48, Cycle1.d1.y - Cycle1.d2.distance + p1.distance, 180);
-            public static Forward p3 = new Forward(20);
+            public static Forward p3 = new Forward(20.5);
             static TrajectorySequenceContainer pickup = new TrajectorySequenceContainer(p1, p2, p3);
 
             public static LineToSplineHeading d1 = new LineToSplineHeading(-27, -12.5, -90);
