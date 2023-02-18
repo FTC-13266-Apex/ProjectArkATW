@@ -48,19 +48,19 @@ public class LeftSemiRegionals extends RoadRunnerAuto {
             public static Forward p3 = new Forward(13);
             static TrajectorySequenceContainer pickup = new TrajectorySequenceContainer(p1, p2, p3);
 
-            public static Back d1 = new Back(1);
+            public static Back d1 = new Back(5);
             public static LineToSplineHeading d2 = new LineToSplineHeading(-27, -17.5, -90);
             static TrajectorySequenceContainer drop = new TrajectorySequenceContainer(d1, d2);
         }
         public static Cycle2 cycle2;
         public static class Cycle2 {
-            public static Back p1 = new Back(2);
+            public static Back p1 = new Back(3);
             public static LineToSplineHeading p2 = new LineToSplineHeading(-48, Cycle1.d2.y + p1.distance, 180);
             public static Forward p3 = new Forward(20);
             static TrajectorySequenceContainer pickup = new TrajectorySequenceContainer(p1, p2, p3);
 
-            public static Back d1 = new Back(1);
-            public static LineToSplineHeading d2 = new LineToSplineHeading(-27, -18, -90);
+            public static Back d1 = new Back(5);
+            public static LineToSplineHeading d2 = new LineToSplineHeading(-26, -20, -90);
             static TrajectorySequenceContainer drop = new TrajectorySequenceContainer(d1, d2);
         }
 
@@ -71,8 +71,8 @@ public class LeftSemiRegionals extends RoadRunnerAuto {
             public static Forward p3 = new Forward(20);
             static TrajectorySequenceContainer pickup = new TrajectorySequenceContainer(p1, p2, p3);
 
-            public static Back d1 = new Back(1);
-            public static LineToSplineHeading d2 = new LineToSplineHeading(-27, -18, -90);
+            public static Back d1 = new Back(5);
+            public static LineToSplineHeading d2 = new LineToSplineHeading(-26, -20, -90);
             static TrajectorySequenceContainer drop = new TrajectorySequenceContainer(d1, d2);
         }
 
@@ -83,7 +83,7 @@ public class LeftSemiRegionals extends RoadRunnerAuto {
             public static Forward p3 = new Forward(20);
             static TrajectorySequenceContainer pickup = new TrajectorySequenceContainer(p1, p2, p3);
 
-            public static Back d1 = new Back(1);
+            public static Back d1 = new Back(3);
             public static LineToSplineHeading d2 = new LineToSplineHeading(-27, -18, -90);
             static TrajectorySequenceContainer drop = new TrajectorySequenceContainer(d1, d2);
         }
