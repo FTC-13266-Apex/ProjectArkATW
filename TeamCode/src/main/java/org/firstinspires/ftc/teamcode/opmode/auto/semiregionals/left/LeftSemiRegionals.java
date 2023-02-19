@@ -35,8 +35,8 @@ public class LeftSemiRegionals extends RoadRunnerAuto {
             public static double dropDriveWait = 0.5;
             public static double dropLiftWait = 1.3 ;
             public static double pickupLiftWait = 1.0;
-            public static double coneFlipperYeetWait = 2.0;
-            public static double coneFlipperLiftWait = 0.1;
+            public static double coneFlipperYeetWait = 1.9;
+            public static double coneFlipperLiftWait = 0.15;
         }
 
         public static PreLoad preLoad;
@@ -67,7 +67,7 @@ public class LeftSemiRegionals extends RoadRunnerAuto {
             static TrajectorySequenceContainer pickup = new TrajectorySequenceContainer(p1, p2, p3);
 
             public static LineToSplineHeading d1 = new LineToSplineHeading(-27, -12.5, -90);
-            public static Forward d2 = new Forward(6.5);
+            public static Forward d2 = new Forward(7);
             static TrajectorySequenceContainer drop = new TrajectorySequenceContainer(d1, d2);
         }
 
