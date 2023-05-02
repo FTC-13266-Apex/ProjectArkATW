@@ -49,24 +49,24 @@ public class LeftSemiRegionals extends RoadRunnerAuto {
 
         public static Cycle1 cycle1;
         public static class Cycle1 {
-            public static LineToConstantHeading p1 = new LineToConstantHeading(-40, -22);
+            public static LineToConstantHeading p1 = new LineToConstantHeading(-40, -22.3);
             public static SplineToConstantHeading p2 = new SplineToConstantHeading(-54.5, -17.5, 180);
             public static Forward p3 = new Forward(13.5);
             static TrajectorySequenceContainer pickup = new TrajectorySequenceContainer(p1, p2, p3);
 
 
-            public static LineToSplineHeading d1 = new LineToSplineHeading(-27.5, -12.5, -90);
-            public static Forward d2 = new Forward(6.5);
+            public static LineToSplineHeading d1 = new LineToSplineHeading(-27.7, -12.5, -90);
+            public static Forward d2 = new Forward(6);
             static TrajectorySequenceContainer drop = new TrajectorySequenceContainer(d1, d2);
         }
         public static Cycle2 cycle2;
         public static class Cycle2 {
-            public static Back p1 = new Back(2.5);
-            public static LineToSplineHeading p2 = new LineToSplineHeading(-48, Cycle1.d1.y - Cycle1.d2.distance + p1.distance, 180);
+            public static Back p1 = new Back(3);
+            public static LineToSplineHeading p2 = new LineToSplineHeading(-48, -16, 180);
             public static Forward p3 = new Forward(20.5);
             static TrajectorySequenceContainer pickup = new TrajectorySequenceContainer(p1, p2, p3);
 
-            public static LineToSplineHeading d1 = new LineToSplineHeading(-27, -12.5, -90);
+            public static LineToSplineHeading d1 = new LineToSplineHeading(-27.5, -12.5, -90);
             public static Forward d2 = new Forward(7);
             static TrajectorySequenceContainer drop = new TrajectorySequenceContainer(d1, d2);
         }

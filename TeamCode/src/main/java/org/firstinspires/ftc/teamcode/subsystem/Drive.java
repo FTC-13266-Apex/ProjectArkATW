@@ -25,11 +25,13 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.opmode.tuner.roadrunner.TwoWheelTrackingLocalizer;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceRunner;
@@ -41,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 import static org.firstinspires.ftc.teamcode.subsystem.Drive.Constants.*;
 
 /*
@@ -120,7 +123,7 @@ public class Drive extends MecanumDrive {
              * If using the built-in motor velocity PID, update MOTOR_VELO_PID with the tuned coefficients
              * from DriveVelocityPIDTuner.
              */
-            public static final boolean RUN_USING_BUILT_IN_CONTROLLER = false;
+            public static final boolean RUN_USING_BUILT_IN_CONTROLLER = true;
             public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(0, 0, 0,
                     getMotorVelocityF(Drivetrain.MAX_RPM / 60 * Drivetrain.TICKS_PER_REV));
             /**
@@ -132,8 +135,8 @@ public class Drive extends MecanumDrive {
 
             // TODO: adjust kV and maybe kA depending on the battery voltage. (maybe kstatic also)
             public static volatile double kV = 0.0168;
-            public static volatile double kA = 0.003;
-            public static volatile double kStatic = 0.02;
+            public static volatile double kA = 0.02;
+            public static volatile double kStatic = 0.003;
 
             /**
              * <p>
@@ -290,7 +293,7 @@ public class Drive extends MecanumDrive {
 
         // if desired, use setLocalizer() to change the localization method
         // for instance, setLocalizer(new ThreeTrackingWheelLocalizer(...));
-        setLocalizer(new StandardTrackingWheelLocalizer(opMode.hardwareMap));
+        setLocalizer(new TwoWheelTrackingLocalizer(hardwareMap, this));
 
         trajectorySequenceRunner = new TrajectorySequenceRunner(follower, Follower.HEADING_PID);
     }

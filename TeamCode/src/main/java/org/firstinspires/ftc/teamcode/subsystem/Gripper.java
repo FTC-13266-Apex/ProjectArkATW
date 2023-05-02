@@ -23,9 +23,9 @@ public class Gripper extends Subsystem {
 
         public static Position position;
         private static class Position {
-            public static volatile double FULL_OPEN = 0.4;
-            public static volatile double OPEN = .68;
-            public static volatile double CLOSE = .80;
+            public static volatile double FULL_OPEN = 0.76;
+            public static volatile double OPEN = .78;
+            public static volatile double CLOSE = .9;
         }
 
         public static Sensor sensor;
@@ -50,8 +50,8 @@ public class Gripper extends Subsystem {
     @Override
     protected void manualControl() {
         ignoreSensor = true;
-        if (opMode.gamepad2.b) open();
-        else if (opMode.gamepad2.a) close();
+        if (opMode.gamepad2.a) open();
+        else if (opMode.gamepad2.b) close();
         else ignoreSensor = false;
     }
 

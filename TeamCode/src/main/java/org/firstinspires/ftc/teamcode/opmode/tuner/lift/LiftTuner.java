@@ -22,7 +22,7 @@ public class LiftTuner extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         Lift lift = new Lift(this);
         new OptimizeStuff(this);
-        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+        //telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
         telemetry.update();
 
