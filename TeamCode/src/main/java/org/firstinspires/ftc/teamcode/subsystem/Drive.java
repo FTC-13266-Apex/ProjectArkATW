@@ -42,6 +42,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.firstinspires.ftc.teamcode.subsystem.Drive.Constants.*;
+import static org.firstinspires.ftc.teamcode.subsystem.Drive.Constants.Drivetrain.MAX_RPM;
 
 /*
  * Simple mecanum drive hardware implementation for REV hardware.
@@ -120,9 +121,9 @@ public class Drive extends MecanumDrive {
              * If using the built-in motor velocity PID, update MOTOR_VELO_PID with the tuned coefficients
              * from DriveVelocityPIDTuner.
              */
-            public static final boolean RUN_USING_BUILT_IN_CONTROLLER = true;
+            public static final boolean RUN_USING_BUILT_IN_CONTROLLER = false;
             public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(0, 0, 0,
-                    getMotorVelocityF(Drivetrain.MAX_RPM / 60 * Drivetrain.TICKS_PER_REV));
+                    getMotorVelocityF(MAX_RPM / 60 * Drivetrain.TICKS_PER_REV));
             /**
              * These are the feedforward parameters used to model the drive motor behavior. If you are using
              * the built-in velocity PID, *these values are fine as is*. However, if you do not have drive
@@ -132,7 +133,7 @@ public class Drive extends MecanumDrive {
 
             // TODO: adjust kV and maybe kA depending on the battery voltage. (maybe kstatic also)
             public static volatile double kV = 0.0168;
-            public static volatile double kA = 0.02;
+            public static volatile double kA = 0.002;
             public static volatile double kStatic = 0.003;
 
             /**
@@ -295,7 +296,7 @@ public class Drive extends MecanumDrive {
         trajectorySequenceRunner = new TrajectorySequenceRunner(follower, Follower.HEADING_PID);
     }
     public Drive (OpMode opMode) {
-        this(opMode,false);
+        this(opMode,true);
     }
 
     @Override
@@ -507,7 +508,7 @@ public class Drive extends MecanumDrive {
 
     @Override
     public Double getExternalHeadingVelocity() {
-        return (double) imu.getAngularVelocity().xRotationRate;
+        return (double) imu.getAngularVelocity().yRotationRate;
     }
 
     public void resetImu() {

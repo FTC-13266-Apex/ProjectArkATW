@@ -43,7 +43,7 @@ public class LeftSemiRegionals extends RoadRunnerAuto {
         public static class PreLoad {
             public static Pose2dContainer startPose = new Pose2dContainer(-38, -66, 90);
             public static Forward a = new Forward(7);
-            public static LineToSplineHeading b = new LineToSplineHeading(-44.5, -26, 180);
+            public static LineToSplineHeading b = new LineToSplineHeading(-44, -26, 180);
             static TrajectorySequenceContainer preload = new TrajectorySequenceContainer(a, b);
         }
 
