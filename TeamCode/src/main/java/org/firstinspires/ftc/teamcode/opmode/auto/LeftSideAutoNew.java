@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.container.LineToLinearH
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.Pose2dContainer;
 import org.firstinspires.ftc.teamcode.util.PoseStorage;
 
-@Autonomous
+//@Autonomous
 public class LeftSideAutoNew extends LinearOpMode {
     public static class Constants {
         public static Speed speed;

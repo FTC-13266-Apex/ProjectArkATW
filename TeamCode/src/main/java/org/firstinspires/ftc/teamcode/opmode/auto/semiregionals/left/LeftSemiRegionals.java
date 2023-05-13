@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.container.SplineToConst
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.StrafeRight;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.TrajectorySequenceContainer;
 
-@Autonomous
+//@Autonomous
 public class LeftSemiRegionals extends RoadRunnerAuto {
     public static class Constants {
         public static Speed speed;

@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.container.Pose2dContain
 import org.firstinspires.ftc.teamcode.util.PoseStorage;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.SplineToSplineHeading;
 
-@Autonomous
+//@Autonomous
 public class NewCycleAutonomous extends LinearOpMode {
     public static class Constants {
         public static Speed speed;

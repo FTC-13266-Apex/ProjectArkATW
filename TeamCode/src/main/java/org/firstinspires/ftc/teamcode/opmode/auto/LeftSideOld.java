@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.subsystem.Gripper;
 import org.firstinspires.ftc.teamcode.subsystem.Lift;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
-@Autonomous
+//@Autonomous
 public class LeftSideOld extends LinearOpMode {
     TrajectoryVelocityConstraint mediumSlowVel = (v, pose2d, pose2d1, pose2d2) -> 30; // value
     TrajectoryAccelerationConstraint mediumSlowAccel = (v, pose2d, pose2d1, pose2d2) -> 30; // value
