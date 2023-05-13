@@ -2,13 +2,12 @@ package org.firstinspires.ftc.teamcode.opmode.auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.command.AutoRunner;
 import org.firstinspires.ftc.teamcode.command.OptimizeStuff;
 import org.firstinspires.ftc.teamcode.subsystem.Drive;
 import org.firstinspires.ftc.teamcode.subsystem.Vision;
 import org.firstinspires.ftc.teamcode.util.PoseStorage;
 
-public abstract class RoadRunnerAuto extends LinearOpMode {
+public abstract class VisionAuto extends LinearOpMode {
     public enum Position {
         LEFT, MID, RIGHT
     }

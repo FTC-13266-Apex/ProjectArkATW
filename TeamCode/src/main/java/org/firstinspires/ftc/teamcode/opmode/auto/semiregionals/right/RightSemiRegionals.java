@@ -1,8 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmode.auto.semiregionals.right;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-
-import org.firstinspires.ftc.teamcode.opmode.auto.RoadRunnerAuto;
+import org.firstinspires.ftc.teamcode.opmode.auto.VisionAuto;
 import org.firstinspires.ftc.teamcode.subsystem.ConeFlipper;
 import org.firstinspires.ftc.teamcode.subsystem.Gripper;
 import org.firstinspires.ftc.teamcode.subsystem.Lift;
@@ -16,7 +14,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.container.StrafeRight;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.TrajectorySequenceContainer;
 
 //@Autonomous
-public class RightSemiRegionals extends RoadRunnerAuto {
+public class RightSemiRegionals extends VisionAuto {
     public static class Constants {
         public static Speed speed;
         public static class Speed {

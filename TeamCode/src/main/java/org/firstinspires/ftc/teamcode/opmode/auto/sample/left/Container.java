@@ -1,8 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmode.auto.sample.left;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-
-import org.firstinspires.ftc.teamcode.opmode.auto.RoadRunnerAuto;
+import org.firstinspires.ftc.teamcode.opmode.auto.VisionAuto;
 import org.firstinspires.ftc.teamcode.subsystem.Gripper;
 import org.firstinspires.ftc.teamcode.subsystem.Lift;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.Back;
@@ -13,7 +11,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.container.SplineToSplin
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.TrajectorySequenceContainer;
 
 //@Autonomous(name = "bad fsm Left")
-public class Container extends RoadRunnerAuto {
+public class Container extends VisionAuto {
     public static class Constants {
         public static Speed speed;
         public static class Speed {
