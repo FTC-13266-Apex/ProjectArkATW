@@ -494,11 +494,11 @@ public class Drive extends MecanumDrive {
     }
 
     @Override
-    public void setMotorPowers(double v, double v1, double v2, double v3) {
-        leftFront.setPower(v);
-        leftRear.setPower(v1);
-        rightRear.setPower(v2);
-        rightFront.setPower(v3);
+    public void setMotorPowers(double leftFront, double leftRear, double rightRear, double rightFront) {
+        this.leftFront.setPower(leftFront);
+        this.leftRear.setPower(leftRear);
+        this.rightRear.setPower(rightRear);
+        this.rightFront.setPower(rightFront);
     }
 
     @Override

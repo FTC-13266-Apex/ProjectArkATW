@@ -32,7 +32,7 @@ public class Lift extends Subsystem {
         }
         public static class Position {
             public static int
-                    HIGH = 1100,
+                    HIGH = 1077,
                     MID = 760,
                     LOW = 437,
                     GROUND_JUNCTION = 200,
@@ -47,7 +47,7 @@ public class Lift extends Subsystem {
         }
         public static class Speed {
             public static double NORMAL        = 10;   // ill use this but im testing something
-            public static int MANUAL_MOVE_SPEED = 6;
+            public static int MANUAL_MOVE_SPEED = 10;
 
         }
     }
